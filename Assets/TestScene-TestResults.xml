@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="TestScene" total="3" errors="3" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-01-22" time="10:11:02">
+  <environment nunit-version="0.0.0.0" clr-version="2.0.50727.1433" os-version="Microsoft Windows NT 6.1.7601.0" platform="Win32NT" cwd="D:\Libraries\My Projects\redblue\gladiators2" machine-name="LUCAS-PC" user="Lucas" user-domain="LUCAS-PC" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-case name="Test_PlayerRecivesDamageWhenSpiderExplodes" executed="True" result="Error" success="False" time="0.075">
+    <failure>
+      <message><![CDATA[IntegrationTest started (Test_PlayerRecivesDamageWhenSpiderExplodes)
+UnityException: Input Axis Horizontal is not setup.
+ To change the input settings use: Edit -> Project Settings -> Input
+IntegrationTest failed with exception (Test_PlayerRecivesDamageWhenSpiderExplodes)
+]]></message>
+      <stack-trace><![CDATA[PlayerMoveController.Update () (at Assets/UnityTestTools/Examples/AngryBotsTests/Scripts/Movement/PlayerMoveController.js:120)
+]]></stack-trace>
+    </failure>
+  </test-case>
+  <test-case name="Test_SpiderSleepsWhenPlayerNotInRange" executed="True" result="Error" success="False" time="0.017">
+    <failure>
+      <message><![CDATA[IntegrationTest started (Test_SpiderSleepsWhenPlayerNotInRange)
+UnityException: Input Axis Horizontal is not setup.
+ To change the input settings use: Edit -> Project Settings -> Input
+IntegrationTest failed with exception (Test_SpiderSleepsWhenPlayerNotInRange)
+IntegrationTest Fail (Test_SpiderSleepsWhenPlayerNotInRange)
+]]></message>
+      <stack-trace><![CDATA[PlayerMoveController.Update () (at Assets/UnityTestTools/Examples/AngryBotsTests/Scripts/Movement/PlayerMoveController.js:120)
+]]></stack-trace>
+    </failure>
+  </test-case>
+  <test-case name="Test_SpiderWakesWhenPlayerInRange" executed="True" result="Error" success="False" time="0.017">
+    <failure>
+      <message><![CDATA[IntegrationTest started (Test_SpiderWakesWhenPlayerInRange)
+UnityException: Input Axis Horizontal is not setup.
+ To change the input settings use: Edit -> Project Settings -> Input
+IntegrationTest failed with exception (Test_SpiderWakesWhenPlayerInRange)
+]]></message>
+      <stack-trace><![CDATA[PlayerMoveController.Update () (at Assets/UnityTestTools/Examples/AngryBotsTests/Scripts/Movement/PlayerMoveController.js:120)
+]]></stack-trace>
+    </failure>
+  </test-case>
+</test-results>
