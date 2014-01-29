@@ -6,7 +6,7 @@ using System.Collections;
  * this need to check back periodically to see how much time
  * has gone by.
  */
-public class RBCountUpTimer
+public class CountUpTimer
 {
 	float timeStarted;
 	bool isRunning;
@@ -16,7 +16,7 @@ public class RBCountUpTimer
 	/*
 	 * Null constructor. Set our duration to a known invalid value.
 	 */
-	public RBCountUpTimer ()
+	public CountUpTimer ()
 	{
 		StopTimer ();
 	}

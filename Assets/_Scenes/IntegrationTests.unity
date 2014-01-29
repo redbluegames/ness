@@ -961,7 +961,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &196720261
 Transform:
   m_ObjectHideFlags: 10
@@ -1152,8 +1152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06dfe4d5ed3f64ed785c9f456001992e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveDirection: {x: -1.09242821, y: .580000162, z: -2.5427134}
-  FaceDirection: {x: -1.09242821, y: .580000162, z: -2.5427134}
+  MoveDirection: {x: 0, y: 0, z: 0}
+  FaceDirection: {x: 0, y: 0, z: 0}
   TurnDamping: 25
   Speed: 5
   MoveScale: 1
@@ -1462,8 +1462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06dfe4d5ed3f64ed785c9f456001992e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveDirection: {x: -1.09242821, y: .580000162, z: -2.5427134}
-  FaceDirection: {x: -1.09242821, y: .580000162, z: -2.5427134}
+  MoveDirection: {x: 0, y: 0, z: 0}
+  FaceDirection: {x: 0, y: 0, z: 0}
   TurnDamping: 25
   Speed: 5
   MoveScale: 1
@@ -2474,8 +2474,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06dfe4d5ed3f64ed785c9f456001992e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveDirection: {x: -1.09242821, y: .580000162, z: -2.5427134}
-  FaceDirection: {x: -1.09242821, y: .580000162, z: -2.5427134}
+  MoveDirection: {x: 0, y: 0, z: 0}
+  FaceDirection: {x: 0, y: 0, z: 0}
   TurnDamping: 25
   Speed: 5
   MoveScale: 1
@@ -2947,8 +2947,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06dfe4d5ed3f64ed785c9f456001992e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveDirection: {x: -1.09242821, y: .580000162, z: -2.5427134}
-  FaceDirection: {x: -1.09242821, y: .580000162, z: -2.5427134}
+  MoveDirection: {x: 0, y: 0, z: 0}
+  FaceDirection: {x: 0, y: 0, z: 0}
   TurnDamping: 25
   Speed: 5
   MoveScale: 1
@@ -3968,7 +3968,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400018, guid: 3d8f4162e5996244f95d173d4ca16b34, type: 2}
   m_PrefabInternal: {fileID: 2027197521}
   m_GameObject: {fileID: 1244937473}
-  m_LocalRotation: {x: 0, y: 0, z: -.216440007, w: .976296008}
+  m_LocalRotation: {x: 0, y: 0, z: -.216439992, w: .976295948}
   m_LocalPosition: {x: .200000003, y: .700000048, z: -.599999905}
   m_LocalScale: {x: .0900000036, y: .200000003, z: .100000001}
   m_Children: []
@@ -4650,8 +4650,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06dfe4d5ed3f64ed785c9f456001992e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveDirection: {x: -1.09242821, y: .580000162, z: -2.5427134}
-  FaceDirection: {x: -1.09242821, y: .580000162, z: -2.5427134}
+  MoveDirection: {x: 0, y: 0, z: 0}
+  FaceDirection: {x: 0, y: 0, z: 0}
   TurnDamping: 25
   Speed: 5
   MoveScale: 1
@@ -5053,14 +5053,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb1ceec31c4d4adc90853576cb8b30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  followTarget: {fileID: 0}
   viewPortIndex: 0
-  xOffset: 0
-  yOffset: 11
-  zOffset: -5
-  xRotation: 60
-  yRotation: 0
-  zRotation: 0
 --- !u!81 &1623470773
 AudioListener:
   m_ObjectHideFlags: 0
@@ -5149,7 +5143,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400018, guid: 3d8f4162e5996244f95d173d4ca16b34, type: 2}
   m_PrefabInternal: {fileID: 383517246}
   m_GameObject: {fileID: 1652557915}
-  m_LocalRotation: {x: 0, y: 0, z: -.216440007, w: .976296008}
+  m_LocalRotation: {x: 0, y: 0, z: -.216439992, w: .976295948}
   m_LocalPosition: {x: .200000003, y: .700000048, z: -.599999905}
   m_LocalScale: {x: .0900000036, y: .200000003, z: .100000001}
   m_Children: []
@@ -5419,8 +5413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06dfe4d5ed3f64ed785c9f456001992e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveDirection: {x: -1.09242821, y: .580000162, z: -2.5427134}
-  FaceDirection: {x: -1.09242821, y: .580000162, z: -2.5427134}
+  MoveDirection: {x: 0, y: 0, z: 0}
+  FaceDirection: {x: 0, y: 0, z: 0}
   TurnDamping: 25
   Speed: 5
   MoveScale: 1
@@ -6035,8 +6029,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06dfe4d5ed3f64ed785c9f456001992e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveDirection: {x: -1.09242821, y: .580000162, z: -2.5427134}
-  FaceDirection: {x: -1.09242821, y: .580000162, z: -2.5427134}
+  MoveDirection: {x: 0, y: 0, z: 0}
+  FaceDirection: {x: 0, y: 0, z: 0}
   TurnDamping: 25
   Speed: 5
   MoveScale: 1

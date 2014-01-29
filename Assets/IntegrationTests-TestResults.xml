@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="IntegrationTests" total="2" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-01-24" time="11:22:40">
-  <environment nunit-version="0.0.0.0" clr-version="2.0.50727.1433" os-version="Microsoft Windows NT 6.1.7601.0" platform="Win32NT" cwd="D:\Libraries\My Projects\redblue\gladiators2" machine-name="LUCAS-PC" user="Lucas" user-domain="LUCAS-PC" />
-  <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-case name="Test_PlayerDeath" executed="True" result="Success" success="True" time="4.032">
+<test-results name="IntegrationTests" total="2" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-01-29" time="13:13:35">
+  <environment nunit-version="0.0.0.0" clr-version="2.0.50727.1433" os-version="Unix 13.0.0.0" platform="Unix" cwd="/Users/lucas/Documents/projects/redblue/ness" machine-name="LucasMacBook.local" user="lucas" user-domain="LucasMacBook.local" />
+  <culture-info current-culture="" current-uiculture="" />
+  <test-case name="Test_PlayerDeath" executed="True" result="Success" success="True" time="4.018">
     <reason>
       <message><![CDATA[IntegrationTest started (Test_PlayerDeath)
 Health: Subtracting = 10
@@ -22,7 +22,7 @@ IntegrationTest finished (Test_PlayerDeath)
 ]]></message>
     </reason>
   </test-case>
-  <test-case name="Test_RatMoves" executed="True" result="Success" success="True" time="1.287">
+  <test-case name="Test_RatMoves" executed="True" result="Success" success="True" time="1.365">
     <reason>
       <message><![CDATA[IntegrationTest started (Test_RatMoves)
 IntegrationTest Pass (Test_RatMoves)

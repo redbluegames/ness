@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class AI : MonoBehaviour
@@ -8,8 +8,8 @@ public class AI : MonoBehaviour
 	public CharacterMotor motor;
 	public Animation attackAnimation;
 	public AttackCast attackCaster;
-	RBCountDownTimer attackTime = new RBCountDownTimer ();
-	RBCountDownTimer attackCooldown = new RBCountDownTimer ();
+	CountDownTimer attackTime = new CountDownTimer ();
+	CountDownTimer attackCooldown = new CountDownTimer ();
 	bool isAttacking;
 	
 	// Update is called once per frame

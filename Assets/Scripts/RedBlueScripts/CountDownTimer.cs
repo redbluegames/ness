@@ -6,7 +6,7 @@ using System.Collections;
  * this need to check back periodically to see if time is up.
  * Then, if the timer is needed again, reset it.
  */
-public class RBCountDownTimer
+public class CountDownTimer
 {
 	float timeStarted;
 	float duration;
@@ -17,7 +17,7 @@ public class RBCountDownTimer
 	/*
 	 * Null constructor. Set our duration to a known invalid value.
 	 */
-	public RBCountDownTimer ()
+	public CountDownTimer ()
 	{
 		isRunning = false;
 		duration = UNSET;

@@ -16,7 +16,7 @@ public class Fighter : MonoBehaviour
 	public Team team;
 	
 	// Timers
-	RBCountUpTimer chargeUpTimer;
+	CountUpTimer chargeUpTimer;
 	public float currentChargeUpTime = 0;
 	
 	// Weapons and Attacks
@@ -122,7 +122,7 @@ public class Fighter : MonoBehaviour
 	void Start ()
 	{
 		// Initialize attacks
-		chargeUpTimer = new RBCountUpTimer ();
+		chargeUpTimer = new CountUpTimer ();
 		if (isHuman) {
 			SetupHumanFighter ();
 		} else {
