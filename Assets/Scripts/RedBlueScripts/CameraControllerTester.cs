@@ -6,15 +6,15 @@ public class CameraControllerTester : MonoBehaviour
 	public CameraController cameraController;
 
 	// Test shake variables
-	public float shakeSpeed;
-	public float shakeMagnitude;
-	public float shakeDuration;
+	public float shakeSpeed = 1f;
+	public float shakeMagnitude = 2f;
+	public float shakeDuration = 1f;
 	public bool testShake;                  // Force camera shake using provided properties
 
 	// Test zoom variables
-	public float zoomRatio;
-	public float zoomDuration;
-	public float resetZoomDuration;
+	public float zoomRatio = 1.5f;
+	public float zoomDuration = 2f;
+	public float resetZoomDuration = 1.0f;
 	public bool testZoom;                   // Force camera zoom using provided properties
 	public bool testResetZoom;              // Force reset camera zoom
 

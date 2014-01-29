@@ -2712,14 +2712,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followTarget: {fileID: 1079692479}
   viewPortIndex: 0
-  testShakeSpeed: 0
-  testShakeMagnitude: 0
-  testShakeDuration: 0
-  testShake: 0
-  testZoomRatio: 0
-  testZoomDuration: 0
-  testZoom: 0
-  resetZoom: 0
 --- !u!114 &1335224292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2741,9 +2733,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1335224285}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27086f058ddbcbd42ae116f527e62b46, type: 3}
+  m_Script: {fileID: 11500000, guid: e4ef9db016268468cb10a7a66d6b0991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraController: {fileID: 1335224291}
+  shakeSpeed: 1
+  shakeMagnitude: 11
+  shakeDuration: 1
+  testShake: 0
+  zoomRatio: 0
+  zoomDuration: 0
+  resetZoomDuration: 0
+  testZoom: 0
+  testResetZoom: 0
 --- !u!1 &1354561223
 GameObject:
   m_ObjectHideFlags: 0

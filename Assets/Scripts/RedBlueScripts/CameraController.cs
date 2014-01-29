@@ -165,17 +165,16 @@ public class CameraController : MonoBehaviour
 			elapsed += Time.deltaTime;			
 			
 			float percentComplete = elapsed / duration;			
-			percentComplete *= percentComplete;
-			
+
 			// We want to reduce the shake from full power to 0 starting half way through
 			float damper = 1.0f - Mathf.Clamp (2.0f * percentComplete - 1.0f, 0.0f, 1.0f);
 			
 			// Calculate the noise parameter starting randomly and going as fast as speed allows
 			float alpha = randomStart + speed * percentComplete;
 			
-			// map noise to [-1, 1]
-			float x = Util.Noise.GetNoise (alpha, 0.0f, 0.0f) * 2.0f - 1.0f;
-			float y = Util.Noise.GetNoise (0.0f, 0.0f, alpha) * 2.0f - 1.0f;
+			// map noise to [-1, 1] (noise generated from 0-1)
+			float x = Mathf.PerlinNoise (alpha, 0) * 2.0f - 1.0f;
+			float y = Mathf.PerlinNoise (0, alpha) * 2.0f - 1.0f;
 			
 			x *= magnitude * damper;
 			y *= magnitude * damper;
