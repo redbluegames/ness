@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class IsometricCameraController : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
 	public GameObject followTarget;
 	public int viewPortIndex;
@@ -13,16 +13,6 @@ public class IsometricCameraController : MonoBehaviour
 	Vector3 shakeOffset;
 	Vector3 followOffset;
 	float fieldOfViewOffset;
-
-	// Test variables
-	public float testShakeSpeed;
-	public float testShakeMagnitude;
-	public float testShakeDuration;
-	public bool testShake;
-	public float testZoomRatio;
-	public float testZoomDuration;
-	public bool testZoom;
-	public bool resetZoom;
 
 	void Start ()
 	{
@@ -42,10 +32,6 @@ public class IsometricCameraController : MonoBehaviour
 
 	void LateUpdate ()
 	{
-		// Try our test methods
-		TestZoom ();
-		TestShake ();
-
 		FollowTarget ();
 		ResolveOffsets ();
 	}
@@ -134,18 +120,6 @@ public class IsometricCameraController : MonoBehaviour
 	}
 
 	/*
-	 * Test method to help us test the behavior of various zooms. Set testZoom to true
-	 * while in Play mode.
-	 */
-	void TestZoom ()
-	{
-		if (testZoom) {
-			testZoom = false;
-			Zoom (testZoomRatio, testZoomDuration);
-		}
-	}
-
-	/*
 	 * Custom class to store data about a zoom. Used for coroutines which require
 	 * one parameter.
 	 */
@@ -208,18 +182,6 @@ public class IsometricCameraController : MonoBehaviour
 
 			shakeOffset = new Vector3 (x, 0, y);
 			yield return null;
-		}
-	}
-
-	/*
-	 * Test method to help check the behavior of various shakes. Set testShake to true
-	 * while in Play mode.
-	 */
-	void TestShake ()
-	{
-		if (testShake) {
-			testShake = false;
-			Shake (testShakeSpeed, testShakeDuration, testShakeMagnitude);
 		}
 	}
 	#endregion

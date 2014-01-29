@@ -73,7 +73,7 @@ public class Fighter : MonoBehaviour
 
 	// Cached objects
 	Transform myTransform;
-	IsometricCameraController playerCamera;
+	CameraController playerCamera;
 	
 	// Character state
 	public enum CharacterState
@@ -105,7 +105,7 @@ public class Fighter : MonoBehaviour
 	void Awake ()
 	{
 		myTransform = transform;
-		playerCamera = GameObject.FindWithTag (Tags.MAIN_CAMERA).GetComponent<IsometricCameraController> ();
+		playerCamera = GameObject.FindWithTag (Tags.MAIN_CAMERA).GetComponent<CameraController> ();
 		carriedWeapons = new GameObject[2];
 		// TODO make this check for controller == null, otherwise
 		// it always overrides the one chosen in the editor.
