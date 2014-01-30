@@ -6,9 +6,10 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: _LightBrown-Toon
+  m_Name: _orange_toon
   m_Shader: {fileID: 4800000, guid: 48dca5b99d113b8d11006bab44295342, type: 3}
   m_ShaderKeywords: []
+  m_CustomRenderQueue: -1
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -37,7 +38,7 @@ Material:
         first:
           name: _ToonShade
         second:
-          m_Texture: {fileID: 8900000, guid: b995d4bd9d11078d11005b9844295342, type: 3}
+          m_Texture: {fileID: 8900000, guid: ed7fefe29d117c8d11005e4844295342, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -53,7 +54,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .889705896, g: .817067623, b: .660737455, a: 1}
+        second: {r: 1, g: .799188673, b: .272058845, a: 1}
       data:
         first:
           name: _MainTex_ST

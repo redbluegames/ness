@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="IntegrationTestsExample" total="6" errors="2" failures="1" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-01-30" time="14:59:27">
+  <environment nunit-version="0.0.0.0" clr-version="2.0.50727.1433" os-version="Unix 13.0.0.0" platform="Unix" cwd="/Users/lucas/Documents/projects/redblue/ness" machine-name="LucasMacBook.local" user="lucas" user-domain="LucasMacBook.local" />
+  <culture-info current-culture="" current-uiculture="" />
+  <test-case name="Test throwing exception" executed="True" result="Success" success="True" time="0.189">
+    <reason>
+      <message><![CDATA[IntegrationTest started (Test throwing exception)
+CustomException: Exception of type 'ThrowCustomException+CustomException' was thrown.
+CustomException was expected
+IntegrationTest finished (Test throwing exception)
+]]></message>
+    </reason>
+  </test-case>
+  <test-case name="Test with Assertions" executed="True" result="Success" success="True" time="0.063">
+    <reason>
+      <message><![CDATA[IntegrationTest started (Test with Assertions)
+IntegrationTest Pass (Test with Assertions)
+IntegrationTest finished (Test with Assertions)
+]]></message>
+    </reason>
+  </test-case>
+  <test-case name="Test with Assertions Fails" executed="True" result="Error" success="False" time="0.040">
+    <failure>
+      <message><![CDATA[IntegrationTest started (Test with Assertions Fails)
+NullReferenceException: Object reference not set to an instance of an object
+IntegrationTest failed with exception (Test with Assertions Fails)
+]]></message>
+      <stack-trace><![CDATA[UnityTest.PropertyResolver.GetPropertyValueFromString (UnityEngine.GameObject gameObj, System.String propertyPath) (at Assets/UnityTestTools/Assertions/PropertyResolver.cs:237)
+UnityTest.ActionBase.GetPropertyValue (UnityEngine.GameObject gameObject, System.String path, System.Type[] acceptableTypes) (at Assets/UnityTestTools/Assertions/Comparers/ActionBase.cs:37)
+UnityTest.ComparerBase.Compare (System.Object objVal) (at Assets/UnityTestTools/Assertions/Comparers/ComparerBase.cs:39)
+UnityTest.ActionBase.Compare () (at Assets/UnityTestTools/Assertions/Comparers/ActionBase.cs:30)
+UnityTest.Assertions.CheckAssertions (UnityTest.AssertionComponent[] assertions) (at Assets/UnityTestTools/Assertions/Assertions.cs:32)
+UnityTest.Assertions.CheckAssertions (UnityTest.AssertionComponent assertion) (at Assets/UnityTestTools/Assertions/Assertions.cs:16)
+UnityTest.AssertionComponent.CheckAssertionFor (CheckMethod checkMethod) (at Assets/UnityTestTools/Assertions/AssertionComponent.cs:260)
+UnityTest.AssertionComponent.Start () (at Assets/UnityTestTools/Assertions/AssertionComponent.cs:103)
+]]></stack-trace>
+    </failure>
+  </test-case>
+  <test-case name="Test1 - Success" executed="True" result="Success" success="True" time="0.646">
+    <reason>
+      <message><![CDATA[IntegrationTest started (Test1 - Success)
+IntegrationTest Pass (CubeTriggerSuccess)
+IntegrationTest finished (Test1 - Success)
+]]></message>
+    </reason>
+  </test-case>
+  <test-case name="Test2 - Timeout" executed="True" result="Cancelled" success="False" time="0.108">
+    <failure>
+      <message><![CDATA[IntegrationTest started (Test2 - Timeout)
+IntegrationTest timeout (Test2 - Timeout)
+]]></message>
+      <stack-trace><![CDATA[]]></stack-trace>
+    </failure>
+  </test-case>
+  <test-case name="Test3 - Failure" executed="True" result="Failure" success="False" time="0.664">
+    <failure>
+      <message><![CDATA[IntegrationTest started (Test3 - Failure)
+IntegrationTest Fail (CubeTriggerFailure)
+IntegrationTest failed (Test3 - Failure)
+]]></message>
+      <stack-trace><![CDATA[]]></stack-trace>
+    </failure>
+  </test-case>
+</test-results>

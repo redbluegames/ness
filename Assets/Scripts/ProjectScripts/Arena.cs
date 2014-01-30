@@ -16,7 +16,7 @@ public class Arena : Singleton<Arena>
 	public GameObject enemyPrefab;
 	public int[] waveComp = {2,4,6,8,10,12,14,16,18,20};
 
-	public bool IsRunning {get; private set;}
+	public bool IsRunning { get; private set; }
 	
 	public UICenterText arenaText;
 	
@@ -43,9 +43,9 @@ public class Arena : Singleton<Arena>
 			return;
 		}
 		if (GetActiveEnemyCount () == 0 && !IsRunning) {
-			arenaText.DisplayMessage ("You Win!", Mathf.Infinity);
+			//arenaText.DisplayMessage ("You Win!", Mathf.Infinity);
 		}
-		if(!IsRunning) {
+		if (!IsRunning) {
 			return;
 		}
 		TickTimer ();
@@ -63,8 +63,7 @@ public class Arena : Singleton<Arena>
 	public void StartNextWave ()
 	{
 		arenaText.DisplayMessage ("Incoming Wave!", 2.5f);
-		if(waveComp.Length == 0)
-		{
+		if (waveComp.Length == 0) {
 			IsRunning = false;
 			return;
 		}
