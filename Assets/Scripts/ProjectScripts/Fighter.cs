@@ -323,7 +323,9 @@ public class Fighter : MonoBehaviour
 		// Look at XZ coordinate of target only
 		Vector3 lookPosition = target.transform.position;
 		lookPosition.y = myTransform.position.y;
-		myTransform.LookAt (lookPosition);
+		if (!feetPlanted) {
+			myTransform.LookAt (lookPosition);
+		}
 	}
 
 	/*

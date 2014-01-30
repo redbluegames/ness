@@ -94,12 +94,15 @@ public class PlayerController : IController
 	{
 		InputDevice xbox = InputDevices.GetAllInputDevices () [(int)InputDevices.ControllerTypes.XBox];
 
-		bool isHoldingDownTarget = RBInput.GetButtonForPlayer (InputStrings.TARGET, PlayerIndex) ||
+		bool isTargetPressed = RBInput.GetButtonDownForPlayer (InputStrings.TARGET, PlayerIndex) ||
 			Input.GetAxisRaw (RBInput.ConcatPlayerIndex (InputStrings.TARGET, PlayerIndex, xbox)) >= 0.99;
-		if (isHoldingDownTarget) {
+		if (isTargetPressed && !fighter.isLockedOn) {
 			if (!fighter.isLockedOn || (fighter.isLockedOn && fighter.target == null)) {
 				TargetNearest ();
 			}
+		} else if (isTargetPressed && fighter.isLockedOn) {
+			fighter.LoseTarget ();
+		} else {
 			// PC and Controller controls likely should diverge here due to right stick use
 			InputDevice pc = InputDevices.GetAllInputDevices () [(int)InputDevices.ControllerTypes.Keyboard];
 			float aimAxis = Input.GetAxisRaw (RBInput.ConcatPlayerIndex (InputStrings.TARGETHORIZONTAL, PlayerIndex, xbox));
@@ -116,7 +119,7 @@ public class PlayerController : IController
 					TargetNext (true);
 				}
 			}
-
+			
 			// Move target right
 			if (Input.GetButtonDown (RBInput.ConcatPlayerIndex (InputStrings.TARGETRIGHT, PlayerIndex, pc)) 
 				|| (aimAxis > deadStickThreshold && !rightStickInUse)) {
@@ -125,11 +128,7 @@ public class PlayerController : IController
 					TargetNext (false);
 				}
 			}
-		} else {
-			fighter.LoseTarget ();
 		}
-
-
 	}
 
 	void TryAttack ()
@@ -290,11 +289,9 @@ public class PlayerController : IController
 	public void ForgetEnemy (GameObject enemy)
 	{
 		if (enemies.Contains (enemy)) {
+			bool sameAsTarget = enemy.Equals (fighter.target);
 			enemies.Remove (enemy);
-			// Pick up a new target if we are in target mode
-			// TODO This solution doesn't fully work. When player is charging through a group
-			// it switches between them, destroying everything in it's path with ruthless precision.
-			if ((fighter.target == null || enemies.Contains (fighter.target)) && fighter.isLockedOn) {
+			if (sameAsTarget) {
 				TargetNearest ();
 			}
 		} else {

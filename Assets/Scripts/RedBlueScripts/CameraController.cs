@@ -157,7 +157,6 @@ public class CameraController : MonoBehaviour
 	 */
 	IEnumerator SetShakeOffset (float speed, float duration, float magnitude)
 	{
-		Vector3 originalCamPos = Camera.main.transform.position;
 		float randomStart = Random.Range (-1000.0f, 1000.0f);
 		float elapsed = 0.0f;
 		while (elapsed < duration) {
