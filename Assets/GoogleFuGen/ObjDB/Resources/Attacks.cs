@@ -1,6 +1,6 @@
 //----------------------------------------------
 //    GoogleFu: Google Doc Unity integration
-//         Copyright Â© 2013 Litteratus
+//         Copyright ?? 2013 Litteratus
 //
 //        This file has been auto-generated
 //              Do not manually edit
@@ -28,7 +28,8 @@ namespace GoogleFu
 		public string _CHARGEANIMATION;
 		public string _SWINGANIMATION;
 		public string _PROJECTILEPREFAB;
-		public AttacksRow(string __NAME, string __MINDAMAGE, string __MAXDAMAGE, string __RANGE, string __STRENGTH, string __CONTROLTYPE, string __REACTIONTYPE, string __MINKNOCKBACK, string __MAXKNOCKBACK, string __CHARGEANIMATION, string __SWINGANIMATION, string __PROJECTILEPREFAB) 
+		public float _CAMERASHAKEINTENSITY;
+		public AttacksRow(string __NAME, string __MINDAMAGE, string __MAXDAMAGE, string __RANGE, string __STRENGTH, string __CONTROLTYPE, string __REACTIONTYPE, string __MINKNOCKBACK, string __MAXKNOCKBACK, string __CHARGEANIMATION, string __SWINGANIMATION, string __PROJECTILEPREFAB, string __CAMERASHAKEINTENSITY) 
 		{
 			_NAME = __NAME;
 			{
@@ -72,6 +73,13 @@ namespace GoogleFu
 			_CHARGEANIMATION = __CHARGEANIMATION;
 			_SWINGANIMATION = __SWINGANIMATION;
 			_PROJECTILEPREFAB = __PROJECTILEPREFAB;
+			{
+			float res;
+				if(float.TryParse(__CAMERASHAKEINTENSITY, out res))
+					_CAMERASHAKEINTENSITY = res;
+				else
+					Debug.LogError("Failed To Convert CAMERASHAKEINTENSITY string: "+ __CAMERASHAKEINTENSITY +" to float");
+			}
 		}
 
 		public string GetStringData( string colID )
@@ -115,6 +123,9 @@ namespace GoogleFu
 				case "PROJECTILEPREFAB":
 					ret = _PROJECTILEPREFAB.ToString();
 					break;
+				case "CAMERASHAKEINTENSITY":
+					ret = _CAMERASHAKEINTENSITY.ToString();
+					break;
 			}
 
 			return ret;
@@ -131,7 +142,7 @@ namespace GoogleFu
 		public List<AttacksRow> Rows = new List<AttacksRow>();
 		public override void AddRowGeneric (List<string> input)
 		{
-			Rows.Add(new AttacksRow(input[0],input[1],input[2],input[3],input[4],input[5],input[6],input[7],input[8],input[9],input[10],input[11]));
+			Rows.Add(new AttacksRow(input[0],input[1],input[2],input[3],input[4],input[5],input[6],input[7],input[8],input[9],input[10],input[11],input[12]));
 		}
 		public override void Clear ()
 		{

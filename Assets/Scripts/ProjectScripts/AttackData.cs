@@ -16,6 +16,7 @@ public class AttackData : ScriptableObject
 	public AnimationClip chargeAnimation;
 	public AnimationClip swingAnimation;
 	public string projectilePrefab;
+	public float cameraShakeIntensity;
 	
 	public enum ReactionType
 	{

@@ -5,11 +5,15 @@ using System.Collections.Generic;
 public class WeaponManager : Singleton<WeaponManager>
 {
 	public List<WeaponData> weaponList = new List<WeaponData> ();
-	GoogleFu.Weapons weaponsDb;
+	public GoogleFu.Weapons weaponsDb;
 	
 	// Use this for initialization
 	void Awake ()
 	{
+		weaponsDb = GetComponent<GoogleFu.Weapons> ();
+		if (weaponsDb == null) {
+			Debug.LogWarning ("Weapon DB not found. Make sure you have run GoogleFU import.");
+		}
 		ImportWeapons ();
 	}
 
@@ -67,12 +71,6 @@ public class WeaponManager : Singleton<WeaponManager>
 
 	void ImportWeapons ()
 	{
-		GameObject managers = GameObject.Find (ObjectNames.MANAGERS);
-		weaponsDb = managers.GetComponent <GoogleFu.Weapons> ();
-		if (weaponsDb == null) {
-			Debug.LogError ("Weapon DB not found. Make sure you have run GoogleFU import.");
-		}
-		
 		ClearWeapons ();
 		
 		foreach (GoogleFu.WeaponsRow row in weaponsDb.Rows) {

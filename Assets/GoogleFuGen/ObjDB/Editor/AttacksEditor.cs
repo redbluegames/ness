@@ -129,6 +129,13 @@ namespace GoogleFu
 			}
 			EditorGUILayout.EndHorizontal();
 
+			EditorGUILayout.BeginHorizontal();
+			GUILayout.Label( "CAMERASHAKEINTENSITY", GUILayout.Width( 150.0f ) );
+			{
+				EditorGUILayout.FloatField( r._CAMERASHAKEINTENSITY );
+			}
+			EditorGUILayout.EndHorizontal();
+
 		}
 	}
 }

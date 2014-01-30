@@ -668,6 +668,78 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1107784472}
   m_GameObject: {fileID: 200863738}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &278150718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100002, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+  m_PrefabInternal: {fileID: 744742526}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 278150719}
+  - 114: {fileID: 278150721}
+  - 114: {fileID: 278150720}
+  m_Layer: 0
+  m_Name: _WeaponManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &278150719
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400002, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+  m_PrefabInternal: {fileID: 744742526}
+  m_GameObject: {fileID: 278150718}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .893390656, y: -14.7208176, z: 1.02645969}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1390360875}
+--- !u!114 &278150720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400006, guid: 9b4c39fcf2f7a2347bba736d69dd0224,
+    type: 2}
+  m_PrefabInternal: {fileID: 744742526}
+  m_GameObject: {fileID: 278150718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e0c87a954ce7f54d8ac2743e411509e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rowNames:
+  - SPEAR
+  - SWORD
+  - ENEMY_SWORD
+  - BOW
+  Rows:
+  - _NAME: Spear
+    _LIGHTATTACKID: SPEAR_JAB
+    _HEAVYATTACKID: SPEAR_HOLD
+  - _NAME: Sword
+    _LIGHTATTACKID: SWORD_WEAK
+    _HEAVYATTACKID: SWORD_STRONG
+  - _NAME: Enemy Sword
+    _LIGHTATTACKID: ENEMY_WEAK
+    _HEAVYATTACKID: ENEMY_STRONG
+  - _NAME: Bow
+    _LIGHTATTACKID: BOW_QUICKFIRE
+    _HEAVYATTACKID: BOW_AIMEDSHOT
+--- !u!114 &278150721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400010, guid: 9b4c39fcf2f7a2347bba736d69dd0224,
+    type: 2}
+  m_PrefabInternal: {fileID: 744742526}
+  m_GameObject: {fileID: 278150718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0d7bab86390fbc4b9c30cf6c92fa276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponList: []
+  weaponsDb: {fileID: 0}
 --- !u!1 &319552696
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,6 +1083,62 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1079692480}
+--- !u!1001 &744742526
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 1.77954841
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.06163311
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 6.10255623
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 197433043}
+    - target: {fileID: 11400002, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+      propertyPath: arenaText
+      value: 
+      objectReference: {fileID: 439775753}
+    - target: {fileID: 11400010, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+      propertyPath: weaponsDb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400012, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+      propertyPath: attacksDb
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+  m_RootGameObject: {fileID: 1390360874}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &802193150
 GameObject:
   m_ObjectHideFlags: 0
@@ -1281,6 +1409,202 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1958941352}
   m_GameObject: {fileID: 1004776763}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1032048096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100004, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+  m_PrefabInternal: {fileID: 744742526}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1032048097}
+  - 114: {fileID: 1032048099}
+  - 114: {fileID: 1032048098}
+  m_Layer: 0
+  m_Name: _AttackManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1032048097
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400004, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+  m_PrefabInternal: {fileID: 744742526}
+  m_GameObject: {fileID: 1032048096}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .893390656, y: -14.7208176, z: 1.02646017}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1390360875}
+--- !u!114 &1032048098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400008, guid: 9b4c39fcf2f7a2347bba736d69dd0224,
+    type: 2}
+  m_PrefabInternal: {fileID: 744742526}
+  m_GameObject: {fileID: 1032048096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1794e4247ecd7b4a97b7e0ba1b32591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rowNames:
+  - SWORD_WEAK
+  - SWORD_STRONG
+  - ENEMY_WEAK
+  - ENEMY_STRONG
+  - PLAYER_BLOCKING_WEAK
+  - PLAYER_BLOCKING_STRONG
+  - SPEAR_JAB
+  - SPEAR_HOLD
+  - BOW_QUICKFIRE
+  - BOW_AIMEDSHOT
+  Rows:
+  - _NAME: Sword Attack Weak
+    _MINDAMAGE: 10
+    _MAXDAMAGE: 10
+    _RANGE: 5
+    _STRENGTH: Weak
+    _CONTROLTYPE: Swing
+    _REACTIONTYPE: None
+    _MINKNOCKBACK: 0
+    _MAXKNOCKBACK: 0
+    _CHARGEANIMATION: 
+    _SWINGANIMATION: attack_sweepsmall_swing
+    _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: 0
+  - _NAME: Sword Attack Strong
+    _MINDAMAGE: 50
+    _MAXDAMAGE: 50
+    _RANGE: 5
+    _STRENGTH: Strong
+    _CONTROLTYPE: Swing
+    _REACTIONTYPE: Knockback
+    _MINKNOCKBACK: .300000012
+    _MAXKNOCKBACK: .300000012
+    _CHARGEANIMATION: 
+    _SWINGANIMATION: attack_sweepbig_swing
+    _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: .200000003
+  - _NAME: Enemy Attack Weak
+    _MINDAMAGE: 5
+    _MAXDAMAGE: 5
+    _RANGE: 5
+    _STRENGTH: Weak
+    _CONTROLTYPE: Swing
+    _REACTIONTYPE: None
+    _MINKNOCKBACK: 0
+    _MAXKNOCKBACK: 0
+    _CHARGEANIMATION: 
+    _SWINGANIMATION: attack_stab_swing
+    _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: .100000001
+  - _NAME: Enemy Attack Strong
+    _MINDAMAGE: 20
+    _MAXDAMAGE: 20
+    _RANGE: 5
+    _STRENGTH: Strong
+    _CONTROLTYPE: Swing
+    _REACTIONTYPE: Knockback
+    _MINKNOCKBACK: .300000012
+    _MAXKNOCKBACK: .300000012
+    _CHARGEANIMATION: 
+    _SWINGANIMATION: attack_sweepbig_swing
+    _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: .200000003
+  - _NAME: Player Block Weak
+    _MINDAMAGE: 10
+    _MAXDAMAGE: 10
+    _RANGE: 5
+    _STRENGTH: Weak
+    _CONTROLTYPE: Swing
+    _REACTIONTYPE: None
+    _MINKNOCKBACK: 0
+    _MAXKNOCKBACK: 0
+    _CHARGEANIMATION: 
+    _SWINGANIMATION: attack_stab_swing
+    _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: 0
+  - _NAME: Player Block Strong
+    _MINDAMAGE: 20
+    _MAXDAMAGE: 20
+    _RANGE: 5
+    _STRENGTH: Strong
+    _CONTROLTYPE: Swing
+    _REACTIONTYPE: None
+    _MINKNOCKBACK: 0
+    _MAXKNOCKBACK: 0
+    _CHARGEANIMATION: 
+    _SWINGANIMATION: attack_stab_swing
+    _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: 0
+  - _NAME: Spear Jab
+    _MINDAMAGE: 10
+    _MAXDAMAGE: 10
+    _RANGE: 5
+    _STRENGTH: Weak
+    _CONTROLTYPE: Swing
+    _REACTIONTYPE: None
+    _MINKNOCKBACK: 0
+    _MAXKNOCKBACK: 0
+    _CHARGEANIMATION: 
+    _SWINGANIMATION: attack_spear_jab
+    _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: .100000001
+  - _NAME: Spear Charging Attack
+    _MINDAMAGE: 10
+    _MAXDAMAGE: 50
+    _RANGE: 7
+    _STRENGTH: Strong
+    _CONTROLTYPE: Hold
+    _REACTIONTYPE: Knockback
+    _MINKNOCKBACK: 2
+    _MAXKNOCKBACK: 5
+    _CHARGEANIMATION: spear_charging
+    _SWINGANIMATION: attack_spear_bigjab
+    _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: .200000003
+  - _NAME: Bow Quickfire
+    _MINDAMAGE: 5
+    _MAXDAMAGE: 5
+    _RANGE: 20
+    _STRENGTH: Weak
+    _CONTROLTYPE: Hold
+    _REACTIONTYPE: None
+    _MINKNOCKBACK: 0
+    _MAXKNOCKBACK: 0
+    _CHARGEANIMATION: bow_aim
+    _SWINGANIMATION: attack_release_bow
+    _PROJECTILEPREFAB: proj_arrow
+    _CAMERASHAKEINTENSITY: 0
+  - _NAME: Bow Aimed Shot
+    _MINDAMAGE: 10
+    _MAXDAMAGE: 50
+    _RANGE: 20
+    _STRENGTH: Strong
+    _CONTROLTYPE: Hold
+    _REACTIONTYPE: Knockback
+    _MINKNOCKBACK: 2
+    _MAXKNOCKBACK: 5
+    _CHARGEANIMATION: bow_aim_long
+    _SWINGANIMATION: attack_release_bow
+    _PROJECTILEPREFAB: proj_arrow
+    _CAMERASHAKEINTENSITY: 0
+--- !u!114 &1032048099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400012, guid: 9b4c39fcf2f7a2347bba736d69dd0224,
+    type: 2}
+  m_PrefabInternal: {fileID: 744742526}
+  m_GameObject: {fileID: 1032048096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32bba45cae92fec4880b1f3cd89345e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackList: []
+  attacksDb: {fileID: 0}
 --- !u!1001 &1076562553
 Prefab:
   m_ObjectHideFlags: 0
@@ -2121,15 +2445,13 @@ Transform:
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
-  m_PrefabInternal: {fileID: 2101425226}
+  m_PrefabInternal: {fileID: 744742526}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1390360875}
   - 114: {fileID: 1390360876}
   - 114: {fileID: 1390360877}
   - 114: {fileID: 1390360878}
-  - 114: {fileID: 1390360879}
-  - 114: {fileID: 1390360882}
   - 114: {fileID: 1390360881}
   - 114: {fileID: 1390360880}
   m_Layer: 0
@@ -2143,19 +2465,21 @@ GameObject:
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
-  m_PrefabInternal: {fileID: 2101425226}
+  m_PrefabInternal: {fileID: 744742526}
   m_GameObject: {fileID: 1390360874}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.77954841, y: 2.06163311, z: 6.10255623}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1032048097}
+  - {fileID: 278150719}
   m_Father: {fileID: 0}
 --- !u!114 &1390360876
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224,
     type: 2}
-  m_PrefabInternal: {fileID: 2101425226}
+  m_PrefabInternal: {fileID: 744742526}
   m_GameObject: {fileID: 1390360874}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -2167,7 +2491,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400002, guid: 9b4c39fcf2f7a2347bba736d69dd0224,
     type: 2}
-  m_PrefabInternal: {fileID: 2101425226}
+  m_PrefabInternal: {fileID: 744742526}
   m_GameObject: {fileID: 1390360874}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -2187,7 +2511,7 @@ MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 11400004, guid: 9b4c39fcf2f7a2347bba736d69dd0224,
     type: 2}
-  m_PrefabInternal: {fileID: 2101425226}
+  m_PrefabInternal: {fileID: 744742526}
   m_GameObject: {fileID: 1390360874}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -2200,24 +2524,12 @@ MonoBehaviour:
   shieldBreak: {fileID: 8300000, guid: 0d551e6a9e6fb2b4e9bd91524a32465b, type: 3}
   swingLight0: {fileID: 8300000, guid: d17ef10083c236c46a4cc080d9e36685, type: 3}
   swingHit0: {fileID: 8300000, guid: 821f60eb613b02944a649d7bfdedcc88, type: 3}
---- !u!114 &1390360879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400006, guid: 9b4c39fcf2f7a2347bba736d69dd0224,
-    type: 2}
-  m_PrefabInternal: {fileID: 2101425226}
-  m_GameObject: {fileID: 1390360874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32bba45cae92fec4880b1f3cd89345e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackList: []
 --- !u!114 &1390360880
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 11400014, guid: 9b4c39fcf2f7a2347bba736d69dd0224,
+    type: 2}
+  m_PrefabInternal: {fileID: 744742526}
   m_GameObject: {fileID: 1390360874}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -2245,8 +2557,9 @@ MonoBehaviour:
 --- !u!114 &1390360881
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 11400016, guid: 9b4c39fcf2f7a2347bba736d69dd0224,
+    type: 2}
+  m_PrefabInternal: {fileID: 744742526}
   m_GameObject: {fileID: 1390360874}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -2277,6 +2590,7 @@ MonoBehaviour:
     _CHARGEANIMATION: 
     _SWINGANIMATION: attack_sweepsmall_swing
     _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: 0
   - _NAME: Sword Attack Strong
     _MINDAMAGE: 50
     _MAXDAMAGE: 50
@@ -2289,6 +2603,7 @@ MonoBehaviour:
     _CHARGEANIMATION: 
     _SWINGANIMATION: attack_sweepbig_swing
     _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: 0
   - _NAME: Enemy Attack Weak
     _MINDAMAGE: 5
     _MAXDAMAGE: 5
@@ -2301,6 +2616,7 @@ MonoBehaviour:
     _CHARGEANIMATION: 
     _SWINGANIMATION: attack_stab_swing
     _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: 0
   - _NAME: Enemy Attack Strong
     _MINDAMAGE: 20
     _MAXDAMAGE: 20
@@ -2313,6 +2629,7 @@ MonoBehaviour:
     _CHARGEANIMATION: 
     _SWINGANIMATION: attack_sweepbig_swing
     _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: 0
   - _NAME: Player Block Weak
     _MINDAMAGE: 10
     _MAXDAMAGE: 10
@@ -2325,6 +2642,7 @@ MonoBehaviour:
     _CHARGEANIMATION: 
     _SWINGANIMATION: attack_stab_swing
     _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: 0
   - _NAME: Player Block Strong
     _MINDAMAGE: 20
     _MAXDAMAGE: 20
@@ -2337,6 +2655,7 @@ MonoBehaviour:
     _CHARGEANIMATION: 
     _SWINGANIMATION: attack_stab_swing
     _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: 0
   - _NAME: Spear Jab
     _MINDAMAGE: 10
     _MAXDAMAGE: 10
@@ -2349,6 +2668,7 @@ MonoBehaviour:
     _CHARGEANIMATION: 
     _SWINGANIMATION: attack_spear_jab
     _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: 0
   - _NAME: Spear Charging Attack
     _MINDAMAGE: 10
     _MAXDAMAGE: 50
@@ -2361,6 +2681,7 @@ MonoBehaviour:
     _CHARGEANIMATION: spear_charging
     _SWINGANIMATION: attack_spear_bigjab
     _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: 0
   - _NAME: Bow Quickfire
     _MINDAMAGE: 5
     _MAXDAMAGE: 5
@@ -2373,6 +2694,7 @@ MonoBehaviour:
     _CHARGEANIMATION: bow_aim
     _SWINGANIMATION: attack_release_bow
     _PROJECTILEPREFAB: proj_arrow
+    _CAMERASHAKEINTENSITY: 0
   - _NAME: Bow Aimed Shot
     _MINDAMAGE: 10
     _MAXDAMAGE: 50
@@ -2385,19 +2707,7 @@ MonoBehaviour:
     _CHARGEANIMATION: bow_aim_long
     _SWINGANIMATION: attack_release_bow
     _PROJECTILEPREFAB: proj_arrow
---- !u!114 &1390360882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400012, guid: 9b4c39fcf2f7a2347bba736d69dd0224,
-    type: 2}
-  m_PrefabInternal: {fileID: 2101425226}
-  m_GameObject: {fileID: 1390360874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0d7bab86390fbc4b9c30cf6c92fa276, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponList: []
+    _CAMERASHAKEINTENSITY: 0
 --- !u!1 &1497576155
 GameObject:
   m_ObjectHideFlags: 0
@@ -3368,53 +3678,3 @@ Renderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_SortingLayerID: 0
---- !u!1001 &2101425226
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 1.77954841
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 2.06163311
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 6.10255623
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400002, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
-      propertyPath: spawnPoint
-      value: 
-      objectReference: {fileID: 197433043}
-    - target: {fileID: 11400002, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
-      propertyPath: arenaText
-      value: 
-      objectReference: {fileID: 439775753}
-    m_RemovedComponents:
-    - {fileID: 11400010, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
-    - {fileID: 11400008, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
-  m_ParentPrefab: {fileID: 100100000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
-  m_RootGameObject: {fileID: 1390360874}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1

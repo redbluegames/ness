@@ -5,12 +5,14 @@ using System.Collections.Generic;
 public class AttackManager : Singleton<AttackManager>
 {
 	public List<AttackData> attackList = new List<AttackData> ();
-	GoogleFu.Attacks attacksDb;
+	public GoogleFu.Attacks attacksDb;
 
 	void Awake ()
 	{
-		GameObject managers = GameObject.Find (ObjectNames.MANAGERS);
-		attacksDb = managers.GetComponent <GoogleFu.Attacks> ();
+		attacksDb = GetComponent<GoogleFu.Attacks> ();
+		if (attacksDb == null) {
+			Debug.LogError ("Attack DB not found. Make sure you have run GoogleFU import.");
+		}
 		ImportAttacks ();
 	}
 
@@ -60,13 +62,6 @@ public class AttackManager : Singleton<AttackManager>
 	 */
 	void ImportAttacks ()
 	{
-		GameObject managers = GameObject.Find (ObjectNames.MANAGERS);
-		attacksDb = managers.GetComponent <GoogleFu.Attacks> ();
-		
-		if (attacksDb == null) {
-			Debug.LogError ("Attack DB not found. Make sure you have run GoogleFU import.");
-		}
-		
 		ClearAttacks ();
 		
 		foreach (GoogleFu.AttacksRow row in attacksDb.Rows) {
@@ -84,6 +79,7 @@ public class AttackManager : Singleton<AttackManager>
 			newAttack.chargeAnimation = LoadClipFromString (row._CHARGEANIMATION);
 			newAttack.swingAnimation = LoadClipFromString (row._SWINGANIMATION);
 			newAttack.projectilePrefab = row._PROJECTILEPREFAB;
+			newAttack.cameraShakeIntensity = row._CAMERASHAKEINTENSITY;
 			AddAttack (newAttack);
 		}
 	}

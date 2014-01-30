@@ -1,6 +1,6 @@
 //----------------------------------------------
 //    GoogleFu: Google Doc Unity integration
-//         Copyright Â© 2013 Litteratus
+//         Copyright ?? 2013 Litteratus
 //
 //        This file has been auto-generated
 //              Do not manually edit
