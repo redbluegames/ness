@@ -18,6 +18,7 @@ desktop.ini
 *.userprefs
 
 # Third Party Libraries
+Imports/
 GoogleFu/
 GoogleFu.meta
 NGUI/
