@@ -95,6 +95,6 @@ public class AIRanged : MonoBehaviour
 		Damage damageOut = new Damage (attack.maxDamage, attack.reactionType, transform);
 		GameObject newProjectile = (GameObject)Instantiate (
 			projectilePrefab, transform.position, transform.rotation);
-		newProjectile.GetComponent<Projectile> ().Fire (500.0f, 5.0f, transform.forward, damageOut, Team.BadGuys);
+		newProjectile.GetComponent<Projectile> ().Fire (2000.0f, 5.0f, transform.forward, damageOut, Team.BadGuys);
 	}
 }
