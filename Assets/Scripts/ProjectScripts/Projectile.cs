@@ -5,6 +5,7 @@ public class Projectile : MonoBehaviour
 {
 	public bool keepAlive;
 	Damage damageOut;
+	Team team;
 	float startingTime;
 	float lifeTime;
 	AttackCast attackCast;
@@ -17,8 +18,9 @@ public class Projectile : MonoBehaviour
 		keepAlive = true;
 	}
 
-	public void Fire (float velocity, float secondsToDeath, Vector3 direction, Damage damage)
+	public void Fire (float velocity, float secondsToDeath, Vector3 direction, Damage damage, Team shooterTeam)
 	{
+		team = shooterTeam;
 		attackCast.OnHit += OnProjectileHit;
 		attackCast.Begin ();
 		damageOut = damage;
@@ -46,7 +48,11 @@ public class Projectile : MonoBehaviour
 	void OnProjectileHit (RaycastHit hit)
 	{
 		GameObject hitGameObject = hit.transform.gameObject;
-		hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
-		DestroyProjectile ();
+		Enemy enemy = hitGameObject.GetComponentInChildren<Enemy> ();
+		Fighter fighter = hitGameObject.GetComponentInChildren<Fighter> ();
+		if ((enemy != null && enemy.team != team) || (fighter != null && fighter.team != team)) {
+			hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
+			DestroyProjectile ();
+		}
 	}
 }

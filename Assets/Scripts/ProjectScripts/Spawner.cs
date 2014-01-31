@@ -73,7 +73,7 @@ public class Spawner : MonoBehaviour
 			GameObject newEnemy = (GameObject)Instantiate (enemies [0]);
 			newEnemy.transform.parent = prefabContainer.transform;
 			// Arrange our enemies randomly
-			randSpacing = new Vector3 (Random.Range (0, 5), 0, Random.Range (0, 5));
+			randSpacing = new Vector3 (Random.Range (0, 2), 0, Random.Range (0, 2));
 			newEnemy.transform.position = spawnAt + randSpacing;
 		}
 	}

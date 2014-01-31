@@ -88,14 +88,6 @@ public class Fighter : MonoBehaviour
 	}
 	public CharacterState characterState;
 
-	// The Team the fighter is on
-	public enum Team
-	{
-		Neutral = 0,
-		GoodGuys = 1,
-		BadGuys = 2
-	}
-
 	public enum AttackType
 	{
 		Weak = 0,
@@ -560,7 +552,7 @@ public class Fighter : MonoBehaviour
 		}
 		GameObject newProjectile = (GameObject)Instantiate (
 			projectilePrefab, transform.position, transform.rotation);
-		newProjectile.GetComponent<Projectile> ().Fire (2000.0f, 5.0f, transform.forward, damageOut);
+		newProjectile.GetComponent<Projectile> ().Fire (2000.0f, 5.0f, transform.forward, damageOut, Team.GoodGuys);
 	}
 
 	/*

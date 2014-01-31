@@ -2,15 +2,9 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public class Rat : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
 	// The Team the fighter is on
-	public enum Team
-	{
-		Neutral = 0,
-		GoodGuys = 1,
-		BadGuys = 2
-	}
 	public Team team;
 
 	public AudioClip takeHitSound;
