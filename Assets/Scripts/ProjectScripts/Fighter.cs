@@ -457,7 +457,7 @@ public class Fighter : MonoBehaviour
 		if (isActive) {
 			//TODO Create a Damage tab in the google fu spreadsheet that assists with calculating desired damage.
 			Damage damageOut = new Damage (currentAttack.maxDamage, myTransform);
-			activeWeapon.BeginAttack (damageOut);
+			activeWeapon.BeginAttack (damageOut, this);
 		} else {
 			activeWeapon.EndAttack ();
 		}
@@ -680,9 +680,13 @@ public class Fighter : MonoBehaviour
 		}
 	}
 
+	/*
+	 * This is called by the weapon to let the fighter know an attack hit its target.
+	 */
 	public void NotifyAttackHit ()
 	{
 		//GameManager.Instance.FreezeGame (0.067f);
+		playerCamera.Shake (3.0f, 1.0f, currentAttack.cameraShakeIntensity);
 	}
 
 	void Die ()

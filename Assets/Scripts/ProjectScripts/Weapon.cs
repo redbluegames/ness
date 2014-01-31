@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour
 	public AttackCast attackCast;
 	public GameObject lightProjectile;
 	public GameObject heavyProjectile;
+	Fighter weaponUser;
 
 	Damage damageOut;
 
@@ -16,8 +17,9 @@ public class Weapon : MonoBehaviour
 		attackCast = GetComponentInChildren<AttackCast> ();
 	}
 
-	public void BeginAttack (Damage damageToDeal)
+	public void BeginAttack (Damage damageToDeal, Fighter attacker)
 	{
+		weaponUser = attacker;
 		attackCast.OnHit += OnWeaponHit;
 		damageOut = damageToDeal;
 		attackCast.Begin ();
@@ -36,5 +38,6 @@ public class Weapon : MonoBehaviour
 	{
 		GameObject hitGameObject = hit.transform.gameObject;
 		hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
+		weaponUser.SendMessage ("NotifyAttackHit", SendMessageOptions.DontRequireReceiver);
 	}
 }
