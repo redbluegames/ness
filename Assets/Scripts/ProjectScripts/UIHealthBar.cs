@@ -4,15 +4,16 @@ using System.Collections;
 public class UIHealthBar : MonoBehaviour
 {
 	public Health health;
-	public UISlider bar;
+	public GUIText healthDisplay;
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		if (bar != null) {
-			bar.sliderValue = health.CalculateDisplayPercent();
+		if (healthDisplay != null) {
+			healthDisplay.text = "Health: " + health.curHealth;
+			//bar.sliderValue = health.CalculateDisplayPercent();
 		} else {
-			Debug.LogWarning ("Health Slider not set in editor. Attach slider to HealthBar script in HUD.");
+			Debug.LogWarning ("Health Text not set in editor. Attach health text object to HealthBar script in HUD.");
 		}
 	}
 }
