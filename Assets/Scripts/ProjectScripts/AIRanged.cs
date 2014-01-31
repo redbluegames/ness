@@ -30,7 +30,6 @@ public class AIRanged : MonoBehaviour
 
 		if (Target != null) {
 			float sqrDistanceToTarget = (Target.transform.position - transform.position).sqrMagnitude;
-			Debug.Log ("Distance: " + sqrDistanceToTarget);
 			targetInRange = sqrDistanceToTarget <= ATTACK_RANGE_SQUARED;
 			if (!targetInRange && !isAttacking) {
 				// Approach target until in range
