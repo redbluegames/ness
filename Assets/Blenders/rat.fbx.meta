@@ -1,0 +1,236 @@
+fileFormatVersion: 2
+guid: f1539c0a3585844a1b01d3bd755f3b00
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Basebone
+    100002: Body0
+    100004: Body1
+    100006: Body2
+    100008: Head
+    100010: Head_IK
+    100012: Rat
+    100014: //RootNode
+    100016: RatRig
+    400000: Basebone
+    400002: Body0
+    400004: Body1
+    400006: Body2
+    400008: Head
+    400010: Head_IK
+    400012: Rat
+    400014: //RootNode
+    400016: RatRig
+    4300000: Rat
+    7400000: Attack
+    7400002: Idle
+    7400004: PoseLib
+    7400006: Walk
+    9500000: //RootNode
+    13700000: Rat
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Attack
+      takeName: Attack
+      firstFrame: 0
+      lastFrame: 89
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: .684310019
+        functionName: StartAttackCast
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .932378352
+        functionName: EndAttackCast
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: .939508498
+        functionName: OnAnimationComplete
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Rat
+        weight: 1
+      - path: RatRig
+        weight: 1
+      - path: RatRig/Basebone
+        weight: 1
+      - path: RatRig/Basebone/Body0
+        weight: 1
+      - path: RatRig/Basebone/Body0/Body1
+        weight: 1
+      - path: RatRig/Basebone/Body0/Body1/Body2
+        weight: 1
+      - path: RatRig/Basebone/Body0/Body1/Body2/Head
+        weight: 1
+      - path: RatRig/Basebone/Head_IK
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Idle
+      takeName: Idle
+      firstFrame: 0
+      lastFrame: 59
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Rat
+        weight: 1
+      - path: RatRig
+        weight: 1
+      - path: RatRig/Basebone
+        weight: 1
+      - path: RatRig/Basebone/Body0
+        weight: 1
+      - path: RatRig/Basebone/Body0/Body1
+        weight: 1
+      - path: RatRig/Basebone/Body0/Body1/Body2
+        weight: 1
+      - path: RatRig/Basebone/Body0/Body1/Body2/Head
+        weight: 1
+      - path: RatRig/Basebone/Head_IK
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Walk
+      takeName: Walk
+      firstFrame: 0
+      lastFrame: 29
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Rat
+        weight: 1
+      - path: RatRig
+        weight: 1
+      - path: RatRig/Basebone
+        weight: 1
+      - path: RatRig/Basebone/Body0
+        weight: 1
+      - path: RatRig/Basebone/Body0/Body1
+        weight: 1
+      - path: RatRig/Basebone/Body0/Body1/Body2
+        weight: 1
+      - path: RatRig/Basebone/Body0/Body1/Body2/Head
+        weight: 1
+      - path: RatRig/Basebone/Head_IK
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 1
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: Basebone
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

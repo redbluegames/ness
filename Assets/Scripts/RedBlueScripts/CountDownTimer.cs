@@ -6,6 +6,7 @@ using System.Collections;
  * this need to check back periodically to see if time is up.
  * Then, if the timer is needed again, reset it.
  */
+[System.Serializable]
 public class CountDownTimer
 {
 	float timeStarted;

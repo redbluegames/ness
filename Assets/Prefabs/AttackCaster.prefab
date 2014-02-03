@@ -8,7 +8,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400000}
-  - 114: {fileID: 11400002}
   - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: AttackCaster
@@ -45,19 +44,6 @@ MonoBehaviour:
     m_Bits: 4294967295
   debugShowCasts: 1
   debugShowHits: 1
---- !u!114 &11400002
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cc869b9a5caf4fa996ce6f40ea31adc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gizmoSize: .800000012
-  gizmoColor: {r: 1, g: .921568632, b: .0156862754, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -2,15 +2,24 @@ using UnityEngine;
 using System;
 using System.Collections;
 
+[RequireComponent(typeof(CharacterMotor))]
 public class Enemy : MonoBehaviour
 {
 	// The Team the fighter is on
 	public Team team;
-
 	public AudioClip takeHitSound;
 	public GameObject ragdollPrefab;
+	public bool isAttacking {get; private set;}
 
+	// "WantsTo" variables
+	public Vector3 moveDirection;
+	public Vector3 faceDirection;
+	public bool wantsToAttack;
+
+	CharacterMotor motor;
+	Animator animator;
 	Health health;
+	AttackCast attackCaster;
 
 	void Start ()
 	{
@@ -47,6 +56,82 @@ public class Enemy : MonoBehaviour
 	void AssignReferences ()
 	{
 		health = gameObject.GetComponent<Health> ();
+		motor = gameObject.GetComponent<CharacterMotor> ();
+		animator = gameObject.GetComponent<Animator> ();
+		attackCaster = gameObject.GetComponentInChildren<AttackCast> ();
+	}
+
+	void Update ()
+	{
+		if(wantsToAttack)
+		{
+			isAttacking = true;
+			wantsToAttack = false;
+		}
+
+		// Update animation parameters
+		UpdateAnimator ();
+
+		// Update face and move directions
+		if(moveDirection != Vector3.zero) {
+			// A zero moveDirection means they don't want to move. Use last heading.
+			motor.MoveDirection = moveDirection;
+		}
+		motor.FaceDirection = faceDirection;
+	}
+
+	/// <summary>
+	/// Handles keeping the animator up to date with the script state
+	/// </summary>
+	void UpdateAnimator ()
+	{
+		if(animator == null) {
+			return;
+		}
+		float speed = 0.0f;
+		if (moveDirection != Vector3.zero) {
+			speed = 1.0f;
+		} else {
+			speed = 0.0f;
+		}
+
+		animator.SetBool("IsAttacking", isAttacking);
+		animator.SetFloat ("Speed", speed);
+	}
+
+	/// <summary>
+	/// Begin the sweep for damageable objects on the current attack
+	/// </summary>
+	public void StartAttackCast ()
+	{
+		attackCaster.OnHit += OnAttackHit;
+		attackCaster.Begin ();
+	}
+	
+	/// <summary>
+	/// End the sweep for damageable objects on the current attack
+	/// </summary>
+	void EndAttackCast ()
+	{
+		attackCaster.End ();
+	}
+
+	/// <summary>
+	/// Raises the animation complete event.
+	/// </summary>
+	public void OnAnimationComplete ()
+	{
+		isAttacking =false;
+	}
+	
+	/*
+	 * Deal damage to the hit object based on the current attack.
+	 */
+	void OnAttackHit (RaycastHit hit)
+	{
+		Damage damageOut = new Damage (10.0f, transform);
+		GameObject hitGameObject = hit.transform.gameObject;
+		hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
 	}
 
 	/*
