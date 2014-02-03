@@ -48,6 +48,8 @@ public class Projectile : MonoBehaviour
 	void OnProjectileHit (RaycastHit hit)
 	{
 		GameObject hitGameObject = hit.transform.gameObject;
+		// TODO Refactor the way enemy detection works. Right now this only works for collisions
+		// in which the hitobject or its children have enemy, but not the parents (giantguard)
 		Enemy enemy = hitGameObject.GetComponentInChildren<Enemy> ();
 		Fighter fighter = hitGameObject.GetComponentInChildren<Fighter> ();
 		if ((enemy != null && enemy.team != team) || (fighter != null && fighter.team != team)) {
