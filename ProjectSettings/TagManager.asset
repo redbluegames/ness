@@ -15,8 +15,8 @@ TagManager:
   Builtin Layer 7: 
   User Layer 8: GUI
   User Layer 9: Player
-  User Layer 10: 
-  User Layer 11: 
+  User Layer 10: Enemy
+  User Layer 11: Wall
   User Layer 12: 
   User Layer 13: 
   User Layer 14: 

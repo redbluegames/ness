@@ -11,7 +11,7 @@ GameObject:
   - 33: {fileID: 3300000}
   - 65: {fileID: 6500000}
   - 23: {fileID: 2300000}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: EastWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ GameObject:
   - 33: {fileID: 3300002}
   - 65: {fileID: 6500002}
   - 23: {fileID: 2300002}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: DoorEast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ GameObject:
   - 33: {fileID: 3300004}
   - 65: {fileID: 6500004}
   - 23: {fileID: 2300004}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: NorthWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400006}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ArenaLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   - 33: {fileID: 3300006}
   - 65: {fileID: 6500006}
   - 23: {fileID: 2300006}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: WestWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - 33: {fileID: 3300008}
   - 65: {fileID: 6500008}
   - 23: {fileID: 2300008}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: DoorWest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   - 33: {fileID: 3300010}
   - 65: {fileID: 6500010}
   - 23: {fileID: 2300010}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SouthWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   - 33: {fileID: 3300012}
   - 65: {fileID: 6500012}
   - 23: {fileID: 2300012}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: EastWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   - 33: {fileID: 3300014}
   - 65: {fileID: 6500014}
   - 23: {fileID: 2300014}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: DoorWest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ GameObject:
   - 33: {fileID: 3300016}
   - 65: {fileID: 6500016}
   - 23: {fileID: 2300016}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: DoorEast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   - 4: {fileID: 400020}
   - 33: {fileID: 3300018}
   - 23: {fileID: 2300018}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RatGeo_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - 4: {fileID: 400022}
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AttackCaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400024}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RatGeo_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   - 4: {fileID: 400026}
   - 23: {fileID: 2300020}
   - 33: {fileID: 3300020}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RatGeo_Snout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400028}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: node_attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   - 4: {fileID: 400032}
   - 33: {fileID: 3300022}
   - 23: {fileID: 2300022}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RatGeo_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +284,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400030}
   - 111: {fileID: 11100000}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RatGeo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +301,7 @@ GameObject:
   - 4: {fileID: 400034}
   - 114: {fileID: 11400008}
   - 54: {fileID: 5400000}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: proj_fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   - 4: {fileID: 400036}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400006}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AttackCaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,7 +336,7 @@ GameObject:
   - 23: {fileID: 2300024}
   - 33: {fileID: 3300024}
   - 122: {fileID: 12200000}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: proj_fireballGeo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,7 +353,7 @@ GameObject:
   - 4: {fileID: 400040}
   - 33: {fileID: 3300026}
   - 23: {fileID: 2300026}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: QuiverGeo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +369,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400042}
   - 111: {fileID: 11100002}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SkelGeo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -386,7 +386,7 @@ GameObject:
   - 4: {fileID: 400044}
   - 33: {fileID: 3300028}
   - 23: {fileID: 2300028}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SkelGeo_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -454,7 +454,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
-  m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
+  m_LocalRotation: {x: 0, y: .707106888, z: 0, w: .707106769}
   m_LocalPosition: {x: -10, y: .5, z: 0}
   m_LocalScale: {x: 50, y: 3, z: 1}
   m_Children: []
@@ -487,7 +487,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100014}
-  m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
+  m_LocalRotation: {x: 0, y: .707106888, z: 0, w: .707106769}
   m_LocalPosition: {x: 0, y: .5, z: -15}
   m_LocalScale: {x: 5, y: 3, z: 5}
   m_Children: []
@@ -638,7 +638,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100040}
-  m_LocalRotation: {x: 0, y: 0, z: .216439247, w: -.976296067}
+  m_LocalRotation: {x: 0, y: 0, z: .216439262, w: -.976296127}
   m_LocalPosition: {x: 0, y: .349999994, z: -.5}
   m_LocalScale: {x: .300000012, y: .75, z: .200000003}
   m_Children: []

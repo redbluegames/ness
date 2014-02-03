@@ -53,6 +53,9 @@ public class Projectile : MonoBehaviour
 		if ((enemy != null && enemy.team != team) || (fighter != null && fighter.team != team)) {
 			hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
 			DestroyProjectile ();
+		} else if (enemy == null) {
+			// Something other than a player or an enemy was hit
+			DestroyProjectile ();
 		}
 	}
 }

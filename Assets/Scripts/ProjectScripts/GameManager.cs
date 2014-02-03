@@ -9,7 +9,8 @@ using System.Collections;
  **/
 public class GameManager : Singleton<GameManager>
 {
-	public TimeManager GameTime { get; private set;}
+	public TimeManager GameTime { get; private set; }
+	public LayerMask LineOfSightMask;
 
 	// guarantee this will be always a singleton only - can't use the constructor!
 	protected GameManager ()
@@ -18,6 +19,6 @@ public class GameManager : Singleton<GameManager>
 
 	void Awake ()
 	{
-		GameTime = gameObject.AddComponent("TimeManager") as TimeManager;
+		GameTime = gameObject.AddComponent ("TimeManager") as TimeManager;
 	}
 }

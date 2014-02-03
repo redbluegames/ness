@@ -11,8 +11,6 @@ GameObject:
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400004}
-  - 114: {fileID: 11400016}
-  - 114: {fileID: 11400014}
   m_Layer: 0
   m_Name: _Managers
   m_TagString: Untagged
@@ -100,6 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c27ad98f49e09b41a61bef7a03bcb5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LineOfSightMask:
+    serializedVersion: 2
+    m_Bits: 3584
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -118,7 +119,6 @@ MonoBehaviour:
   waveTimeLeft: 0
   enemyPrefab: {fileID: 100002, guid: 05ec9b1a5891b9945a3d6bff4ef2d534, type: 2}
   waveComp: 
-  arenaText: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -187,6 +187,7 @@ MonoBehaviour:
   - SPEAR_HOLD
   - BOW_QUICKFIRE
   - BOW_AIMEDSHOT
+  - ENEMY_BOLT
   Rows:
   - _NAME: Sword Attack Weak
     _MINDAMAGE: 10
@@ -317,6 +318,19 @@ MonoBehaviour:
     _CHARGEANIMATION: bow_aim_long
     _SWINGANIMATION: attack_release_bow
     _PROJECTILEPREFAB: proj_arrow
+    _CAMERASHAKEINTENSITY: 0
+  - _NAME: Enemy Bolt
+    _MINDAMAGE: 10
+    _MAXDAMAGE: 20
+    _RANGE: 30
+    _STRENGTH: Weak
+    _CONTROLTYPE: Hold
+    _REACTIONTYPE: None
+    _MINKNOCKBACK: 0
+    _MAXKNOCKBACK: 0
+    _CHARGEANIMATION: 
+    _SWINGANIMATION: attack_release_bow
+    _PROJECTILEPREFAB: proj_bolt
     _CAMERASHAKEINTENSITY: 0
 --- !u!114 &11400010
 MonoBehaviour:
@@ -344,188 +358,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackList: []
   attacksDb: {fileID: 0}
---- !u!114 &11400014
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e0c87a954ce7f54d8ac2743e411509e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rowNames:
-  - SPEAR
-  - SWORD
-  - ENEMY_SWORD
-  - BOW
-  Rows:
-  - _NAME: Spear
-    _LIGHTATTACKID: SPEAR_JAB
-    _HEAVYATTACKID: SPEAR_HOLD
-  - _NAME: Sword
-    _LIGHTATTACKID: SWORD_WEAK
-    _HEAVYATTACKID: SWORD_STRONG
-  - _NAME: Enemy Sword
-    _LIGHTATTACKID: ENEMY_WEAK
-    _HEAVYATTACKID: ENEMY_STRONG
-  - _NAME: Bow
-    _LIGHTATTACKID: BOW_QUICKFIRE
-    _HEAVYATTACKID: BOW_AIMEDSHOT
---- !u!114 &11400016
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1794e4247ecd7b4a97b7e0ba1b32591, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rowNames:
-  - SWORD_WEAK
-  - SWORD_STRONG
-  - ENEMY_WEAK
-  - ENEMY_STRONG
-  - PLAYER_BLOCKING_WEAK
-  - PLAYER_BLOCKING_STRONG
-  - SPEAR_JAB
-  - SPEAR_HOLD
-  - BOW_QUICKFIRE
-  - BOW_AIMEDSHOT
-  Rows:
-  - _NAME: Sword Attack Weak
-    _MINDAMAGE: 10
-    _MAXDAMAGE: 10
-    _RANGE: 5
-    _STRENGTH: Weak
-    _CONTROLTYPE: Swing
-    _REACTIONTYPE: None
-    _MINKNOCKBACK: 0
-    _MAXKNOCKBACK: 0
-    _CHARGEANIMATION: 
-    _SWINGANIMATION: attack_sweepsmall_swing
-    _PROJECTILEPREFAB: 
-    _CAMERASHAKEINTENSITY: 0
-  - _NAME: Sword Attack Strong
-    _MINDAMAGE: 50
-    _MAXDAMAGE: 50
-    _RANGE: 5
-    _STRENGTH: Strong
-    _CONTROLTYPE: Swing
-    _REACTIONTYPE: Knockback
-    _MINKNOCKBACK: .300000012
-    _MAXKNOCKBACK: .300000012
-    _CHARGEANIMATION: 
-    _SWINGANIMATION: attack_sweepbig_swing
-    _PROJECTILEPREFAB: 
-    _CAMERASHAKEINTENSITY: 0
-  - _NAME: Enemy Attack Weak
-    _MINDAMAGE: 5
-    _MAXDAMAGE: 5
-    _RANGE: 5
-    _STRENGTH: Weak
-    _CONTROLTYPE: Swing
-    _REACTIONTYPE: None
-    _MINKNOCKBACK: 0
-    _MAXKNOCKBACK: 0
-    _CHARGEANIMATION: 
-    _SWINGANIMATION: attack_stab_swing
-    _PROJECTILEPREFAB: 
-    _CAMERASHAKEINTENSITY: 0
-  - _NAME: Enemy Attack Strong
-    _MINDAMAGE: 20
-    _MAXDAMAGE: 20
-    _RANGE: 5
-    _STRENGTH: Strong
-    _CONTROLTYPE: Swing
-    _REACTIONTYPE: Knockback
-    _MINKNOCKBACK: .300000012
-    _MAXKNOCKBACK: .300000012
-    _CHARGEANIMATION: 
-    _SWINGANIMATION: attack_sweepbig_swing
-    _PROJECTILEPREFAB: 
-    _CAMERASHAKEINTENSITY: 0
-  - _NAME: Player Block Weak
-    _MINDAMAGE: 10
-    _MAXDAMAGE: 10
-    _RANGE: 5
-    _STRENGTH: Weak
-    _CONTROLTYPE: Swing
-    _REACTIONTYPE: None
-    _MINKNOCKBACK: 0
-    _MAXKNOCKBACK: 0
-    _CHARGEANIMATION: 
-    _SWINGANIMATION: attack_stab_swing
-    _PROJECTILEPREFAB: 
-    _CAMERASHAKEINTENSITY: 0
-  - _NAME: Player Block Strong
-    _MINDAMAGE: 20
-    _MAXDAMAGE: 20
-    _RANGE: 5
-    _STRENGTH: Strong
-    _CONTROLTYPE: Swing
-    _REACTIONTYPE: None
-    _MINKNOCKBACK: 0
-    _MAXKNOCKBACK: 0
-    _CHARGEANIMATION: 
-    _SWINGANIMATION: attack_stab_swing
-    _PROJECTILEPREFAB: 
-    _CAMERASHAKEINTENSITY: 0
-  - _NAME: Spear Jab
-    _MINDAMAGE: 10
-    _MAXDAMAGE: 10
-    _RANGE: 5
-    _STRENGTH: Weak
-    _CONTROLTYPE: Swing
-    _REACTIONTYPE: None
-    _MINKNOCKBACK: 0
-    _MAXKNOCKBACK: 0
-    _CHARGEANIMATION: 
-    _SWINGANIMATION: attack_spear_jab
-    _PROJECTILEPREFAB: 
-    _CAMERASHAKEINTENSITY: 0
-  - _NAME: Spear Charging Attack
-    _MINDAMAGE: 10
-    _MAXDAMAGE: 50
-    _RANGE: 7
-    _STRENGTH: Strong
-    _CONTROLTYPE: Hold
-    _REACTIONTYPE: Knockback
-    _MINKNOCKBACK: 2
-    _MAXKNOCKBACK: 5
-    _CHARGEANIMATION: spear_charging
-    _SWINGANIMATION: attack_spear_bigjab
-    _PROJECTILEPREFAB: 
-    _CAMERASHAKEINTENSITY: 0
-  - _NAME: Bow Quickfire
-    _MINDAMAGE: 5
-    _MAXDAMAGE: 5
-    _RANGE: 20
-    _STRENGTH: Weak
-    _CONTROLTYPE: Hold
-    _REACTIONTYPE: None
-    _MINKNOCKBACK: 0
-    _MAXKNOCKBACK: 0
-    _CHARGEANIMATION: bow_aim
-    _SWINGANIMATION: attack_release_bow
-    _PROJECTILEPREFAB: proj_arrow
-    _CAMERASHAKEINTENSITY: 0
-  - _NAME: Bow Aimed Shot
-    _MINDAMAGE: 10
-    _MAXDAMAGE: 50
-    _RANGE: 20
-    _STRENGTH: Strong
-    _CONTROLTYPE: Hold
-    _REACTIONTYPE: Knockback
-    _MINKNOCKBACK: 2
-    _MAXKNOCKBACK: 5
-    _CHARGEANIMATION: bow_aim_long
-    _SWINGANIMATION: attack_release_bow
-    _PROJECTILEPREFAB: proj_arrow
-    _CAMERASHAKEINTENSITY: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
