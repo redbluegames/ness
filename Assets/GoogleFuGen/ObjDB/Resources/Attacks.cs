@@ -1,6 +1,6 @@
 //----------------------------------------------
 //    GoogleFu: Google Doc Unity integration
-//         Copyright ?? 2013 Litteratus
+//         Copyright Â© 2013 Litteratus
 //
 //        This file has been auto-generated
 //              Do not manually edit
@@ -134,10 +134,10 @@ namespace GoogleFu
 	public class Attacks :  GoogleFuComponentBase
 	{
 		public enum rowIds {
-			SWORD_WEAK, SWORD_STRONG, ENEMY_WEAK, ENEMY_STRONG, PLAYER_BLOCKING_WEAK, PLAYER_BLOCKING_STRONG, SPEAR_JAB, SPEAR_HOLD, BOW_QUICKFIRE, BOW_AIMEDSHOT, ENEMY_FIREBALL
+			SWORD_WEAK, SWORD_STRONG, ENEMY_WEAK, ENEMY_STRONG, PLAYER_BLOCKING_WEAK, PLAYER_BLOCKING_STRONG, SPEAR_JAB, SPEAR_HOLD, BOW_QUICKFIRE, BOW_AIMEDSHOT, ENEMY_FIREBALL, GIANT_SWING
 		};
 		public string [] rowNames = {
-			"SWORD_WEAK", "SWORD_STRONG", "ENEMY_WEAK", "ENEMY_STRONG", "PLAYER_BLOCKING_WEAK", "PLAYER_BLOCKING_STRONG", "SPEAR_JAB", "SPEAR_HOLD", "BOW_QUICKFIRE", "BOW_AIMEDSHOT", "ENEMY_FIREBALL"
+			"SWORD_WEAK", "SWORD_STRONG", "ENEMY_WEAK", "ENEMY_STRONG", "PLAYER_BLOCKING_WEAK", "PLAYER_BLOCKING_STRONG", "SPEAR_JAB", "SPEAR_HOLD", "BOW_QUICKFIRE", "BOW_AIMEDSHOT", "ENEMY_FIREBALL", "GIANT_SWING"
 		};
 		public List<AttacksRow> Rows = new List<AttacksRow>();
 		public override void AddRowGeneric (List<string> input)
