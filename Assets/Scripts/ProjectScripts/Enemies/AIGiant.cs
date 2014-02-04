@@ -5,8 +5,9 @@ public class AIGiant : MonoBehaviour
 {
 	public GameObject Target;
 	Enemy enemy;
-	public Animation swingAttackAnimation;
-	public Animation heavySwingAttackAnimation;
+	public AnimationClip swingAttackAnimation;
+	public AnimationClip bigSwingAttackAnimation;
+	public Animation attackAnimation;
 	public AttackCast attackCaster;
 	CountDownTimer attackTime = new CountDownTimer ();
 	CountDownTimer attackCooldown = new CountDownTimer ();
@@ -45,11 +46,11 @@ public class AIGiant : MonoBehaviour
 
 				// Begin or end a running attack
 				if (!isAttacking && attackCooldown.IsTimeUp ()) {
-					int randomAttack = Random.Range (0, 1);
-					if (randomAttack == 0) {
+					bool bigAttack = RBRandom.PercentageChance (50);
+					if (!bigAttack) {
 						StartAttack (swingAttackAnimation);
-					} else if (randomAttack == 1) {
-						StartAttack (heavySwingAttackAnimation);
+					} else {
+						StartAttack (bigSwingAttackAnimation);
 					}
 				} else if (isAttacking && attackTime.IsTimeUp ()) {
 					EndAttack ();
@@ -67,12 +68,12 @@ public class AIGiant : MonoBehaviour
 		}
 	}
 
-	void StartAttack (Animation attackAnimation)
+	void StartAttack (AnimationClip attackClip)
 	{
-		attackAnimation.Play ();
+		attackAnimation.Play (attackClip.name);
 		attackCaster.OnHit += OnAttackHit;
 		attackCaster.Begin ();
-		attackTime.StartTimer (attackAnimation.clip.length);
+		attackTime.StartTimer (attackClip.length);
 		isAttacking = true;
 	}
 
