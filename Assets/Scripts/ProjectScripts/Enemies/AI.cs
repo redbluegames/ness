@@ -29,26 +29,26 @@ public class AI : MonoBehaviour
 
 		if (Target != null) {
 			Vector3 directionToTarget = (Target.transform.position - transform.position);
-			float sqrDistanceToTarget = (Target.transform.position - transform.position).sqrMagnitude;
+			float sqrDistanceToTarget = directionToTarget.sqrMagnitude;
+			directionToTarget.Normalize ();
 			// Check if we should start an attack
 			float ATTACK_RANGE_SQUARED = 16.0f;
 			bool isInAttackRange = sqrDistanceToTarget <= ATTACK_RANGE_SQUARED;
 			if (isInAttackRange && attackCooldown.IsTimeUp ()) {
-				enemy.wantsToAttack = true;
+				enemy.WantsToAttack = true;
 				attackCooldown.StartTimer (3.0f);
 			}
 
 			if (isInAttackRange && !enemy.isAttacking) {
 				// Stop moving
-				enemy.throttle = 0.0f;
+				enemy.MoveDirection = Vector3.zero;
 			} else {
 				// Approach target until in range. Also approach during attack
-				enemy.throttle = 1.0f;
+				enemy.MoveDirection = directionToTarget;
 			}
 			
 			// Always face and move towards the target
-			enemy.moveDirection = directionToTarget;
-			enemy.faceDirection = directionToTarget;
+			enemy.FaceDirection = directionToTarget;
 		}
 	}
 

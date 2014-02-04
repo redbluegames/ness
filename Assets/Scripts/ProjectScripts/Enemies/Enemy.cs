@@ -9,14 +9,26 @@ public class Enemy : MonoBehaviour
 	public Team team;
 	public AudioClip takeHitSound;
 	public GameObject ragdollPrefab;
-	public bool isAttacking {get; private set;}
+
+	public bool isAttacking { get; private set; }
 
 	// "WantsTo" variables
-	public float throttle;
-	public Vector3 moveDirection;
-	public Vector3 faceDirection;
-	public bool wantsToAttack;
-
+	float moveThrottle;
+	private Vector3 moveDirection;
+	public Vector3 MoveDirection {
+		get {
+			return this.moveDirection;
+		}
+	
+		set {  
+			moveDirection = value;
+			// Cache throttle based on direction
+			moveThrottle = value.magnitude;
+		}
+	}
+	public Vector3 FaceDirection;
+	public bool WantsToAttack;
+	// References
 	CharacterMotor motor;
 	Animator animator;
 	Health health;
@@ -64,24 +76,25 @@ public class Enemy : MonoBehaviour
 
 	void Update ()
 	{
-		if(wantsToAttack)
-		{
+		if (WantsToAttack) {
 			animator.SetTrigger ("Attack");
-			wantsToAttack = false;
+			WantsToAttack = false;
 		}
 
 		// Update animation parameters
 		UpdateAnimator ();
 
 		// Update face and move directions
-		motor.MoveDirection = moveDirection;
-		motor.FaceDirection = faceDirection;
+		if (moveThrottle > 0.0f) {
+			motor.MoveDirection = moveDirection;
+		}
+		motor.FaceDirection = FaceDirection;
 	}
 
 	void LateUpdate ()
 	{
 		// Poll the current state instead of getting an animation complete event.
-		isAttacking = animator.GetCurrentAnimatorStateInfo(0).IsName("Attack");
+		isAttacking = animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack");
 	}
 
 	/// <summary>
@@ -89,10 +102,10 @@ public class Enemy : MonoBehaviour
 	/// </summary>
 	void UpdateAnimator ()
 	{
-		if(animator == null) {
+		if (animator == null) {
 			return;
 		}
-		float speed = throttle > 0.0f ? 1.0f : 0.0f;
+		float speed = moveThrottle > 0.0f ? 1.0f : 0.0f;
 		animator.SetFloat ("Speed", speed);
 	}
 

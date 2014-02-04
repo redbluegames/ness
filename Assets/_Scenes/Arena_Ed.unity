@@ -832,7 +832,6 @@ MonoBehaviour:
   team: 2
   takeHitSound: {fileID: 8300000, guid: 821f60eb613b02944a649d7bfdedcc88, type: 3}
   ragdollPrefab: {fileID: 100006, guid: 949311480947b4894a1e435510ea804e, type: 2}
-  throttle: 0
   moveDirection: {x: 0, y: 0, z: 0}
   faceDirection: {x: 0, y: 0, z: 0}
   wantsToAttack: 0
