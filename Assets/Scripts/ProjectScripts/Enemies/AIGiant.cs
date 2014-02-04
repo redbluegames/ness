@@ -4,13 +4,26 @@ using System.Collections;
 public class AIGiant : MonoBehaviour
 {
 	public GameObject Target;
-	public CharacterMotor motor;
+	Enemy enemy;
 	public Animation swingAttackAnimation;
 	public AttackCast attackCaster;
 	CountDownTimer attackTime = new CountDownTimer ();
 	CountDownTimer attackCooldown = new CountDownTimer ();
 	bool isAttacking;
 	
+	void Start ()
+	{
+		AssignParentEnemy ();
+	}
+	
+	/// <summary>
+	/// Finds and assigns the parent entity this AI will control
+	/// </summary>
+	void AssignParentEnemy ()
+	{
+		enemy = transform.parent.GetComponent<Enemy> ();
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -23,11 +36,11 @@ public class AIGiant : MonoBehaviour
 			bool isInAttackRange = sqrDistanceToTarget > ATTACK_RANGE_SQUARED;
 			if (isInAttackRange && !isAttacking) {
 				// Approach target until in range
-				motor.MoveDirection = Target.transform.position - transform.position;
+				enemy.MoveDirection = Target.transform.position - transform.position;
 			} else {
 				// Attack
 				// Stop moving
-				motor.MoveDirection = Vector3.zero;
+				enemy.MoveDirection = Vector3.zero;
 
 				// Begin or end a running attack
 				if (!isAttacking && attackCooldown.IsTimeUp ()) {
@@ -42,8 +55,8 @@ public class AIGiant : MonoBehaviour
 			// Always face the target, ignoring y coordinates
 			if (!isAttacking) {
 				float yFaceDirection = transform.position.y;
-				motor.FaceDirection = Target.transform.position - transform.position;
-				motor.FaceDirection.y = yFaceDirection;
+				enemy.FaceDirection = Target.transform.position - transform.position;
+				enemy.FaceDirection.y = yFaceDirection;
 			}
 		}
 	}

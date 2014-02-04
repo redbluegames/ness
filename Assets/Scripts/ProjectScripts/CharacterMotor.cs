@@ -53,6 +53,10 @@ public class CharacterMotor : MonoBehaviour
 			Debug.LogError ("CharacterMotor should never have a zero move direction.");
 		}
 		Vector3 movement = (MoveDirection.normalized * Speed * MoveScale);
+		// When Moving comes from updates (script driven vs. animation driven) account for delta time
+		if (isPositionScriptDriven) {
+			movement *= Time.deltaTime;
+		}
 
 		// Add in gravity
 		AdjustVerticalSpeedForGravity ();

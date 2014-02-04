@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
 	// "WantsTo" variables
 	float moveThrottle;
 	private Vector3 moveDirection;
+
 	public Vector3 MoveDirection {
 		get {
 			return this.moveDirection;
@@ -26,6 +27,7 @@ public class Enemy : MonoBehaviour
 			moveThrottle = value.magnitude;
 		}
 	}
+
 	public Vector3 FaceDirection;
 	public bool WantsToAttack;
 	// References
@@ -33,6 +35,7 @@ public class Enemy : MonoBehaviour
 	Animator animator;
 	Health health;
 	AttackCast attackCaster;
+	bool usesAnimation; // TODO remove this bool once all enemies use Animation
 
 	void Start ()
 	{
@@ -71,30 +74,41 @@ public class Enemy : MonoBehaviour
 		health = gameObject.GetComponent<Health> ();
 		motor = gameObject.GetComponent<CharacterMotor> ();
 		animator = gameObject.GetComponent<Animator> ();
+		usesAnimation = animator != null;
 		attackCaster = gameObject.GetComponentInChildren<AttackCast> ();
 	}
 
 	void Update ()
 	{
-		if (WantsToAttack) {
-			animator.SetTrigger ("Attack");
-			WantsToAttack = false;
-		}
+		if (usesAnimation) {
+			if (WantsToAttack) {
+				animator.SetTrigger ("Attack");
+				WantsToAttack = false;
+			}
 
-		// Update animation parameters
-		UpdateAnimator ();
+			// Update animation parameters
+			UpdateAnimator ();
+		}
 
 		// Update face and move directions
 		if (moveThrottle > 0.0f) {
 			motor.MoveDirection = moveDirection;
-		}
+		} 
 		motor.FaceDirection = FaceDirection;
+
+		// TODO: Remove this hack for handling idle for characters that don't have animation driven position.
+		if (!usesAnimation) {
+
+			motor.MoveScale = moveThrottle > 0.0f ? 1.0f : 0.0f;
+		}
 	}
 
 	void LateUpdate ()
 	{
-		// Poll the current state instead of getting an animation complete event.
-		isAttacking = animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack");
+		if (usesAnimation) {
+			// Poll the current state instead of getting an animation complete event.
+			isAttacking = animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack");
+		}
 	}
 
 	/// <summary>
