@@ -439,6 +439,7 @@ Animation:
   m_Animation: {fileID: 7400000, guid: 4cd73b032f9222d48b30aca2be99a8b5, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 4cd73b032f9222d48b30aca2be99a8b5, type: 2}
+  - {fileID: 7400000, guid: 38921e587a80754409872beaa2c11b1f, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -457,6 +458,8 @@ MonoBehaviour:
   team: 2
   takeHitSound: {fileID: 8300000, guid: 821f60eb613b02944a649d7bfdedcc88, type: 3}
   ragdollPrefab: {fileID: 100002, guid: 32f793a429728db4b8c5ce82143d318d, type: 2}
+  FaceDirection: {x: 0, y: 0, z: 0}
+  WantsToAttack: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -529,8 +532,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
-  motor: {fileID: 11400008}
-  swingAttackAnimation: {fileID: 11100000}
+  swingAttackAnimation: {fileID: 7400000, guid: 4cd73b032f9222d48b30aca2be99a8b5,
+    type: 2}
+  bigSwingAttackAnimation: {fileID: 7400000, guid: 38921e587a80754409872beaa2c11b1f,
+    type: 2}
+  attackAnimation: {fileID: 11100000}
   attackCaster: {fileID: 11400004}
 --- !u!136 &13600000
 CapsuleCollider:
