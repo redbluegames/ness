@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
 	public int viewPortIndex;
 
 	// Position offsets from the camera
-	public Vector3 defaultOffset { get; private set; }
+	public Vector3 defaultOffset;
 	public Quaternion defaultRotation { get; private set; }
 	public float defaultFieldOfView  { get; private set; }
 	Vector3 shakeOffset;
@@ -26,8 +26,17 @@ public class CameraController : MonoBehaviour
 	void SetupDefaults ()
 	{
 		defaultFieldOfView = camera.fieldOfView;
-		defaultOffset = camera.transform.position;
-		defaultRotation = camera.transform.rotation;
+
+		// Resolve offset so that we can get the angle to the target
+		ResolveOffsets ();
+
+		if(followTarget == null) {
+			Debug.LogError("Camera is missing a Follow Target.");
+			defaultRotation = new Quaternion();
+		} else {
+			transform.LookAt (followTarget.transform.position);
+			defaultRotation = transform.rotation;
+		}
 	}
 
 	void LateUpdate ()

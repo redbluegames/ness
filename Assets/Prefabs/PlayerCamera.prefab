@@ -86,14 +86,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb1ceec31c4d4adc90853576cb8b30c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  followTarget: {fileID: 0}
   viewPortIndex: 0
-  xOffset: 0
-  yOffset: 11
-  zOffset: -5
-  xRotation: 60
-  yRotation: 0
-  zRotation: 0
+  defaultOffset: {x: 0, y: 11, z: -4}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
