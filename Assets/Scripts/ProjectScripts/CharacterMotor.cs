@@ -3,8 +3,8 @@ using System.Collections;
 
 public class CharacterMotor : MonoBehaviour
 {
-	public Vector3	MoveDirection;
-	public Vector3	FaceDirection;
+	public Vector3 MoveDirection;
+	public Vector3 FaceDirection;
 	public float TurnDamping = 25.0f;
 	public float Speed = 5.0f;
 	public float MoveScale = 1.0f;
@@ -23,20 +23,19 @@ public class CharacterMotor : MonoBehaviour
 	
 	void AssignReferences ()
 	{
-		animator = GetComponentInChildren<Animator>();
+		animator = GetComponentInChildren<Animator> ();
 	}
 
 	void FixedUpdate ()
 	{
 		// When character root motion does not come from an animation, it must be updated on update
-		if(isPositionScriptDriven)
-		{
+		if (isPositionScriptDriven) {
 			MoveCharacter ();
 			UpdateFacing ();
 		}
 	}
 
-	void OnAnimatorMove()
+	void OnAnimatorMove ()
 	{
 		// Get speed from animation
 		Speed = animator.deltaPosition.magnitude;
@@ -50,7 +49,11 @@ public class CharacterMotor : MonoBehaviour
 		// Get movement vector
 		// Do not let them move up with a basic character controller
 		MoveDirection.y = 0.0f;
+		if (MoveDirection == Vector3.zero) {
+			Debug.LogError ("CharacterMotor should never have a zero move direction.");
+		}
 		Vector3 movement = (MoveDirection.normalized * Speed * MoveScale);
+
 		// Add in gravity
 		AdjustVerticalSpeedForGravity ();
 		movement += new Vector3 (0.0f, verticalSpeed, 0.0f);
@@ -61,7 +64,7 @@ public class CharacterMotor : MonoBehaviour
 		lastMovement = movement;
 	}
 
-	void UpdateFacing()
+	void UpdateFacing ()
 	{
 		Vector3 targetFaceDirection;
 		Vector3 movementXZ = new Vector3 (lastMovement.x, 0.0f, lastMovement.z);

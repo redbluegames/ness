@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
 	public bool isAttacking {get; private set;}
 
 	// "WantsTo" variables
+	public float throttle;
 	public Vector3 moveDirection;
 	public Vector3 faceDirection;
 	public bool wantsToAttack;
@@ -65,7 +66,7 @@ public class Enemy : MonoBehaviour
 	{
 		if(wantsToAttack)
 		{
-			isAttacking = true;
+			animator.SetTrigger ("Attack");
 			wantsToAttack = false;
 		}
 
@@ -73,11 +74,14 @@ public class Enemy : MonoBehaviour
 		UpdateAnimator ();
 
 		// Update face and move directions
-		if(moveDirection != Vector3.zero) {
-			// A zero moveDirection means they don't want to move. Use last heading.
-			motor.MoveDirection = moveDirection;
-		}
+		motor.MoveDirection = moveDirection;
 		motor.FaceDirection = faceDirection;
+	}
+
+	void LateUpdate ()
+	{
+		// Poll the current state instead of getting an animation complete event.
+		isAttacking = animator.GetCurrentAnimatorStateInfo(0).IsName("Attack");
 	}
 
 	/// <summary>
@@ -88,14 +92,7 @@ public class Enemy : MonoBehaviour
 		if(animator == null) {
 			return;
 		}
-		float speed = 0.0f;
-		if (moveDirection != Vector3.zero) {
-			speed = 1.0f;
-		} else {
-			speed = 0.0f;
-		}
-
-		animator.SetBool("IsAttacking", isAttacking);
+		float speed = throttle > 0.0f ? 1.0f : 0.0f;
 		animator.SetFloat ("Speed", speed);
 	}
 
@@ -114,14 +111,6 @@ public class Enemy : MonoBehaviour
 	void EndAttackCast ()
 	{
 		attackCaster.End ();
-	}
-
-	/// <summary>
-	/// Raises the animation complete event.
-	/// </summary>
-	public void OnAnimationComplete ()
-	{
-		isAttacking =false;
 	}
 	
 	/*
@@ -147,11 +136,14 @@ public class Enemy : MonoBehaviour
 	void Die (Damage lethalDamage)
 	{
 		RemoveFromPlayerEnemyList ();
-		Vector3 forceDirection = lethalDamage.HitLocation.point - lethalDamage.Attacker.transform.position;
+
+		// Remove the current collider so that the ragdoll doesn't unembed.
+		collider.enabled = false;
+		Vector3 forceDirection = transform.position - lethalDamage.Attacker.transform.position;
 		GameObject ragdoll = (GameObject)Instantiate (ragdollPrefab, transform.position, transform.rotation);
-		Vector3 force = forceDirection * 50;
-		ragdoll.rigidbody.isKinematic = false;
+		Vector3 force = forceDirection * 100;
 		ragdoll.rigidbody.AddForce (force);
+
 		Destroy (gameObject);
 		Destroy (ragdoll, 3.0f);
 	}

@@ -694,7 +694,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7de8998c9440417e80538b1c8304573, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 280443199}
 --- !u!1 &266127462
 GameObject:
   m_ObjectHideFlags: 0
@@ -833,6 +832,7 @@ MonoBehaviour:
   team: 2
   takeHitSound: {fileID: 8300000, guid: 821f60eb613b02944a649d7bfdedcc88, type: 3}
   ragdollPrefab: {fileID: 100006, guid: 949311480947b4894a1e435510ea804e, type: 2}
+  throttle: 0
   moveDirection: {x: 0, y: 0, z: 0}
   faceDirection: {x: 0, y: 0, z: 0}
   wantsToAttack: 0
