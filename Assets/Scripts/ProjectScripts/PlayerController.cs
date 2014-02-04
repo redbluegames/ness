@@ -12,7 +12,8 @@ public class PlayerController : IController
 	public List<GameObject> enemies;
 
 	bool isPlayerBound;
-	bool rightStickInUse;
+	bool rightStickAvailable = true;
+	bool rightStickHorizontalAvailable = true;
 	GameObject targetReticle;
 
 	void Awake ()
@@ -92,43 +93,52 @@ public class PlayerController : IController
 	 */
 	void TryTargetting ()
 	{
+		float deadStickThreshold = 0.5f;
 		InputDevice xbox = InputDevices.GetAllInputDevices () [(int)InputDevices.ControllerTypes.XBox];
-
+		float rightStickPressedAxis = Input.GetAxisRaw (RBInput.ConcatPlayerIndex (InputStrings.TARGET, PlayerIndex, xbox));
+		bool rightStickPressed = rightStickPressedAxis >= 0.99 && rightStickAvailable;
+		// Consolidate bool for PC and XBox
 		bool isTargetPressed = RBInput.GetButtonDownForPlayer (InputStrings.TARGET, PlayerIndex) ||
-			Input.GetAxisRaw (RBInput.ConcatPlayerIndex (InputStrings.TARGET, PlayerIndex, xbox)) >= 0.99;
-		if (isTargetPressed && !fighter.isLockedOn) {
-			if (!fighter.isLockedOn || (fighter.isLockedOn && fighter.target == null)) {
+			rightStickPressed;
+
+		// Toggle Targeting on and off
+		if (isTargetPressed) {
+			rightStickAvailable = false;
+			if (!fighter.isLockedOn) {
 				TargetNearest ();
+			} else {
+				fighter.LoseTarget ();
 			}
-		} else if (isTargetPressed && fighter.isLockedOn) {
-			fighter.LoseTarget ();
-		} else {
+		} 
+
+		// Switch between targets
+		if (fighter.isLockedOn) {
 			// PC and Controller controls likely should diverge here due to right stick use
 			InputDevice pc = InputDevices.GetAllInputDevices () [(int)InputDevices.ControllerTypes.Keyboard];
 			float aimAxis = Input.GetAxisRaw (RBInput.ConcatPlayerIndex (InputStrings.TARGETHORIZONTAL, PlayerIndex, xbox));
-			// Enforce stick behavior like a button
-			float deadStickThreshold = 0.5f;
-			if (aimAxis < deadStickThreshold && aimAxis > -deadStickThreshold) {
-				rightStickInUse = false;
-			}
+
 			// Move target left
 			if (Input.GetButtonDown (RBInput.ConcatPlayerIndex (InputStrings.TARGETLEFT, PlayerIndex, pc)) || 
-				(aimAxis < -deadStickThreshold && !rightStickInUse)) {
-				rightStickInUse = true;
-				if (fighter.isLockedOn && fighter.target != null) {
-					TargetNext (true);
-				}
+				(aimAxis < -deadStickThreshold && rightStickHorizontalAvailable)) {
+				rightStickHorizontalAvailable = false;
+				TargetNext (true);
 			}
 			
 			// Move target right
 			if (Input.GetButtonDown (RBInput.ConcatPlayerIndex (InputStrings.TARGETRIGHT, PlayerIndex, pc)) 
-				|| (aimAxis > deadStickThreshold && !rightStickInUse)) {
-				rightStickInUse = true;
-				if (fighter.isLockedOn && fighter.target != null) {
-					TargetNext (false);
-				}
+				|| (aimAxis > deadStickThreshold && rightStickHorizontalAvailable)) {
+				rightStickHorizontalAvailable = false;
+				TargetNext (false);
 			}
+			// Enforce stick behavior like a button
+			rightStickHorizontalAvailable = IsAxisDead (aimAxis, deadStickThreshold);
 		}
+		rightStickAvailable = IsAxisDead (rightStickPressedAxis, deadStickThreshold);
+	}
+
+	bool IsAxisDead (float axisValue, float deadStickThreshold)
+	{
+		return (axisValue < deadStickThreshold && axisValue > -deadStickThreshold);
 	}
 
 	void TryAttack ()

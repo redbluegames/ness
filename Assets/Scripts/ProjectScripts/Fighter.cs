@@ -42,8 +42,10 @@ public class Fighter : MonoBehaviour
 	public GameObject chargeFX; 
 
 	// Dodge
-	float dodgeSpeed = 20.0f;
-	float dodgeTime = 0.15f;
+	float dodgeSpeed;
+	float startDodgeSpeed = 50.0f;
+	float endDodgeSpeed = 0.0f;
+	float dodgeTime = 0.6f;
 	Vector3 currentDodgeDirection;
 	
 	// Knockback
@@ -59,6 +61,8 @@ public class Fighter : MonoBehaviour
 	Vector3 moveDirection;
 	float gravity = -20.0f;
 	float verticalSpeed = 0.0f;
+	float attackDamping = 5.0f;
+	const float defaultDamping = 25.0f;
 	float damping = 25.0f;
 	CollisionFlags collisionFlags;
 
@@ -66,6 +70,7 @@ public class Fighter : MonoBehaviour
 	float lastHitTime = Mathf.NegativeInfinity;
 	float lastDodgeTime = Mathf.NegativeInfinity;
 	float lastKnockbackTime = Mathf.NegativeInfinity;
+	float attackStartTime = Mathf.NegativeInfinity;
 	
 	// Color management members
 	Color hitColor = new Color (1.0f, 1.0f, 1.0f, 1.0f);
@@ -103,6 +108,8 @@ public class Fighter : MonoBehaviour
 		// it always overrides the one chosen in the editor.
 		controller = GetComponent<IController> ();
 		health = GetComponent<Health> ();
+		damping = defaultDamping;
+		dodgeSpeed = startDodgeSpeed;
 		if (swingTrail == null) {
 			swingTrail = GetComponentInChildren<TrailRenderer> ();
 			if (swingTrail != null) {
@@ -163,7 +170,7 @@ public class Fighter : MonoBehaviour
 	void PerformActionInProgress ()
 	{
 		if (isAttacking) {
-			UpdateMovingAttackState ();
+			UpdateAttackState ();
 		} else if (IsDodging ()) {
 			UpdateDodgeState ();
 		} else if (IsInMoveReaction ()) {
@@ -273,6 +280,7 @@ public class Fighter : MonoBehaviour
 				UnBlock ();
 			}
 			currentDodgeDirection = direction;
+			dodgeSpeed = startDodgeSpeed;
 			characterState = CharacterState.Dodging;
 			CancelAttack ();
 			lastDodgeTime = Time.time;
@@ -372,10 +380,6 @@ public class Fighter : MonoBehaviour
 		Vector3 movement = (direction.normalized * speed) + new Vector3 (0.0f, verticalSpeed, 0.0f);
 		movement *= Time.deltaTime;
 
-		// Apply movement vector
-		CharacterController biped = GetComponent<CharacterController> ();
-		collisionFlags = biped.Move (movement);
-		
 		// Rotate to face the direction of XZ movement immediately, if lockFacing isn't set
 		Vector3 movementXZ = new Vector3 (movement.x, 0.0f, movement.z);
 		if (target != null) {
@@ -384,6 +388,10 @@ public class Fighter : MonoBehaviour
 			myTransform.rotation = Quaternion.Slerp (myTransform.rotation,
 					Quaternion.LookRotation (movementXZ), Time.deltaTime * damping);
 		}
+
+		// Apply movement vector
+		CharacterController biped = GetComponent<CharacterController> ();
+		collisionFlags = biped.Move (movement);
 	}
 
 	/*
@@ -430,11 +438,14 @@ public class Fighter : MonoBehaviour
 	 * Check that enough time has passed after character swung to call the
 	 * swing "complete". Once it is, restore the character state to normal.
 	 */
-	void UpdateMovingAttackState ()
+	void UpdateAttackState ()
 	{
 		if (forcedAttackMoveSpeed > 0) {
 			Move (transform.TransformDirection (Vector3.forward), forcedAttackMoveSpeed);
 		}
+		float dampingToGo = attackDamping - damping;
+		damping = damping + dampingToGo * 0.1f;
+		//damping = Mathf.Lerp (damping, attackDamping, dampingPercentage);
 	}
 
 	/*
@@ -465,6 +476,7 @@ public class Fighter : MonoBehaviour
 		// Clear any unfinished forced attack move speed
 		forcedAttackMoveSpeed = 0;
 		UnplantFeet ();
+		damping = defaultDamping;
 		// Cancel Attack can be called even if the player isn't attacking
 		if (currentAttack != null) {
 			// Only deactivate non-projectile attacks
@@ -513,6 +525,7 @@ public class Fighter : MonoBehaviour
 	void FireWeapon ()
 	{
 		isAttacking = true;
+		attackStartTime = Time.time;
 		// Fire weapon, attack isn't chargable
 		bool isMeleeAttack = string.Equals (currentAttack.projectilePrefab, string.Empty);
 		if (isMeleeAttack) {
@@ -574,6 +587,7 @@ public class Fighter : MonoBehaviour
 		if (Time.time - lastDodgeTime >= dodgeTime) {
 			characterState = CharacterState.Idle;
 		} else {
+			dodgeSpeed += (endDodgeSpeed - dodgeSpeed) * 0.15f;
 			Move (currentDodgeDirection, dodgeSpeed);
 		}
 	}
@@ -589,7 +603,7 @@ public class Fighter : MonoBehaviour
 		if (timeInKnockbackState >= currentMoveReactionDuration) {
 			characterState = CharacterState.Idle;
 		} else if (timeInKnockbackState < (KNOCKBACK_MOVE_PORTION * currentMoveReactionDuration)) {
-			Move (currentMoveReactionDirection, dodgeSpeed);
+			Move (currentMoveReactionDirection, startDodgeSpeed);
 		}
 	}
 
@@ -649,6 +663,7 @@ public class Fighter : MonoBehaviour
 	 */
 	public void ApplyDamage (Damage incomingDamage)
 	{
+		//TODO derive this from the attack, or damage info
 		playerCamera.Shake (3.0f, 0.2f, 0.1f);
 		// Handle blocked hits first
 		if (IsBlocking) {
@@ -678,7 +693,7 @@ public class Fighter : MonoBehaviour
 	public void NotifyAttackHit ()
 	{
 		//GameManager.Instance.FreezeGame (0.067f);
-		playerCamera.Shake (3.0f, 1.0f, currentAttack.cameraShakeIntensity);
+		playerCamera.Shake (3.0f, 0.3f, currentAttack.cameraShakeIntensity);
 	}
 
 	void Die ()

@@ -6,6 +6,7 @@ public class AIGiant : MonoBehaviour
 	public GameObject Target;
 	Enemy enemy;
 	public Animation swingAttackAnimation;
+	public Animation heavySwingAttackAnimation;
 	public AttackCast attackCaster;
 	CountDownTimer attackTime = new CountDownTimer ();
 	CountDownTimer attackCooldown = new CountDownTimer ();
@@ -44,7 +45,12 @@ public class AIGiant : MonoBehaviour
 
 				// Begin or end a running attack
 				if (!isAttacking && attackCooldown.IsTimeUp ()) {
-					StartAttack ();
+					int randomAttack = Random.Range (0, 1);
+					if (randomAttack == 0) {
+						StartAttack (swingAttackAnimation);
+					} else if (randomAttack == 1) {
+						StartAttack (heavySwingAttackAnimation);
+					}
 				} else if (isAttacking && attackTime.IsTimeUp ()) {
 					EndAttack ();
 				}
@@ -61,12 +67,12 @@ public class AIGiant : MonoBehaviour
 		}
 	}
 
-	void StartAttack ()
+	void StartAttack (Animation attackAnimation)
 	{
-		swingAttackAnimation.Play ();
+		attackAnimation.Play ();
 		attackCaster.OnHit += OnAttackHit;
 		attackCaster.Begin ();
-		attackTime.StartTimer (swingAttackAnimation.clip.length);
+		attackTime.StartTimer (attackAnimation.clip.length);
 		isAttacking = true;
 	}
 
@@ -89,6 +95,7 @@ public class AIGiant : MonoBehaviour
 	{
 		Damage damageOut = new Damage (20.0f, transform);
 		GameObject hitGameObject = hit.transform.gameObject;
+		// TODO Prevent friendly fire here
 		hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
 	}
 }
