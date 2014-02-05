@@ -36,9 +36,7 @@ public class AIRanged : MonoBehaviour
 			targetInRange = sqrDistanceToTarget <= ATTACK_RANGE_SQUARED;
 			targetInSight = IsTargetVisible ();
 			if (!targetInSight) {
-				if (lastSeenTargetPosition != null) {
-					motor.MoveDirection = lastSeenTargetPosition - transform.position;
-				}
+				motor.MoveDirection = lastSeenTargetPosition - transform.position;
 			} else if (!targetInRange && !isAttacking) {
 				// Approach target until in range
 				motor.MoveDirection = Target.transform.position - transform.position;
@@ -80,7 +78,11 @@ public class AIRanged : MonoBehaviour
 				closestHit = hits [i];
 			}
 		}
-		return closestHit.collider.gameObject == Target;
+		bool targetVisible = closestHit.collider.gameObject == Target;
+		if (targetVisible) {
+			lastSeenTargetPosition = closestHit.collider.transform.position;
+		}
+		return targetVisible;
 	}
 
 	void StartAttack ()

@@ -70,7 +70,6 @@ public class Fighter : MonoBehaviour
 	float lastHitTime = Mathf.NegativeInfinity;
 	float lastDodgeTime = Mathf.NegativeInfinity;
 	float lastKnockbackTime = Mathf.NegativeInfinity;
-	float attackStartTime = Mathf.NegativeInfinity;
 	
 	// Color management members
 	Color hitColor = new Color (1.0f, 1.0f, 1.0f, 1.0f);
@@ -525,7 +524,6 @@ public class Fighter : MonoBehaviour
 	void FireWeapon ()
 	{
 		isAttacking = true;
-		attackStartTime = Time.time;
 		// Fire weapon, attack isn't chargable
 		bool isMeleeAttack = string.Equals (currentAttack.projectilePrefab, string.Empty);
 		if (isMeleeAttack) {

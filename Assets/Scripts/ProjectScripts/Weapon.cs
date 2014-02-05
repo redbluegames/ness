@@ -43,10 +43,9 @@ public class Weapon : MonoBehaviour
 		if (hitGameObject.CompareTag (Tags.ENEMY)) {
 			fx = CFX_SpawnSystem.GetNextObject (enemyHitFX);
 		}
-		if (fx != null) {
-			fx.transform.position = hit.point;
-			fx.particleSystem.Play ();
-		}
+		fx.transform.position = hit.point;
+		fx.particleSystem.Play ();
+
 		hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
 		weaponUser.SendMessage ("NotifyAttackHit", SendMessageOptions.DontRequireReceiver);
 	}

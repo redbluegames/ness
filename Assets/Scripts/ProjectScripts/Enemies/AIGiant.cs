@@ -17,7 +17,7 @@ public class AIGiant : MonoBehaviour
 	{
 		AssignParentEnemy ();
 	}
-	
+	 
 	/// <summary>
 	/// Finds and assigns the parent entity this AI will control
 	/// </summary>
