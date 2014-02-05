@@ -8,5 +8,6 @@ public class ObjectNames
 	public static string ATTACK_CASTER = "AttackCaster";
 	public static string MANAGERS = "_Managers";
 	public static string DYNAMIC_OBJECTS = "_DynamicObjects";
+	public static string FX_POOL = "FXPool";
 	public static string FX_CHARGE = "FX_Charge";
 }
