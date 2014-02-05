@@ -44,9 +44,25 @@ GameObject:
   m_Component:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400012}
-  - 114: {fileID: 11400008}
+  - 114: {fileID: 11400014}
   m_Layer: 0
   m_Name: _AttackManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400006}
+  - 114: {fileID: 11400008}
+  m_Layer: 0
+  m_Name: _FXSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,6 +80,7 @@ Transform:
   m_Children:
   - {fileID: 400004}
   - {fileID: 400002}
+  - {fileID: 400006}
   m_Father: {fileID: 0}
 --- !u!4 &400002
 Transform:
@@ -84,6 +101,17 @@ Transform:
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: .893390656, y: -14.7208176, z: 1.02646017}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400000}
+--- !u!4 &400006
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
@@ -170,6 +198,48 @@ MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec1683be71e02f548b9023d92d51ac31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToPreload:
+  - {fileID: 100000, guid: 8006b7c759c1379488a4d352e13d205a, type: 2}
+  - {fileID: 100000, guid: 23db1402dd2bd694bb942ef415e3c34c, type: 2}
+  objectsToPreloadTimes: 0400000004000000
+  hideObjectsInHierarchy: 0
+--- !u!114 &11400010
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0d7bab86390fbc4b9c30cf6c92fa276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponList: []
+  weaponsDb: {fileID: 0}
+--- !u!114 &11400012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32bba45cae92fec4880b1f3cd89345e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackList: []
+  attacksDb: {fileID: 0}
+--- !u!114 &11400014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -187,7 +257,8 @@ MonoBehaviour:
   - SPEAR_HOLD
   - BOW_QUICKFIRE
   - BOW_AIMEDSHOT
-  - ENEMY_BOLT
+  - ENEMY_FIREBALL
+  - GIANT_SWING
   Rows:
   - _NAME: Sword Attack Weak
     _MINDAMAGE: 10
@@ -204,7 +275,7 @@ MonoBehaviour:
     _CAMERASHAKEINTENSITY: 0
   - _NAME: Sword Attack Strong
     _MINDAMAGE: 50
-    _MAXDAMAGE: 50
+    _MAXDAMAGE: 30
     _RANGE: 5
     _STRENGTH: Strong
     _CONTROLTYPE: Swing
@@ -282,7 +353,7 @@ MonoBehaviour:
     _CAMERASHAKEINTENSITY: .100000001
   - _NAME: Spear Charging Attack
     _MINDAMAGE: 10
-    _MAXDAMAGE: 50
+    _MAXDAMAGE: 30
     _RANGE: 7
     _STRENGTH: Strong
     _CONTROLTYPE: Hold
@@ -308,7 +379,7 @@ MonoBehaviour:
     _CAMERASHAKEINTENSITY: 0
   - _NAME: Bow Aimed Shot
     _MINDAMAGE: 10
-    _MAXDAMAGE: 50
+    _MAXDAMAGE: 30
     _RANGE: 20
     _STRENGTH: Strong
     _CONTROLTYPE: Hold
@@ -319,45 +390,32 @@ MonoBehaviour:
     _SWINGANIMATION: attack_release_bow
     _PROJECTILEPREFAB: proj_arrow
     _CAMERASHAKEINTENSITY: 0
-  - _NAME: Enemy Bolt
+  - _NAME: Enemy Fireball
     _MINDAMAGE: 10
     _MAXDAMAGE: 20
     _RANGE: 30
     _STRENGTH: Weak
     _CONTROLTYPE: Hold
-    _REACTIONTYPE: None
-    _MINKNOCKBACK: 0
-    _MAXKNOCKBACK: 0
+    _REACTIONTYPE: Knockback
+    _MINKNOCKBACK: .200000003
+    _MAXKNOCKBACK: .300000012
     _CHARGEANIMATION: 
     _SWINGANIMATION: attack_release_bow
-    _PROJECTILEPREFAB: proj_bolt
-    _CAMERASHAKEINTENSITY: 0
---- !u!114 &11400010
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0d7bab86390fbc4b9c30cf6c92fa276, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponList: []
-  weaponsDb: {fileID: 0}
---- !u!114 &11400012
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32bba45cae92fec4880b1f3cd89345e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackList: []
-  attacksDb: {fileID: 0}
+    _PROJECTILEPREFAB: proj_fireball
+    _CAMERASHAKEINTENSITY: .400000006
+  - _NAME: Giant Swing
+    _MINDAMAGE: 20
+    _MAXDAMAGE: 20
+    _RANGE: 10
+    _STRENGTH: Weak
+    _CONTROLTYPE: Swing
+    _REACTIONTYPE: Knockback
+    _MINKNOCKBACK: .200000003
+    _MAXKNOCKBACK: .5
+    _CHARGEANIMATION: 
+    _SWINGANIMATION: attack_giant_swing
+    _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: .600000024
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

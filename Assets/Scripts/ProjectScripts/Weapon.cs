@@ -9,6 +9,8 @@ public class Weapon : MonoBehaviour
 	public GameObject lightProjectile;
 	public GameObject heavyProjectile;
 	Fighter weaponUser;
+	public GameObject enemyHitFX;
+	public GameObject wallHitFX;
 
 	Damage damageOut;
 
@@ -37,6 +39,14 @@ public class Weapon : MonoBehaviour
 	void OnWeaponHit (RaycastHit hit)
 	{
 		GameObject hitGameObject = hit.transform.gameObject;
+		GameObject fx = CFX_SpawnSystem.GetNextObject (wallHitFX);
+		if (hitGameObject.CompareTag (Tags.ENEMY)) {
+			fx = CFX_SpawnSystem.GetNextObject (enemyHitFX);
+		}
+		if (fx != null) {
+			fx.transform.position = hit.point;
+			fx.particleSystem.Play ();
+		}
 		hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
 		weaponUser.SendMessage ("NotifyAttackHit", SendMessageOptions.DontRequireReceiver);
 	}
