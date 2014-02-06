@@ -132,12 +132,22 @@ public class Enemy : MonoBehaviour
 		Renderer[] renderers = (Renderer[])GetComponentsInChildren<Renderer> ();
 		Color[] oldColor = new Color[renderers.Length];
 		for (int i = 0; i < renderers.Length; ++i) {
-			oldColor [i] = renderers [i].material.color;
-			renderers [i].material.color = Color.white;
+			if (renderers [i] != null && renderers [i].material != null) {
+				if (renderers [i].material.HasProperty ("_Color")) {
+					oldColor [i] = renderers [i].material.color;
+					renderers [i].material.color = Color.white;
+				} else {
+					oldColor [i] = Color.yellow;
+				}
+			}
 		}
 		yield return new WaitForSeconds (0.2f);
 		for (int i = 0; i < renderers.Length; ++i) {
-			renderers [i].material.color = oldColor [i];
+			if (renderers [i] != null && renderers [i].material != null) {
+				if (oldColor [i] != null) {
+					renderers [i].material.color = oldColor [i];
+				}
+			}
 		}
 	}
 

@@ -44,6 +44,7 @@ public class Weapon : MonoBehaviour
 			fx = CFX_SpawnSystem.GetNextObject (enemyHitFX);
 		}
 		fx.transform.position = hit.point;
+		fx.particleSystem.Simulate (0.05f);
 		fx.particleSystem.Play ();
 
 		hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);

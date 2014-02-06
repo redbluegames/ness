@@ -73,7 +73,7 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: .5
+          value: .049999997
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -285,7 +285,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
       minMaxState: 0
-    cnt0: 8
+    cnt0: 15
     cnt1: 30
     cnt2: 30
     cnt3: 30
