@@ -144,9 +144,7 @@ public class Enemy : MonoBehaviour
 		yield return new WaitForSeconds (0.2f);
 		for (int i = 0; i < renderers.Length; ++i) {
 			if (renderers [i] != null && renderers [i].material != null) {
-				if (oldColor [i] != null) {
-					renderers [i].material.color = oldColor [i];
-				}
+				renderers [i].material.color = oldColor [i];
 			}
 		}
 	}

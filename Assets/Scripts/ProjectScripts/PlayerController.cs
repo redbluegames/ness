@@ -14,13 +14,18 @@ public class PlayerController : IController
 	bool isPlayerBound;
 	bool rightStickAvailable = true;
 	bool rightStickHorizontalAvailable = true;
+
+	// Targetting variables
+	GameObject pointer;
 	GameObject targetReticle;
+	float reticleY;
+	Vector3 previousReticleScale;
 
 	void Awake ()
 	{
 		AssignReferences ();
 		isPlayerBound = false;
-		ShowTargetReticle (false);
+		ShowReticle (false);
 
 		BindPlayer (0, InputDevices.GetAllInputDevices () [(int)InputDevices.ControllerTypes.Keyboard]);
 	}
@@ -31,13 +36,16 @@ public class PlayerController : IController
 	void AssignReferences ()
 	{
 		enemies = new List<GameObject> ();
-		targetReticle = GameObject.Find (ObjectNames.RETICLE);
+		pointer = GameObject.Find (ObjectNames.POINTER);
 		fighter = gameObject.GetComponent<Fighter> ();
+		targetReticle = GameObject.Find (ObjectNames.TARGET_RETICLE);
+		reticleY = targetReticle.transform.position.y;
 	}
 	
 	void Update ()
 	{
-		ShowTargetReticle (fighter.target != null);
+		ShowReticle (fighter.target != null);
+		RepositionReticle ();
 	}
 
 	public override void Think ()
@@ -222,14 +230,38 @@ public class PlayerController : IController
 	 * Debug method that highlights the Arrow or not. Pass in True to highlight,
 	 * False to not highlight it.
 	 */
-	void ShowTargetReticle (bool showReticle)
+	void ShowReticle (bool showReticle)
 	{
-		Renderer[] renderers = targetReticle.GetComponentsInChildren<Renderer> ();
+		Renderer[] renderers = pointer.GetComponentsInChildren<Renderer> ();
 		foreach (Renderer reticlePieceRenderer in renderers) {
 			if (showReticle) {
 				reticlePieceRenderer.material.color = Color.red;
+				targetReticle.SetActive (true);
 			} else {
 				reticlePieceRenderer.material.color = Color.blue;
+				targetReticle.SetActive (false);
+			}
+		}
+	}
+
+	/// <summary>
+	/// Repositions the reticle under the target enemy and scales it if necessary.
+	/// </summary>
+	void RepositionReticle ()
+	{
+		if (fighter.target != null) {
+			// Move our reticle under the target
+			Transform targetTransform = fighter.target.transform;
+			targetReticle.transform.position = new Vector3 (targetTransform.position.x, reticleY,
+			                                                targetTransform.position.z);
+
+			// Scale if necessary
+			float scaleMultiple = 1.5f;
+			Vector3 newScale = new Vector3 (fighter.target.collider.bounds.size.x * scaleMultiple, 1, 
+			                                fighter.target.collider.bounds.size.z * scaleMultiple);
+			if (newScale != previousReticleScale) {
+				previousReticleScale = newScale;
+				targetReticle.transform.localScale = newScale;
 			}
 		}
 	}
@@ -257,6 +289,7 @@ public class PlayerController : IController
 		// Select the next target
 		if (newTarget != null) {
 			fighter.LockOnTarget (newTarget);
+			RepositionReticle ();
 		}
 	}
 
@@ -282,6 +315,7 @@ public class PlayerController : IController
 		}
 		if (newTarget != null) {
 			fighter.LockOnTarget (newTarget);
+			RepositionReticle ();
 		}
 	}
 
