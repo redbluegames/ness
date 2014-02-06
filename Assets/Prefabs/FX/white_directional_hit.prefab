@@ -25,7 +25,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: .707106888, y: 0, z: 0, w: .707106769}
-  m_LocalPosition: {x: 0, y: -0, z: 2.33345056}
+  m_LocalPosition: {x: 1.5822221, y: 2.87257261e-17, z: -1.29369164}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -285,15 +285,15 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
       minMaxState: 0
-    cnt0: 15
-    cnt1: 30
+    cnt0: 8
+    cnt1: 8
     cnt2: 30
     cnt3: 30
     time0: .0500000007
-    time1: 0
+    time1: .100000001
     time2: 0
     time3: 0
-    m_BurstCount: 1
+    m_BurstCount: 2
   SizeModule:
     enabled: 0
     curve:
