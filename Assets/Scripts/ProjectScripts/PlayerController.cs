@@ -202,9 +202,9 @@ public class PlayerController : IController
 		if (RBInput.GetAxisForPlayer (InputStrings.BLOCK, PlayerIndex) == 1 ||
 			RBInput.GetButtonForPlayer (InputStrings.BLOCK, PlayerIndex)) {
 			fighter.Block ();
-		} else if (RBInput.GetAxisForPlayer (InputStrings.BLOCK, PlayerIndex) == 0 ||
+		} else if (RBInput.GetAxisForPlayer (InputStrings.BLOCK, PlayerIndex) < 1 ||
 			RBInput.GetButtonUpForPlayer (InputStrings.BLOCK, PlayerIndex)) {
-			if (fighter.IsBlocking) {
+			if (fighter.isBlocking) {
 				fighter.UnBlock ();
 			}
 		}

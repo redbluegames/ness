@@ -11,8 +11,6 @@ public class Fighter : MonoBehaviour
 	Health health;
 	bool isHuman = false;
 
-	public bool IsBlocking { get; private set; }
-
 	public Team team;
 	
 	// Timers
@@ -28,8 +26,9 @@ public class Fighter : MonoBehaviour
 	public bool feetPlanted;
 
 	// State Variables
-	public bool isAttacking;
-	public bool isLockedOn;
+	public bool isAttacking { get; private set; }
+	public bool isLockedOn { get; private set; }
+	public bool isBlocking { get; private set; }
 
 	// Animations, Sounds, and FX
 	public AnimationClip idle;
@@ -138,8 +137,8 @@ public class Fighter : MonoBehaviour
 		TryDebugs ();
 
 		// Animation sector
-		if (!isAttacking && IsIdle () && !chargeUpTimer.IsRunning ()) {
-			if (IsBlocking) {
+		if (!isAttacking && (IsIdle () || IsMoving ()) && !chargeUpTimer.IsRunning ()) {
+			if (isBlocking) {
 				animation.CrossFade (blockIdle.name, 0.1f);
 			} else {
 				animation.Play (idle.name, PlayMode.StopAll);
@@ -213,7 +212,7 @@ public class Fighter : MonoBehaviour
 			characterState = CharacterState.Moving;
 			float movescale = 1.0f;
 			bool isCharging = chargeUpTimer.IsRunning ();
-			if (IsBlocking || isCharging) {
+			if (isBlocking || isCharging) {
 				movescale = 0.5f;
 			}
 			Move (direction, runSpeed * movescale);
@@ -231,6 +230,11 @@ public class Fighter : MonoBehaviour
 			// Ignore any attacks while player isn't moving or idle.
 			// Ignore any inputs while the player is already attacking or isn't
 			return;
+		}
+		if (isBlocking) {
+			// TODO Get Edward to help make the animation unblock while attacking animation
+			// is playing. Is this worth it without using mechanim?
+			UnBlock ();
 		}
 		currentAttack = attacks [(int)attackType];
 		if (currentAttack.controlType == AttackData.ControlType.Hold) {
@@ -275,7 +279,7 @@ public class Fighter : MonoBehaviour
 	public void Dodge (Vector3 direction)
 	{
 		if (IsMoving () || IsIdle ()) {
-			if (IsBlocking) {
+			if (isBlocking) {
 				UnBlock ();
 			}
 			currentDodgeDirection = direction;
@@ -291,13 +295,13 @@ public class Fighter : MonoBehaviour
 	 */
 	public void Block ()
 	{
-		if (IsBlocking) {
+		if (isBlocking || isAttacking) {
 			return;
 		}
 		
 		if (IsIdle () || IsMoving ()) {
-			PlayAttackSound (shieldUpSound);
-			IsBlocking = true;
+			PlaySound (shieldUpSound);
+			isBlocking = true;
 		}
 	}
 
@@ -306,7 +310,8 @@ public class Fighter : MonoBehaviour
 	 */
 	public void UnBlock ()
 	{
-		IsBlocking = false;
+		PlaySound (shieldUpSound);
+		isBlocking = false;
 	}
 
 	/*
@@ -341,7 +346,7 @@ public class Fighter : MonoBehaviour
 	/*
 	 * Plays the specified sound clip as a one shot sound
 	 */
-	void PlayAttackSound (AudioClip clip)
+	void PlaySound (AudioClip clip)
 	{
 		attackAndBlockChannel.PlayOneShot (clip);
 	}
@@ -664,10 +669,11 @@ public class Fighter : MonoBehaviour
 		//TODO derive this from the attack, or damage info
 		playerCamera.Shake (3.0f, 0.2f, 0.1f);
 		// Handle blocked hits first
-		if (IsBlocking) {
-			PlayAttackSound (blockSound);
+		if (isBlocking) {
+			// TODO Directional blocking can go here.
+			PlaySound (blockSound);
 			// Cause attacker to get knocked back
-			incomingDamage.Attacker.GetComponent<Fighter> ().ReceiveKnockbackByBlock ((incomingDamage.Attacker.position - myTransform.position).normalized, 0.15f);
+			//incomingDamage.Attacker.GetComponent<Fighter> ().ReceiveKnockbackByBlock ((incomingDamage.Attacker.position - myTransform.position).normalized, 0.15f);
 		} else {
 			// Play a new hit sound at the location. Must make minDistance the same as the
 			// attack channel so that it plays at the same volume. This is kind of weird...

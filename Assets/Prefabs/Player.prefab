@@ -32,7 +32,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400002}
   m_Layer: 9
-  m_Name: Reticle
+  m_Name: Pointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -806,7 +806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370a8738e2f234cc8aec79957fdc6bee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fighter: {fileID: 0}
+  fighter: {fileID: 11400004}
   enemies: []
 --- !u!114 &11400004
 MonoBehaviour:
@@ -829,8 +829,6 @@ MonoBehaviour:
   attacks: []
   currentAttack: {fileID: 0}
   feetPlanted: 0
-  isAttacking: 0
-  isLockedOn: 0
   idle: {fileID: 7400000, guid: 72eb18d4c62b54d13b0cbcca34d47b8f, type: 2}
   blockIdle: {fileID: 7400000, guid: 24318a3e94365ef4b9131558114de053, type: 2}
   swingTrail: {fileID: 0}
