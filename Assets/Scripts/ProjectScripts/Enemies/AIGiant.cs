@@ -8,6 +8,7 @@ public class AIGiant : MonoBehaviour
 	public AnimationClip swingAttackAnimation;
 	public AnimationClip bigSwingAttackAnimation;
 	public Animation attackAnimation;
+	TrailRenderer trailRenderer;
 	public AttackCast attackCaster;
 	CountDownTimer attackTime = new CountDownTimer ();
 	CountDownTimer attackCooldown = new CountDownTimer ();
@@ -16,6 +17,7 @@ public class AIGiant : MonoBehaviour
 	void Start ()
 	{
 		AssignParentEnemy ();
+		trailRenderer = transform.parent.GetComponentInChildren<TrailRenderer> ();
 	}
 	 
 	/// <summary>
@@ -73,6 +75,7 @@ public class AIGiant : MonoBehaviour
 		attackAnimation.Play (attackClip.name);
 		attackCaster.OnHit += OnAttackHit;
 		attackCaster.Begin ();
+		trailRenderer.enabled = true;
 		attackTime.StartTimer (attackClip.length);
 		isAttacking = true;
 	}
@@ -81,6 +84,7 @@ public class AIGiant : MonoBehaviour
 	{
 		attackCooldown.StartTimer (0.5f);
 		attackCaster.End ();
+		trailRenderer.enabled = false;
 		isAttacking = false;
 	}
 	
@@ -96,7 +100,8 @@ public class AIGiant : MonoBehaviour
 	{
 		Damage damageOut = new Damage (20.0f, transform);
 		GameObject hitGameObject = hit.transform.gameObject;
-		// TODO Prevent friendly fire here
-		hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
+		if (hitGameObject.CompareTag (Tags.PLAYER)) {
+			hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
+		}
 	}
 }
