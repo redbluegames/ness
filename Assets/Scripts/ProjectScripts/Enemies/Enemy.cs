@@ -124,6 +124,24 @@ public class Enemy : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Iterates over all renderers for an object and set the color to white for
+	/// a set amount of time. Restores the colors back to normal afterwards.
+	/// </summary>
+	IEnumerator FlashWhite ()
+	{
+		Renderer[] renderers = (Renderer[])GetComponentsInChildren<Renderer> ();
+		Color[] oldColor = new Color[renderers.Length];
+		for (int i = 0; i < renderers.Length; ++i) {
+			oldColor [i] = renderers [i].material.color;
+			renderers [i].material.color = Color.white;
+		}
+		yield return new WaitForSeconds (0.2f);
+		for (int i = 0; i < renderers.Length; ++i) {
+			renderers [i].material.color = oldColor [i];
+		}
+	}
+
+	/// <summary>
 	/// Begin the sweep for damageable objects on the current attack
 	/// </summary>
 	public void StartAttackCast ()
@@ -158,6 +176,7 @@ public class Enemy : MonoBehaviour
 	{
 		SoundManager.PlayClipAtPoint (takeHitSound, transform.position);
 		health.TakeDamage (damageFromHit);
+		StartCoroutine (FlashWhite ());
 	}
 
 	void Die (Damage lethalDamage)
