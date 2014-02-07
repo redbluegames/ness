@@ -20,7 +20,8 @@ public class Health : MonoBehaviour
 	
 	public void Heal (float healthGain)
 	{
-		Damage healingDamage = new Damage (-healthGain, transform);
+		//TODO Code review needed here to determine if we need Damage to handle heals.
+		Damage healingDamage = new Damage (-healthGain, transform, new RaycastHit ());
 		AdjustHealth (healingDamage);
 	}
 

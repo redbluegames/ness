@@ -129,6 +129,7 @@ public class Fighter : MonoBehaviour
 
 	void Update ()
 	{
+		Debug.DrawLine (Vector3.zero, myTransform.forward);
 		ApplyGravity ();
 		PerformActionInProgress ();
 		UpdateLockOn ();
@@ -463,7 +464,7 @@ public class Fighter : MonoBehaviour
 		Weapon activeWeapon = carriedWeapons [equippedWeaponIndex].GetComponent<Weapon> ();
 		if (isActive) {
 			//TODO Create a Damage tab in the google fu spreadsheet that assists with calculating desired damage.
-			Damage damageOut = new Damage (currentAttack.maxDamage, myTransform);
+			Damage damageOut = new Damage (currentAttack.maxDamage, myTransform, new RaycastHit ());
 			activeWeapon.BeginAttack (damageOut, this);
 		} else {
 			activeWeapon.EndAttack ();
@@ -669,8 +670,13 @@ public class Fighter : MonoBehaviour
 		//TODO derive this from the attack, or damage info
 		playerCamera.Shake (3.0f, 0.2f, 0.1f);
 		// Handle blocked hits first
-		if (isBlocking) {
-			// TODO Directional blocking can go here.
+		Vector3 toHit = incomingDamage.HitLocation.point - myTransform.position;
+		bool hitFromFront = Vector3.Dot (myTransform.forward, toHit.normalized) < 0;
+		if (isBlocking && !hitFromFront) {
+			// Uncomment these to help debug this, but it should be correct.
+			//Debug.DrawLine (Vector3.zero, myTransform.forward);
+			//Debug.DrawLine (Vector3.zero, toHit.normalized, Color.red);
+			//Debug.DrawLine (myTransform.forward, toHit.normalized, Color.green);
 			PlaySound (blockSound);
 			// Cause attacker to get knocked back
 			//incomingDamage.Attacker.GetComponent<Fighter> ().ReceiveKnockbackByBlock ((incomingDamage.Attacker.position - myTransform.position).normalized, 0.15f);

@@ -16,10 +16,10 @@ public class Damage
 		HitReaction = hitReaction;
 	}
 
-	public Damage (float amount, Transform attacker)
+	public Damage (float amount, Transform attacker, RaycastHit hitLocation)
 	{
 		Amount = amount;
-		HitLocation = new RaycastHit ();
+		HitLocation = hitLocation;
 		Attacker = attacker;
 		HitReaction = AttackData.ReactionType.None;
 	}

@@ -110,7 +110,7 @@ public class AIRanged : MonoBehaviour
 	 */
 	void OnAttackHit (RaycastHit hit)
 	{
-		Damage damageOut = new Damage (10.0f, transform);
+		Damage damageOut = new Damage (10.0f, transform, hit);
 		GameObject hitGameObject = hit.transform.gameObject;
 		hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
 	}
