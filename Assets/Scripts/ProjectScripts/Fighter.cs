@@ -16,7 +16,7 @@ public class Fighter : MonoBehaviour
 	// Timers
 	CountUpTimer chargeUpTimer;
 	public float currentChargeUpTime = 0;
-	
+
 	// Weapons and Attacks
 	public GameObject weaponHand;
 	public GameObject[] carriedWeapons;
@@ -31,6 +31,7 @@ public class Fighter : MonoBehaviour
 	public bool isBlocking { get; private set; }
 
 	// Animations, Sounds, and FX
+	public TweenFlashColor shieldFlash;
 	public AnimationClip idle;
 	public AnimationClip blockIdle;
 	public TrailRenderer swingTrail;
@@ -677,6 +678,7 @@ public class Fighter : MonoBehaviour
 			//Debug.DrawLine (Vector3.zero, myTransform.forward);
 			//Debug.DrawLine (Vector3.zero, toHit.normalized, Color.red);
 			//Debug.DrawLine (myTransform.forward, toHit.normalized, Color.green);
+			shieldFlash.Flash ();
 			PlaySound (blockSound);
 			// Cause attacker to get knocked back
 			//incomingDamage.Attacker.GetComponent<Fighter> ().ReceiveKnockbackByBlock ((incomingDamage.Attacker.position - myTransform.position).normalized, 0.15f);

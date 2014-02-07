@@ -62,6 +62,7 @@ GameObject:
   - 114: {fileID: 11400002}
   - 143: {fileID: 14300000}
   - 114: {fileID: 11400004}
+  - 114: {fileID: 11400014}
   m_Layer: 10
   m_Name: SkeletonMage
   m_TagString: Enemy
@@ -419,6 +420,9 @@ MonoBehaviour:
   team: 2
   takeHitSound: {fileID: 8300000, guid: 821f60eb613b02944a649d7bfdedcc88, type: 3}
   ragdollPrefab: {fileID: 100002, guid: 005221611817d4d999b26ef9fe75354b, type: 2}
+  tweenFlashColor: {fileID: 11400014}
+  FaceDirection: {x: 0, y: 0, z: 0}
+  WantsToAttack: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -508,6 +512,19 @@ MonoBehaviour:
     m_Bits: 4294967295
   debugShowCasts: 0
   debugShowHits: 0
+--- !u!114 &11400014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ce5e503deea8154e8eed317d280f90a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 0, b: 0, a: 0}
+  duration: 0
 --- !u!122 &12200000
 Halo:
   m_ObjectHideFlags: 1

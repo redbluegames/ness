@@ -29,6 +29,7 @@ GameObject:
   - 143: {fileID: 14300000}
   - 114: {fileID: 11400004}
   - 95: {fileID: 9500000}
+  - 114: {fileID: 11400010}
   m_Layer: 0
   m_Name: Rat
   m_TagString: Enemy
@@ -431,6 +432,7 @@ MonoBehaviour:
   team: 2
   takeHitSound: {fileID: 8300000, guid: 821f60eb613b02944a649d7bfdedcc88, type: 3}
   ragdollPrefab: {fileID: 100006, guid: 949311480947b4894a1e435510ea804e, type: 2}
+  tweenFlashColor: {fileID: 11400010}
   FaceDirection: {x: 0, y: 0, z: 0}
   WantsToAttack: 0
 --- !u!114 &11400004
@@ -478,6 +480,19 @@ MonoBehaviour:
     m_Bits: 4294967295
   debugShowCasts: 1
   debugShowHits: 1
+--- !u!114 &11400010
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ce5e503deea8154e8eed317d280f90a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 0, b: 0, a: 0}
+  duration: 0
 --- !u!137 &13700000
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
