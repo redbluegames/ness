@@ -87,9 +87,12 @@ public class PlayerController : IController
 		float horizontal = 0.0f, vertical = 0.0f;
 		horizontal = RBInput.GetAxisRawForPlayer (InputStrings.HORIZONTAL, PlayerIndex);
 		vertical = RBInput.GetAxisRawForPlayer (InputStrings.VERTICAL, PlayerIndex);
-		
+
+		// Convert to camera world space
 		Vector3 direction = new Vector3 (horizontal, 0.0f, vertical);
-		
+		direction = Camera.main.transform.TransformDirection (direction);
+		direction = new Vector3 (direction.x, 0, direction.z);
+
 		if (direction != Vector3.zero) {
 			fighter.Run (direction);
 		}
@@ -186,11 +189,16 @@ public class PlayerController : IController
 		float horizontal = 0.0f, vertical = 0.0f;
 		horizontal = RBInput.GetAxisRawForPlayer (InputStrings.HORIZONTAL, PlayerIndex);
 		vertical = RBInput.GetAxisRawForPlayer (InputStrings.VERTICAL, PlayerIndex);
-		
+
+		// Convert to camera world space
+		Vector3 direction = new Vector3 (horizontal, 0.0f, vertical);
+		direction = Camera.main.transform.TransformDirection (direction);
+		direction = new Vector3 (direction.x, 0, direction.z);
+
 		// If player isn't standing still and hits dodge button, let's dodge!
 		if (RBInput.GetButtonDownForPlayer (InputStrings.DODGE, PlayerIndex) &&
-			(horizontal != 0 || vertical != 0)) {
-			fighter.Dodge (new Vector3 (horizontal, 0.0f, vertical));
+			direction != Vector3.zero) {
+			fighter.Dodge (direction);
 		}
 	}
 	
