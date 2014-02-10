@@ -44,7 +44,6 @@ public class AttackCast : MonoBehaviour
 			enabled = false;
 			return;
 		}
-		// TODO: Could support cast to source position, like I did in Ben10
 
 		// Initialize previous position to the current attack position
 		lastFramePosition = transform.position;
@@ -52,6 +51,34 @@ public class AttackCast : MonoBehaviour
 		// Clear previously hit objects so that we can re-hit them
 		ignoreObjects.Clear ();
 		ignoreObjects.Add (transform.root.gameObject);
+		
+		// TODO: Could support cast to source position, like I did in Ben10 to test
+		// for a character's arm
+		
+		// Cast to see if anything is inside the starting position
+		CastForEmbeddedCollisions();
+	}
+
+	/// <summary>
+	/// Casts against the hit layer to see if any objects are starting embedded in the initial
+	/// sphere. An additional cast tries to confirm the hit location for the embedded object.
+	/// </summary>
+	void CastForEmbeddedCollisions()
+	{
+		Collider[] embeddedColliders = Physics.OverlapSphere(transform.position, radius, hitLayer);
+		foreach(Collider collider in embeddedColliders)
+		{
+			// We need to create a RaycastHit event for each collider to get a collision location.
+			// Since it's impossible to see where an overlap occured in the sphere, cast towards
+			// the collider's position to try and find it.
+			Vector3 directionToHitCollider = collider.gameObject.transform.position - transform.position;
+			Ray castRay = new Ray(transform.position, directionToHitCollider); 
+			RaycastHit hit = new RaycastHit();
+			collider.Raycast (castRay, out hit, directionToHitCollider.magnitude);
+			if(hit.collider != null ) {
+				ReportHit (hit);
+			}
+		}
 	}
 
 	/*
@@ -82,10 +109,11 @@ public class AttackCast : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void FixedUpdate ()
+	void Update ()
 	{
-		Vector3 direction = (transform.position - lastFramePosition).normalized;
-		float distance = Vector3.Distance (lastFramePosition, transform.position);
+		Vector3 direction = (transform.position - lastFramePosition);
+		float distance = direction.magnitude;
+		direction.Normalize();
 		RaycastHit[] hits;
 		hits = Physics.SphereCastAll (lastFramePosition, radius, direction, distance, hitLayer);
 		ReportHits (hits);
@@ -180,7 +208,7 @@ public class AttackCast : MonoBehaviour
 	 */
 	void ReportHit (RaycastHit hit)
 	{
-		// Throw out iIgnored objects
+		// Throw out ignored objects
 		if (ignoreObjects.Contains (hit.collider.transform.root.gameObject)) {
 			return;
 		}
