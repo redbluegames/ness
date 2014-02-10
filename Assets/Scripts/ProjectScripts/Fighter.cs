@@ -459,21 +459,23 @@ public class Fighter : MonoBehaviour
 	}
 
 	/*
-	 * Turn on or off the attack trail renderer as well as the attack caster.
+	 * Turn on the attack trail renderer as well as the attack caster.
 	 */
-	void ActivateMeleeAttack (bool isActive)
+	void StartAttackCast ()
 	{
-		if (swingTrail != null) {
-			swingTrail.renderer.enabled = isActive;
-		}
 		Weapon activeWeapon = carriedWeapons [equippedWeaponIndex].GetComponent<Weapon> ();
-		if (isActive) {
-			//TODO Create a Damage tab in the google fu spreadsheet that assists with calculating desired damage.
-			Damage damageOut = new Damage (currentAttack.maxDamage, myTransform, new RaycastHit ());
-			activeWeapon.BeginAttack (damageOut, this);
-		} else {
-			activeWeapon.EndAttack ();
-		}
+		//TODO Create a Damage tab in the google fu spreadsheet that assists with calculating desired damage.
+		Damage damageOut = new Damage (currentAttack.maxDamage, myTransform, new RaycastHit ());
+		activeWeapon.BeginAttack (damageOut, this);
+	}
+
+	/*
+	 * Turn off the attack trail renderer as well as the attack caster.
+	 */
+	void EndAttackCast ()
+	{
+		Weapon activeWeapon = carriedWeapons [equippedWeaponIndex].GetComponent<Weapon> ();
+		activeWeapon.EndAttack ();
 	}
 
 	/*
@@ -491,9 +493,12 @@ public class Fighter : MonoBehaviour
 		if (currentAttack != null) {
 			// Only deactivate non-projectile attacks
 			if (string.Equals (currentAttack.projectilePrefab, string.Empty)) {
-				ActivateMeleeAttack (false);
+				EndAttackCast ();
 			}
 		}
+		// Kill any attack trail
+		SetAttackTrailActive(false);
+		// Cancel charge ups
 		chargeUpTimer.StopTimer ();
 		currentChargeUpTime = 0;
 		isAttacking = false;
@@ -550,10 +555,10 @@ public class Fighter : MonoBehaviour
 	 */
 	void FireMeleeWeapon ()
 	{
-		ActivateMeleeAttack (true);
+		SetAttackTrailActive(true);
 		animation.Play (currentAttack.swingAnimation.name, PlayMode.StopAll);
 	}
-	
+
 	/*
 	 * Spawn a projectile based on the currently equipped weapon and fire it away from
 	 * the player.
@@ -577,6 +582,14 @@ public class Fighter : MonoBehaviour
 		newProjectile.GetComponent<Projectile> ().Fire (2000.0f, 5.0f, transform.forward, damageOut, Team.GoodGuys);
 	}
 
+	void SetAttackTrailActive (bool isActive)
+	{
+		
+		if (swingTrail != null) {
+			swingTrail.renderer.enabled = isActive;
+		}
+	}
+
 	/*
 	 * Begins the fighter charging up an attack. Performs logic around charging,
 	 * sets fighter state, and kicks off the charge animation.
@@ -585,7 +598,7 @@ public class Fighter : MonoBehaviour
 	{
 		chargeUpTimer.StartTimer ();
 		currentChargeUpTime = 0;
-		animation.Play (currentAttack.chargeAnimation.name, PlayMode.StopAll);
+		animation.CrossFade (currentAttack.chargeAnimation.name, 0.1f);
 	}
 
 	/*

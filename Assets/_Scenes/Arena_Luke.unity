@@ -1267,7 +1267,7 @@ MonoBehaviour:
     type: 2}
   bigSwingAttackAnimation: {fileID: 7400000, guid: 38921e587a80754409872beaa2c11b1f,
     type: 2}
-  attackAnimation: {fileID: 1324405335}
+  attackAnimation: {fileID: 865274589}
   attackCaster: {fileID: 151164297}
 --- !u!1001 &334030078
 Prefab:
@@ -2574,7 +2574,12 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 11400010, guid: f3c431e2664cec946b89890548b24c13, type: 2}
+      propertyPath: attackAnimation
+      value: 
+      objectReference: {fileID: 865274589}
+    m_RemovedComponents:
+    - {fileID: 11100000, guid: f3c431e2664cec946b89890548b24c13, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f3c431e2664cec946b89890548b24c13, type: 2}
   m_RootGameObject: {fileID: 865274582}
   m_IsPrefabParent: 0
@@ -2592,6 +2597,7 @@ GameObject:
   - 114: {fileID: 865274586}
   - 143: {fileID: 865274585}
   - 114: {fileID: 865274584}
+  - 111: {fileID: 865274589}
   m_Layer: 10
   m_Name: GiantGuard
   m_TagString: Enemy
@@ -2691,6 +2697,22 @@ MonoBehaviour:
   tweenFlashColor: {fileID: 865274584}
   FaceDirection: {x: 0, y: 0, z: 0}
   WantsToAttack: 0
+--- !u!111 &865274589
+Animation:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 865274582}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 38921e587a80754409872beaa2c11b1f, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 4cd73b032f9222d48b30aca2be99a8b5, type: 2}
+  - {fileID: 7400000, guid: 38921e587a80754409872beaa2c11b1f, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &889301810
 GameObject:
   m_ObjectHideFlags: 0
@@ -4291,7 +4313,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1324405336}
-  - 111: {fileID: 1324405335}
   m_Layer: 10
   m_Name: GiantGuardGeo
   m_TagString: Untagged
@@ -4299,23 +4320,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!111 &1324405335
-Animation:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11100000, guid: f3c431e2664cec946b89890548b24c13,
-    type: 2}
-  m_PrefabInternal: {fileID: 838931780}
-  m_GameObject: {fileID: 1324405334}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 4cd73b032f9222d48b30aca2be99a8b5, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 4cd73b032f9222d48b30aca2be99a8b5, type: 2}
-  - {fileID: 7400000, guid: 38921e587a80754409872beaa2c11b1f, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!4 &1324405336
 Transform:
   m_ObjectHideFlags: 0
