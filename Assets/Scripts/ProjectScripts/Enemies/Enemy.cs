@@ -151,6 +151,25 @@ public class Enemy : MonoBehaviour
 		hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
 	}
 
+	public void ReceiveKnockback (Vector3 direction, float duration)
+	{
+		// TODO Review this with Ed to see if we should be doing this as an animation
+		StartCoroutine (Knockback (direction, duration));
+	}
+
+	// This is mostly a hack just to see the timed shielding behavior
+	IEnumerator Knockback (Vector3 direction, float duration)
+	{
+		float elapsed = 0;
+		float damper = 10.0f;
+		Vector3 directionNoY = new Vector3 (direction.x, 0.0f, direction.z);
+		while (elapsed < duration) {
+			elapsed += Time.deltaTime;
+			motor.MoveDirection = (directionNoY - motor.MoveDirection) * (damper * Time.deltaTime);
+			yield return null;
+		}
+	}
+
 	/*
 	 * Resolve a hit and perform the appropriate reaction. This may mean
 	 * taking damage or it may mean resolving a block.

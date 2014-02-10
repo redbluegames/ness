@@ -16,6 +16,8 @@ public class Fighter : MonoBehaviour
 	// Timers
 	CountUpTimer chargeUpTimer;
 	public float currentChargeUpTime = 0;
+	float superBlockWindow = 1.0f;
+	CountUpTimer shieldTime = new CountUpTimer ();
 
 	// Weapons and Attacks
 	public GameObject weaponHand;
@@ -303,6 +305,7 @@ public class Fighter : MonoBehaviour
 		
 		if (IsIdle () || IsMoving ()) {
 			PlaySound (shieldUpSound);
+			shieldTime.StartTimer ();
 			isBlocking = true;
 		}
 	}
@@ -313,6 +316,7 @@ public class Fighter : MonoBehaviour
 	public void UnBlock ()
 	{
 		PlaySound (shieldUpSound);
+		shieldTime.StopTimer ();
 		isBlocking = false;
 	}
 
@@ -681,7 +685,10 @@ public class Fighter : MonoBehaviour
 			shieldFlash.Flash ();
 			PlaySound (blockSound);
 			// Cause attacker to get knocked back
-			//incomingDamage.Attacker.GetComponent<Fighter> ().ReceiveKnockbackByBlock ((incomingDamage.Attacker.position - myTransform.position).normalized, 0.15f);
+			if (shieldTime.GetTimerRuntime () < superBlockWindow) {
+				Enemy attackingEnemy = incomingDamage.Attacker.GetComponent<Enemy> ();
+				attackingEnemy.ReceiveKnockback (toHit.normalized * 15.0f, 0.5f);
+			}
 		} else {
 			// Play a new hit sound at the location. Must make minDistance the same as the
 			// attack channel so that it plays at the same volume. This is kind of weird...
@@ -692,7 +699,7 @@ public class Fighter : MonoBehaviour
 			health.TakeDamage (incomingDamage);
 			// Handle reaction type of successful hits
 			if (incomingDamage.HitReaction == AttackData.ReactionType.Knockback) {
-				float knockBackDuration = 1.0f;
+				float knockBackDuration = 0.2f;
 				// Knock back in the opposite direction of the attacker.
 				ReceiveKnockback ((myTransform.position - incomingDamage.Attacker.position).normalized, knockBackDuration);
 			}
