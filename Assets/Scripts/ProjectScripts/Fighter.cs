@@ -299,7 +299,7 @@ public class Fighter : MonoBehaviour
 	 */
 	public void Block ()
 	{
-		if (isBlocking || isAttacking) {
+		if (isBlocking || isAttacking || chargeUpTimer.IsRunning() ) {
 			return;
 		}
 		
