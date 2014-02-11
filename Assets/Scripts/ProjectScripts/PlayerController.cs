@@ -89,9 +89,7 @@ public class PlayerController : IController
 		vertical = RBInput.GetAxisRawForPlayer (InputStrings.VERTICAL, PlayerIndex);
 
 		// Convert to camera world space
-		Vector3 direction = new Vector3 (horizontal, 0.0f, vertical);
-		direction = Camera.main.transform.TransformDirection (direction);
-		direction = new Vector3 (direction.x, 0, direction.z);
+		Vector3 direction = ConvertInputToCamera (horizontal, vertical);
 
 		if (direction != Vector3.zero) {
 			fighter.Run (direction);
@@ -191,9 +189,7 @@ public class PlayerController : IController
 		vertical = RBInput.GetAxisRawForPlayer (InputStrings.VERTICAL, PlayerIndex);
 
 		// Convert to camera world space
-		Vector3 direction = new Vector3 (horizontal, 0.0f, vertical);
-		direction = Camera.main.transform.TransformDirection (direction);
-		direction = new Vector3 (direction.x, 0, direction.z);
+		Vector3 direction = ConvertInputToCamera (horizontal, vertical);
 
 		// If player isn't standing still and hits dodge button, let's dodge!
 		if (RBInput.GetButtonDownForPlayer (InputStrings.DODGE, PlayerIndex) &&
@@ -349,5 +345,20 @@ public class PlayerController : IController
 		} else {
 			Debug.LogWarning ("Tried to remove enemy from list in which it doesn't exist.");
 		}
+	}
+
+	/// <summary>
+	/// Converts the provided input values relative to the camera. Needed whenever calculating
+	/// direction provided by the player.
+	/// </summary>
+	/// <returns>The input relative to camera.</returns>
+	/// <param name="horizontal">Horizontal input</param>
+	/// <param name="vertical">Vertical input</param>
+	Vector3 ConvertInputToCamera (float horizontal, float vertical)
+	{
+		Transform cameraTransform = Camera.main.transform;
+		Vector3 camForward = Vector3.Scale (cameraTransform.forward, new Vector3 (1, 0, 1)).normalized;
+		Vector3 directionRelativeToCamera = vertical * camForward + horizontal * cameraTransform.right;
+		return directionRelativeToCamera;
 	}
 }
