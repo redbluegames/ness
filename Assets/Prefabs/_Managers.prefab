@@ -129,7 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LineOfSightMask:
     serializedVersion: 2
-    m_Bits: 3584
+    m_Bits: 7680
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -5,6 +5,8 @@ TagManager:
   tags:
   - Enemy
   - 
+  - FxTemporaire
+  - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
   Builtin Layer 2: Ignore Raycast
@@ -17,7 +19,7 @@ TagManager:
   User Layer 9: Player
   User Layer 10: Enemy
   User Layer 11: Wall
-  User Layer 12: 
+  User Layer 12: TempWall
   User Layer 13: 
   User Layer 14: 
   User Layer 15: 

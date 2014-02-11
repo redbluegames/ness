@@ -9,4 +9,5 @@ public class Layers
 	public static int PLAYER = 9;
 	public static int ENEMY = 10;
 	public static int WALL = 11;
+	public static int TEMP_WALL = 12;
 }
