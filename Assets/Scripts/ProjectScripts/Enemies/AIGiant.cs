@@ -98,7 +98,7 @@ public class AIGiant : MonoBehaviour
 	 */
 	void OnAttackHit (RaycastHit hit)
 	{
-		Damage damageOut = new Damage (20.0f, transform, hit);
+		Damage damageOut = new Damage (20.0f, transform.parent.transform, hit);
 		GameObject hitGameObject = hit.transform.gameObject;
 		if (hitGameObject.CompareTag (Tags.PLAYER)) {
 			hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
