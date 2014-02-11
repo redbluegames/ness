@@ -2226,7 +2226,7 @@ AnimationClip:
     script: {fileID: 0}
   m_Events:
   - time: 0
-    functionName: StartAttackCast
+    functionName: PlantFeet
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -2240,7 +2240,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0
-    functionName: PlantFeet
+    functionName: StartAttackCast
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -2255,14 +2255,14 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: .150000006
-    functionName: EndAttackCast
+    functionName: SetAttackMovement
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: .150000006
-    functionName: SetAttackMovement
+  - time: .166666672
+    functionName: EndAttackCast
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
