@@ -8,6 +8,8 @@ public static class InputStrings
 	public static string TARGET = "Target";
 	public static string TARGETLEFT = "TargetLeft";
 	public static string TARGETRIGHT = "TargetRight";
+	public static string TARGETUP = "TargetUp";
+	public static string TARGETDOWN = "TargetDown";
 	public static string TARGETHORIZONTAL = "TargetHorizontal";
 	public static string FIRE = "Fire1";
 	public static string FIRE2 = "Fire2";

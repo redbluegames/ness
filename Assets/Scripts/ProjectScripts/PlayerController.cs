@@ -126,19 +126,41 @@ public class PlayerController : IController
 			InputDevice pc = InputDevices.GetAllInputDevices () [(int)InputDevices.ControllerTypes.Keyboard];
 			float aimAxis = Input.GetAxisRaw (RBInput.ConcatPlayerIndex (InputStrings.TARGETHORIZONTAL, PlayerIndex, xbox));
 
-			// Move target left
-			if (Input.GetButtonDown (RBInput.ConcatPlayerIndex (InputStrings.TARGETLEFT, PlayerIndex, pc)) || 
-				(aimAxis < -deadStickThreshold && rightStickHorizontalAvailable)) {
-				rightStickHorizontalAvailable = false;
-				TargetNext (true);
+			// Move target in axis direction
+			bool changingTarget = false;
+			float horizontal = 0;
+			float vertical = 0;
+			// Set horizontal input
+			if (Input.GetButtonDown (RBInput.ConcatPlayerIndex (InputStrings.TARGETLEFT, PlayerIndex, pc))) {
+				//|| (aimAxis < -deadStickThreshold && rightStickHorizontalAvailable)) {
+				//rightStickHorizontalAvailable = false;
+				//TargetNext (true);
+				horizontal = -1;
+				changingTarget = true;
+			} else if (Input.GetButtonDown (RBInput.ConcatPlayerIndex (InputStrings.TARGETRIGHT, PlayerIndex, pc))) {
+				horizontal = 1;
+				changingTarget = true;
 			}
+			// Set Vertical Input
+			if (Input.GetButtonDown (RBInput.ConcatPlayerIndex (InputStrings.TARGETDOWN, PlayerIndex, pc))) {
+				vertical = -1;
+				changingTarget = true;
+			} else if (Input.GetButtonDown (RBInput.ConcatPlayerIndex (InputStrings.TARGETUP, PlayerIndex, pc))) {
+				vertical = 1;
+				changingTarget = true;
+			}
+			if (changingTarget) {
+				TargetNearDirection (horizontal, vertical);
+			}
+			/*
 			
 			// Move target right
 			if (Input.GetButtonDown (RBInput.ConcatPlayerIndex (InputStrings.TARGETRIGHT, PlayerIndex, pc)) 
 				|| (aimAxis > deadStickThreshold && rightStickHorizontalAvailable)) {
 				rightStickHorizontalAvailable = false;
-				TargetNext (false);
-			}
+				TargetNearDirection (1, 0);
+//				TargetNext (false);
+			}*/
 			// Enforce stick behavior like a button
 			rightStickHorizontalAvailable = IsAxisDead (aimAxis, deadStickThreshold);
 		}
@@ -317,6 +339,60 @@ public class PlayerController : IController
 				minDistance = distanceX;
 			}
 		}
+		if (newTarget != null) {
+			fighter.LockOnTarget (newTarget);
+			RepositionReticle ();
+		}
+	}
+
+	/// <summary>
+	/// Given horizontal and vertical inputs, target the enemy that most closely
+	/// matches the direction, relative to the current target. For example if the
+	/// player provides 0, 1 (up) we should target the closest enemy above the
+	/// targetted enemy. If the targets are similarly close to the input direction,
+	/// choose the closest.
+	/// </summary>
+	/// <param name="horizontal">Horizontal.</param>
+	/// <param name="vertical">Vertical.</param>
+	public void TargetNearDirection (float horizontal, float vertical)
+	{
+		const float ACCURACY_THRESHOLD = 60f; // Higher makes for more lenient targetting
+		const float BACKUP_THRESHOLD = 130f; // If no other targets are found, crank up leniency
+		const float TIE_THRESHOLD = 12.5f; // What angle is too close to pick on angle alone?
+
+		Vector3 inputDirection = ConvertInputToCamera (horizontal, vertical);
+		Vector3 pointRelToTarget = fighter.target.transform.position + inputDirection;
+		Vector3 directionRelTarget = pointRelToTarget - fighter.target.transform.position;
+		GameObject newTarget = null;
+		float newTargetAngle = float.MaxValue;
+		float newTargetDistance = float.MaxValue;
+		// Iterate over our enemy list and pick the one at an angle closest to the input direction
+		foreach (GameObject enemy in enemies) {
+			Vector3 enemyToTarget = enemy.transform.position - fighter.target.transform.position;
+			float enemyDistance = Vector3.SqrMagnitude (enemy.transform.position - transform.position);
+			//float dot = Vector3.Dot (directionRelTarget, enemyToTarget);
+			float angle = Vector3.Angle (directionRelTarget, enemyToTarget);
+			if (angle < ACCURACY_THRESHOLD && angle < newTargetAngle + TIE_THRESHOLD) {
+				// Break ties (within X degrees) by checking distance
+				if (angle > newTargetAngle - TIE_THRESHOLD && angle < newTargetAngle + TIE_THRESHOLD) {
+					// Whenever we tie take the closer of the two targets
+					if (enemyDistance < newTargetDistance) {
+						newTargetDistance = enemyDistance;
+						newTarget = enemy;
+						newTargetAngle = angle;
+					}
+				} else {
+					newTarget = enemy;
+					newTargetAngle = angle;
+					newTargetDistance = enemyDistance;
+				}
+			} else if (angle < BACKUP_THRESHOLD && angle < newTargetAngle + TIE_THRESHOLD) {
+				newTarget = enemy;
+				newTargetAngle = angle;
+				newTargetDistance = enemyDistance;
+			}
+		}
+		// Lock on to the target that was selected
 		if (newTarget != null) {
 			fighter.LockOnTarget (newTarget);
 			RepositionReticle ();
