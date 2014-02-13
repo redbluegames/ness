@@ -20,6 +20,7 @@ public class PlayerController : IController
 	GameObject targetReticle;
 	float reticleY;
 	Vector3 previousReticleScale;
+	const float LINE_OF_SIGHT_DIST = 15f;
 
 	void Awake ()
 	{
@@ -305,6 +306,11 @@ public class PlayerController : IController
 		GameObject newTarget = null;
 		float closestDistance = Vector3.SqrMagnitude (enemies [0].transform.position - transform.position);
 		foreach (GameObject enemy in enemies) {
+			// Skip enemy if it isn't in sight
+			bool inSight = enemy.GetComponent<Enemy> ().IsTargetVisible (fighter.gameObject, LINE_OF_SIGHT_DIST);
+			if (!inSight) {
+				continue;
+			}
 			float enemyDistance = Vector3.SqrMagnitude (enemy.transform.position - transform.position);
 			if (enemyDistance <= closestDistance) {
 				closestDistance = enemyDistance;
@@ -358,7 +364,6 @@ public class PlayerController : IController
 	{
 		const float ACCURACY_THRESHOLD = 110f; // Higher makes for more lenient targetting
 		const float TIE_THRESHOLD = 30f; // What angle is too close to pick on angle alone?
-		const float LINE_OF_SIGHT_DIST = 15f;
 
 		Vector3 targetPosition = fighter.target.transform.position; // Cache our target position
 
