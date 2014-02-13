@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
 	}
 
 	public bool isAttacking { get; private set; }
+	public Vector3 lastSeenTargetPosition { get; private set; }
 
 	public bool isInHit { get; private set; }
 
@@ -176,6 +177,33 @@ public class Enemy : MonoBehaviour
 		Damage damageOut = new Damage (10.0f, transform, hit);
 		GameObject hitGameObject = hit.transform.gameObject;
 		hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
+	}
+
+	/*
+	 * Perform a raycast and return whether the closest collision is
+	 * with the target.
+	 */
+	public bool IsTargetVisible (GameObject target, float distance)
+	{
+		Vector3 targetDirection = (target.transform.position - transform.position);
+		int allButEnemies = ~(1 << Layers.ENEMY); // 1s for all but Enemies layer
+		RaycastHit[] hits = Physics.RaycastAll (transform.position, targetDirection, distance,
+		                                        GameManager.Instance.LineOfSightMask & allButEnemies);
+		if (hits.Length <= 0) {
+			return false;
+		}
+		// Look through all hits and store off the closest
+		RaycastHit closestHit = hits [0];
+		for (int i = 0; i < hits.Length; ++i) {
+			if (hits [i].distance < closestHit.distance) {
+				closestHit = hits [i];
+			}
+		}
+		bool targetVisible = closestHit.collider.gameObject == target;
+		if (targetVisible) {
+			lastSeenTargetPosition = closestHit.collider.transform.position;
+		}
+		return targetVisible;
 	}
 
 	public void ReceiveKnockback (Vector3 direction, float duration)

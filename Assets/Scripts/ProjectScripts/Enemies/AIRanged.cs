@@ -18,7 +18,6 @@ public class AIRanged : MonoBehaviour
 	float SIGHT_DISTANCE = 50.0f;
 	bool targetInRange;
 	bool targetInSight;
-	Vector3 lastSeenTargetPosition;
 
 	void Start ()
 	{
@@ -34,9 +33,9 @@ public class AIRanged : MonoBehaviour
 		if (Target != null) {
 			float sqrDistanceToTarget = (Target.transform.position - transform.position).sqrMagnitude;
 			targetInRange = sqrDistanceToTarget <= ATTACK_RANGE_SQUARED;
-			targetInSight = IsTargetVisible ();
+			targetInSight = GetComponent<Enemy> ().IsTargetVisible (Target, SIGHT_DISTANCE);
 			if (!targetInSight) {
-				motor.MoveDirection = lastSeenTargetPosition - transform.position;
+				motor.MoveDirection = GetComponent<Enemy> ().lastSeenTargetPosition - transform.position;
 			} else if (!targetInRange && !isAttacking) {
 				// Approach target until in range
 				motor.MoveDirection = Target.transform.position - transform.position;
@@ -56,33 +55,6 @@ public class AIRanged : MonoBehaviour
 			// Always face the target
 			motor.FaceDirection = Target.transform.position - transform.position;
 		}
-	}
-
-	/*
-	 * Perform a raycast and return whether the closest collision is
-	 * with the target.
-	 */
-	bool IsTargetVisible ()
-	{
-		Vector3 targetDirection = (Target.transform.position - transform.position);
-		int allButEnemies = ~(1 << Layers.ENEMY); // 1s for all but Enemies layer
-		RaycastHit[] hits = Physics.RaycastAll (transform.position, targetDirection, SIGHT_DISTANCE,
-		                                        GameManager.Instance.LineOfSightMask & allButEnemies);
-		if (hits.Length <= 0) {
-			return false;
-		}
-		// Look through all hits and store off the closest
-		RaycastHit closestHit = hits [0];
-		for (int i = 0; i < hits.Length; ++i) {
-			if (hits [i].distance < closestHit.distance) {
-				closestHit = hits [i];
-			}
-		}
-		bool targetVisible = closestHit.collider.gameObject == Target;
-		if (targetVisible) {
-			lastSeenTargetPosition = closestHit.collider.transform.position;
-		}
-		return targetVisible;
 	}
 
 	void StartAttack ()
