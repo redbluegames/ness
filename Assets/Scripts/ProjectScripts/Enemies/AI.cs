@@ -8,6 +8,7 @@ public class AI : MonoBehaviour
 
 	Enemy enemy;
 	CountDownTimer attackCooldown = new CountDownTimer ();
+	const float WAIT_TIME = 3.0f;
 
 	void Start ()
 	{
@@ -36,7 +37,7 @@ public class AI : MonoBehaviour
 			bool isInAttackRange = sqrDistanceToTarget <= ATTACK_RANGE_SQUARED;
 			if (isInAttackRange && attackCooldown.IsTimeUp ()) {
 				enemy.WantsToAttack = true;
-				attackCooldown.StartTimer (3.0f);
+				attackCooldown.StartTimer (WAIT_TIME);
 			}
 
 			if (isInAttackRange && !enemy.isAttacking) {

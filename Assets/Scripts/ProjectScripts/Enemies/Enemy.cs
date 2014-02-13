@@ -10,8 +10,16 @@ public class Enemy : MonoBehaviour
 	public AudioClip takeHitSound;
 	public GameObject ragdollPrefab;
 	public TweenFlashColor tweenFlashColor;
+	public WeightClass weightClass; 
+	public enum WeightClass
+	{
+		Small,
+		Large
+	}
 
 	public bool isAttacking { get; private set; }
+
+	public bool isInHit { get; private set; }
 
 	// "WantsTo" variables
 	float moveThrottle;
@@ -29,8 +37,9 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
-	public Vector3 FaceDirection;
 	public bool WantsToAttack;
+	public Vector3 FaceDirection;
+
 	// References
 	CharacterMotor motor;
 	Animator animator;
@@ -108,7 +117,16 @@ public class Enemy : MonoBehaviour
 	{
 		if (usesAnimation) {
 			// Poll the current state instead of getting an animation complete event.
-			isAttacking = animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack");
+			isAttacking = animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Attack");
+			isInHit = animator.GetCurrentAnimatorStateInfo (0).IsName ("Base Layer.Stumble");
+		}
+	}
+
+	public void Stumble ()
+	{
+		if (usesAnimation) {
+			animator.SetTrigger ("Stumble");
+			EndAttackCast ();
 		}
 	}
 
@@ -129,6 +147,15 @@ public class Enemy : MonoBehaviour
 	/// </summary>
 	public void StartAttackCast ()
 	{
+		// Ignore events that occur while blending out of Attack. 
+		if (usesAnimation) {
+			bool isTransitioningToNonAttackState =
+				animator.IsInTransition (0) &&
+				!animator.GetNextAnimatorStateInfo (0).IsName ("Base Layer.Attack");
+			if (isTransitioningToNonAttackState) {
+				return;
+			}
+		}
 		attackCaster.OnHit += OnAttackHit;
 		attackCaster.Begin ();
 	}
@@ -182,6 +209,13 @@ public class Enemy : MonoBehaviour
 		// One disadvantage is we have to attach it to every object. I like that the RBtweens
 		// are standalone but this one isn't quite because you have to go into code to activate.
 		tweenFlashColor.Flash (Color.white, 0.2f);
+
+		// Apply the hit reaction
+		if (damageFromHit.HitReaction.Equals (AttackData.ReactionType.None)) {
+			if (weightClass == WeightClass.Small) {
+				Stumble ();
+			}
+		}
 	}
 
 	void Die (Damage lethalDamage)
