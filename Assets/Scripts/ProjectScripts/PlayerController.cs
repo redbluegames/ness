@@ -356,21 +356,27 @@ public class PlayerController : IController
 	/// <param name="vertical">Vertical.</param>
 	public void TargetNearDirection (float horizontal, float vertical)
 	{
-		const float ACCURACY_THRESHOLD = 60f; // Higher makes for more lenient targetting
-		const float BACKUP_THRESHOLD = 130f; // If no other targets are found, crank up leniency
-		const float TIE_THRESHOLD = 12.5f; // What angle is too close to pick on angle alone?
+		const float ACCURACY_THRESHOLD = 110f; // Higher makes for more lenient targetting
+		const float TIE_THRESHOLD = 30f; // What angle is too close to pick on angle alone?
+		const float LINE_OF_SIGHT_DIST = 15f;
+
+		Vector3 targetPosition = fighter.target.transform.position; // Cache our target position
 
 		Vector3 inputDirection = ConvertInputToCamera (horizontal, vertical);
-		Vector3 pointRelToTarget = fighter.target.transform.position + inputDirection;
-		Vector3 directionRelTarget = pointRelToTarget - fighter.target.transform.position;
+		Vector3 pointRelToTarget = targetPosition + inputDirection;
+		Vector3 directionRelTarget = pointRelToTarget - targetPosition;
 		GameObject newTarget = null;
 		float newTargetAngle = float.MaxValue;
 		float newTargetDistance = float.MaxValue;
 		// Iterate over our enemy list and pick the one at an angle closest to the input direction
 		foreach (GameObject enemy in enemies) {
-			Vector3 enemyToTarget = enemy.transform.position - fighter.target.transform.position;
-			float enemyDistance = Vector3.SqrMagnitude (enemy.transform.position - transform.position);
-			//float dot = Vector3.Dot (directionRelTarget, enemyToTarget);
+			// Skip enemy if it isn't in sight
+			bool inSight = enemy.GetComponent<Enemy> ().IsTargetVisible (fighter.gameObject, LINE_OF_SIGHT_DIST);
+			if (!inSight) {
+				continue;
+			}
+			Vector3 enemyToTarget = enemy.transform.position - targetPosition;
+			float enemyDistance = Vector3.SqrMagnitude (enemy.transform.position - targetPosition);
 			float angle = Vector3.Angle (directionRelTarget, enemyToTarget);
 			if (angle < ACCURACY_THRESHOLD && angle < newTargetAngle + TIE_THRESHOLD) {
 				// Break ties (within X degrees) by checking distance
@@ -386,10 +392,6 @@ public class PlayerController : IController
 					newTargetAngle = angle;
 					newTargetDistance = enemyDistance;
 				}
-			} else if (angle < BACKUP_THRESHOLD && angle < newTargetAngle + TIE_THRESHOLD) {
-				newTarget = enemy;
-				newTargetAngle = angle;
-				newTargetDistance = enemyDistance;
 			}
 		}
 		// Lock on to the target that was selected
