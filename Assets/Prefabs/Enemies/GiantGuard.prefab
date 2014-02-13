@@ -460,8 +460,9 @@ MonoBehaviour:
   takeHitSound: {fileID: 8300000, guid: 821f60eb613b02944a649d7bfdedcc88, type: 3}
   ragdollPrefab: {fileID: 100002, guid: 32f793a429728db4b8c5ce82143d318d, type: 2}
   tweenFlashColor: {fileID: 11400012}
-  FaceDirection: {x: 0, y: 0, z: 0}
+  weightClass: 1
   WantsToAttack: 0
+  FaceDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
