@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
 
 	// "WantsTo" variables
 	float moveThrottle;
-	private Vector3 moveDirection;
+	public Vector3 moveDirection;
 
 	public Vector3 MoveDirection {
 		get {
@@ -46,6 +46,7 @@ public class Enemy : MonoBehaviour
 	Animator animator;
 	Health health;
 	AttackCast attackCaster;
+	public AttackData currentAttack;
 	bool usesAnimation; // TODO remove this bool once all enemies use Animation
 
 	void Start ()
@@ -148,10 +149,10 @@ public class Enemy : MonoBehaviour
 	/// </summary>
 	public void StartAttackCast ()
 	{
+		// TODO Consolidate this and the StartAttack for each enemy AI.
 		// Ignore events that occur while blending out of Attack. 
 		if (usesAnimation) {
-			bool isTransitioningToNonAttackState =
-				animator.IsInTransition (0) &&
+			bool isTransitioningToNonAttackState = animator.IsInTransition (0) &&
 				!animator.GetNextAnimatorStateInfo (0).IsName ("Base Layer.Attack");
 			if (isTransitioningToNonAttackState) {
 				return;
@@ -160,6 +161,7 @@ public class Enemy : MonoBehaviour
 		attackCaster.OnHit += OnAttackHit;
 		attackCaster.Begin ();
 	}
+
 	
 	/// <summary>
 	/// End the sweep for damageable objects on the current attack
@@ -168,17 +170,18 @@ public class Enemy : MonoBehaviour
 	{
 		attackCaster.End ();
 	}
-	
+
 	/*
-	 * Deal damage to the hit object based on the current attack.
-	 */
+	* Deal damage to the hit object based on the current attack.
+	*/
 	void OnAttackHit (RaycastHit hit)
 	{
-		Damage damageOut = new Damage (10.0f, transform, hit);
+		// TODO Consolidate this and the OnAttackHit for each enemy AI.
+		Damage damageOut = new Damage (10.0f, currentAttack, hit, transform);
 		GameObject hitGameObject = hit.transform.gameObject;
 		hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
 	}
-
+	
 	/*
 	 * Perform a raycast and return whether the closest collision is
 	 * with the target.

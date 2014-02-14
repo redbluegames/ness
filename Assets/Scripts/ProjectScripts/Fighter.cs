@@ -465,7 +465,7 @@ public class Fighter : MonoBehaviour
 	{
 		Weapon activeWeapon = carriedWeapons [equippedWeaponIndex].GetComponent<Weapon> ();
 		//TODO Create a Damage tab in the google fu spreadsheet that assists with calculating desired damage.
-		Damage damageOut = new Damage (currentAttack.maxDamage, myTransform, new RaycastHit ());
+		Damage damageOut = new Damage (currentAttack.maxDamage, currentAttack, new RaycastHit (), myTransform);
 		activeWeapon.BeginAttack (damageOut, this);
 	}
 
@@ -571,7 +571,7 @@ public class Fighter : MonoBehaviour
 		// Spawn and fire projectile
 		Weapon firingWeapon = carriedWeapons [equippedWeaponIndex].GetComponent<Weapon> ();
 		GameObject projectilePrefab = null;
-		Damage damageOut = new Damage (currentAttack.maxDamage, currentAttack, myTransform);
+		Damage damageOut = new Damage (currentAttack.maxDamage, currentAttack, new RaycastHit (), myTransform);
 		if (currentAttack.strength == AttackData.Strength.Weak) {
 			projectilePrefab = firingWeapon.lightProjectile;
 		} else if (currentAttack.strength == AttackData.Strength.Strong) {
@@ -715,7 +715,11 @@ public class Fighter : MonoBehaviour
 			lastHitTime = Time.time;
 			health.TakeDamage (incomingDamage);
 			// Handle reaction type of successful hits
-			if (incomingDamage.Attack.reactionType == AttackData.ReactionType.Knockback) {
+			if (incomingDamage.Attack == null) {
+				// TODO This should be resolved when we have Damage refactored to either
+				// always include Attack or not. Right now we get attack on only some damage
+				// instances
+			} else if (incomingDamage.Attack.reactionType == AttackData.ReactionType.Knockback) {
 //				float knockBackDuration = 0.2f;
 				// Knock back in the opposite direction of the attacker.
 				//ReceiveKnockback ((myTransform.position - incomingDamage.Attacker.position).normalized, knockBackDuration);

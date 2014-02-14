@@ -73,7 +73,6 @@ public class AttackCast : MonoBehaviour
 			Vector3 directionToHitCollider = collider.gameObject.transform.position - transform.position;
 			Ray castRay = new Ray (transform.position, directionToHitCollider.normalized); 
 			RaycastHit hit = new RaycastHit ();
-			Debug.Log ("pos: " + castRay.origin + " direction: " + castRay.direction);
 			collider.Raycast (castRay, out hit, directionToHitCollider.magnitude);
 			if (hit.collider != null) {
 				ReportHit (hit);

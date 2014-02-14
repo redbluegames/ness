@@ -7,7 +7,6 @@ public class AIRanged : MonoBehaviour
 	public GameObject Target;
 	public GameObject projectilePrefab;
 	public GoogleFu.Attacks.rowIds attackId;
-	AttackData attack;
 	public CharacterMotor motor;
 	public Animation attackAnimation;
 	public AttackCast attackCaster;
@@ -16,16 +15,17 @@ public class AIRanged : MonoBehaviour
 	bool isAttacking;
 	float ATTACK_RANGE_SQUARED = 100.0f;
 	float SIGHT_DISTANCE = 50.0f;
-	bool targetInRange;
-	bool targetInSight;
+
+	// Attacks
+	AttackData attack;
 
 	// Cached objects
-	Enemy rangedEnemy;
+	Enemy enemy;
 
 	void Start ()
 	{
 		attack = AttackManager.Instance.GetAttack (attackId);
-		rangedEnemy = transform.parent.GetComponent<Enemy> ();
+		enemy = transform.parent.GetComponent<Enemy> ();
 	}
 
 	// Update is called once per frame
@@ -36,10 +36,10 @@ public class AIRanged : MonoBehaviour
 
 		if (Target != null) {
 			float sqrDistanceToTarget = (Target.transform.position - transform.position).sqrMagnitude;
-			targetInRange = sqrDistanceToTarget <= ATTACK_RANGE_SQUARED;
-			targetInSight = rangedEnemy.IsTargetVisible (Target, SIGHT_DISTANCE);
+			bool targetInRange = sqrDistanceToTarget <= ATTACK_RANGE_SQUARED;
+			bool targetInSight = enemy.IsTargetVisible (Target, SIGHT_DISTANCE);
 			if (!targetInSight) {
-				motor.MoveDirection = rangedEnemy.lastSeenTargetPosition - transform.position;
+				motor.MoveDirection = enemy.lastSeenTargetPosition - transform.position;
 			} else if (!targetInRange && !isAttacking) {
 				// Approach target until in range
 				motor.MoveDirection = Target.transform.position - transform.position;
@@ -86,7 +86,7 @@ public class AIRanged : MonoBehaviour
 	 */
 	void OnAttackHit (RaycastHit hit)
 	{
-		Damage damageOut = new Damage (10.0f, transform, hit);
+		Damage damageOut = new Damage (10.0f, attack, hit, transform);
 		GameObject hitGameObject = hit.transform.gameObject;
 		hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
 	}
@@ -99,7 +99,7 @@ public class AIRanged : MonoBehaviour
 		// Play firing animation
 //		animation.Play (attack.swingAnimation.name, PlayMode.StopAll);
 		// Spawn and fire projectile
-		Damage damageOut = new Damage (attack.maxDamage, attack, transform);
+		Damage damageOut = new Damage (attack.maxDamage, attack, new RaycastHit (), transform);
 		GameObject newProjectile = (GameObject)Instantiate (
 			projectilePrefab, transform.position, transform.rotation);
 		newProjectile.GetComponent<Projectile> ().Fire (2000.0f, 5.0f, transform.forward, damageOut, Team.BadGuys);
