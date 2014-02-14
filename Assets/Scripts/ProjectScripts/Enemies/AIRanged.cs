@@ -19,9 +19,13 @@ public class AIRanged : MonoBehaviour
 	bool targetInRange;
 	bool targetInSight;
 
+	// Cached objects
+	Enemy rangedEnemy;
+
 	void Start ()
 	{
 		attack = AttackManager.Instance.GetAttack (attackId);
+		rangedEnemy = transform.parent.GetComponent<Enemy> ();
 	}
 
 	// Update is called once per frame
@@ -33,9 +37,9 @@ public class AIRanged : MonoBehaviour
 		if (Target != null) {
 			float sqrDistanceToTarget = (Target.transform.position - transform.position).sqrMagnitude;
 			targetInRange = sqrDistanceToTarget <= ATTACK_RANGE_SQUARED;
-			targetInSight = GetComponent<Enemy> ().IsTargetVisible (Target, SIGHT_DISTANCE);
+			targetInSight = rangedEnemy.IsTargetVisible (Target, SIGHT_DISTANCE);
 			if (!targetInSight) {
-				motor.MoveDirection = GetComponent<Enemy> ().lastSeenTargetPosition - transform.position;
+				motor.MoveDirection = rangedEnemy.lastSeenTargetPosition - transform.position;
 			} else if (!targetInRange && !isAttacking) {
 				// Approach target until in range
 				motor.MoveDirection = Target.transform.position - transform.position;
@@ -94,9 +98,8 @@ public class AIRanged : MonoBehaviour
 	{
 		// Play firing animation
 //		animation.Play (attack.swingAnimation.name, PlayMode.StopAll);
-		
 		// Spawn and fire projectile
-		Damage damageOut = new Damage (attack.maxDamage, attack.reactionType, transform);
+		Damage damageOut = new Damage (attack.maxDamage, attack, transform);
 		GameObject newProjectile = (GameObject)Instantiate (
 			projectilePrefab, transform.position, transform.rotation);
 		newProjectile.GetComponent<Projectile> ().Fire (2000.0f, 5.0f, transform.forward, damageOut, Team.BadGuys);

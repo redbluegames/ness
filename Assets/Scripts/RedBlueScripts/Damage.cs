@@ -6,14 +6,14 @@ public class Damage
 	public RaycastHit HitLocation { get; set; }
 	public Transform Attacker { get; set; }
 	public float Amount { get; set; }
-	public AttackData.ReactionType HitReaction { get; set; }
+	public AttackData Attack;
 
-	public Damage (float amount, AttackData.ReactionType hitReaction, RaycastHit hitLocation, Transform attacker)
+	public Damage (float amount, AttackData attackData, RaycastHit hitLocation, Transform attacker)
 	{
 		HitLocation = hitLocation;
 		Amount = amount;
 		Attacker = attacker;
-		HitReaction = hitReaction;
+		Attack = attackData;
 	}
 
 	public Damage (float amount, Transform attacker, RaycastHit hitLocation)
@@ -21,14 +21,14 @@ public class Damage
 		Amount = amount;
 		HitLocation = hitLocation;
 		Attacker = attacker;
-		HitReaction = AttackData.ReactionType.None;
+		Attack = null;
 	}
 	
-	public Damage (float amount, AttackData.ReactionType hitReaction, Transform attacker)
+	public Damage (float amount, AttackData attackData, Transform attacker)
 	{
 		Amount = amount;
 		HitLocation = new RaycastHit ();
 		Attacker = attacker;
-		HitReaction = hitReaction;
+		Attack = attackData;
 	}
 }

@@ -21,9 +21,9 @@ public class Projectile : MonoBehaviour
 	public void Fire (float velocity, float secondsToDeath, Vector3 direction, Damage damage, Team shooterTeam)
 	{
 		team = shooterTeam;
+		damageOut = damage;
 		attackCast.OnHit += OnProjectileHit;
 		attackCast.Begin ();
-		damageOut = damage;
 		keepAlive = false;
 		startingTime = Time.time;
 		lifeTime = secondsToDeath;
@@ -50,6 +50,10 @@ public class Projectile : MonoBehaviour
 		GameObject hitGameObject = hit.transform.gameObject;
 		// TODO Refactor the way enemy detection works. Right now this only works for collisions
 		// in which the hitobject or its children have enemy, but not the parents (giantguard)
+		if (damageOut == null) {
+			Debug.Break ();
+		}
+		damageOut.HitLocation = hit;
 		Enemy enemy = hitGameObject.GetComponentInChildren<Enemy> ();
 		Fighter fighter = hitGameObject.GetComponentInChildren<Fighter> ();
 		if ((enemy != null && enemy.team != team) || (fighter != null && fighter.team != team)) {

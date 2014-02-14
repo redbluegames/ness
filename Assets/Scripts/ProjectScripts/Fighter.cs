@@ -299,7 +299,7 @@ public class Fighter : MonoBehaviour
 	 */
 	public void Block ()
 	{
-		if (isBlocking || isAttacking || chargeUpTimer.IsRunning() ) {
+		if (isBlocking || isAttacking || chargeUpTimer.IsRunning ()) {
 			return;
 		}
 		
@@ -492,12 +492,12 @@ public class Fighter : MonoBehaviour
 		// Cancel Attack can be called even if the player isn't attacking
 		if (currentAttack != null) {
 			// Only deactivate non-projectile attacks
-			if (string.Equals (currentAttack.projectilePrefab, string.Empty)) {
+			if (currentAttack.IsRanged ()) {
 				EndAttackCast ();
 			}
 		}
 		// Kill any attack trail
-		SetAttackTrailActive(false);
+		SetAttackTrailActive (false);
 		// Cancel charge ups
 		chargeUpTimer.StopTimer ();
 		currentChargeUpTime = 0;
@@ -541,7 +541,7 @@ public class Fighter : MonoBehaviour
 	{
 		isAttacking = true;
 		// Fire weapon, attack isn't chargable
-		bool isMeleeAttack = string.Equals (currentAttack.projectilePrefab, string.Empty);
+		bool isMeleeAttack = !currentAttack.IsRanged ();
 		if (isMeleeAttack) {
 			FireMeleeWeapon ();
 		} else {
@@ -555,7 +555,7 @@ public class Fighter : MonoBehaviour
 	 */
 	void FireMeleeWeapon ()
 	{
-		SetAttackTrailActive(true);
+		SetAttackTrailActive (true);
 		animation.Play (currentAttack.swingAnimation.name, PlayMode.StopAll);
 	}
 
@@ -571,7 +571,7 @@ public class Fighter : MonoBehaviour
 		// Spawn and fire projectile
 		Weapon firingWeapon = carriedWeapons [equippedWeaponIndex].GetComponent<Weapon> ();
 		GameObject projectilePrefab = null;
-		Damage damageOut = new Damage (currentAttack.maxDamage, currentAttack.reactionType, myTransform);
+		Damage damageOut = new Damage (currentAttack.maxDamage, currentAttack, myTransform);
 		if (currentAttack.strength == AttackData.Strength.Weak) {
 			projectilePrefab = firingWeapon.lightProjectile;
 		} else if (currentAttack.strength == AttackData.Strength.Strong) {
@@ -698,9 +698,13 @@ public class Fighter : MonoBehaviour
 			shieldFlash.Flash ();
 			PlaySound (blockSound);
 			// Cause attacker to get knocked back
+			// TODO We need a check for if the damage is ranged
 			if (shieldTime.GetTimerRuntime () < superBlockWindow) {
-				Enemy attackingEnemy = incomingDamage.Attacker.GetComponent<Enemy> ();
-				attackingEnemy.ReceiveKnockback (toHit.normalized * 15.0f, 0.5f);
+				// Only knockback enemies if non-projectile attacks
+				if (!incomingDamage.Attack.IsRanged ()) {
+					Enemy attackingEnemy = incomingDamage.Attacker.GetComponent<Enemy> ();
+					attackingEnemy.ReceiveKnockback (toHit.normalized * 15.0f, 0.5f);
+				}
 			}
 		} else {
 			// Play a new hit sound at the location. Must make minDistance the same as the
@@ -711,10 +715,10 @@ public class Fighter : MonoBehaviour
 			lastHitTime = Time.time;
 			health.TakeDamage (incomingDamage);
 			// Handle reaction type of successful hits
-			if (incomingDamage.HitReaction == AttackData.ReactionType.Knockback) {
-				float knockBackDuration = 0.2f;
+			if (incomingDamage.Attack.reactionType == AttackData.ReactionType.Knockback) {
+//				float knockBackDuration = 0.2f;
 				// Knock back in the opposite direction of the attacker.
-				ReceiveKnockback ((myTransform.position - incomingDamage.Attacker.position).normalized, knockBackDuration);
+				//ReceiveKnockback ((myTransform.position - incomingDamage.Attacker.position).normalized, knockBackDuration);
 			}
 		}
 	}

@@ -56,26 +56,26 @@ public class AttackCast : MonoBehaviour
 		// for a character's arm
 		
 		// Cast to see if anything is inside the starting position
-		CastForEmbeddedCollisions();
+		CastForEmbeddedCollisions ();
 	}
 
 	/// <summary>
 	/// Casts against the hit layer to see if any objects are starting embedded in the initial
 	/// sphere. An additional cast tries to confirm the hit location for the embedded object.
 	/// </summary>
-	void CastForEmbeddedCollisions()
+	void CastForEmbeddedCollisions ()
 	{
-		Collider[] embeddedColliders = Physics.OverlapSphere(transform.position, radius, hitLayer);
-		foreach(Collider collider in embeddedColliders)
-		{
+		Collider[] embeddedColliders = Physics.OverlapSphere (transform.position, radius, hitLayer);
+		foreach (Collider collider in embeddedColliders) {
 			// We need to create a RaycastHit event for each collider to get a collision location.
 			// Since it's impossible to see where an overlap occured in the sphere, cast towards
 			// the collider's position to try and find it.
 			Vector3 directionToHitCollider = collider.gameObject.transform.position - transform.position;
-			Ray castRay = new Ray(transform.position, directionToHitCollider); 
-			RaycastHit hit = new RaycastHit();
+			Ray castRay = new Ray (transform.position, directionToHitCollider.normalized); 
+			RaycastHit hit = new RaycastHit ();
+			Debug.Log ("pos: " + castRay.origin + " direction: " + castRay.direction);
 			collider.Raycast (castRay, out hit, directionToHitCollider.magnitude);
-			if(hit.collider != null ) {
+			if (hit.collider != null) {
 				ReportHit (hit);
 			}
 		}
@@ -113,7 +113,7 @@ public class AttackCast : MonoBehaviour
 	{
 		Vector3 direction = (transform.position - lastFramePosition);
 		float distance = direction.magnitude;
-		direction.Normalize();
+		direction.Normalize ();
 		RaycastHit[] hits;
 		hits = Physics.SphereCastAll (lastFramePosition, radius, direction, distance, hitLayer);
 		ReportHits (hits);

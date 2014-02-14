@@ -239,7 +239,7 @@ public class Enemy : MonoBehaviour
 		tweenFlashColor.Flash (Color.white, 0.2f);
 
 		// Apply the hit reaction
-		if (damageFromHit.HitReaction.Equals (AttackData.ReactionType.None)) {
+		if (damageFromHit.Attack.reactionType.Equals (AttackData.ReactionType.None)) {
 			if (weightClass == WeightClass.Small) {
 				Stumble ();
 			}
