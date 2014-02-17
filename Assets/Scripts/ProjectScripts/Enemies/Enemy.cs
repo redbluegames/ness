@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
 	}
 
 	public bool isAttacking { get; private set; }
+
 	public Vector3 lastSeenTargetPosition { get; private set; }
 
 	public bool isInHit { get; private set; }
@@ -252,10 +253,21 @@ public class Enemy : MonoBehaviour
 
 		// Remove the current collider so that the ragdoll doesn't unembed.
 		collider.enabled = false;
-		Vector3 forceDirection = transform.position - lethalDamage.Attacker.transform.position;
+		
 		GameObject ragdoll = (GameObject)Instantiate (ragdollPrefab, transform.position, transform.rotation);
-		Vector3 force = forceDirection * 100;
-		ragdoll.rigidbody.AddForce (force);
+
+		Vector3 forceDirection = transform.position - lethalDamage.Attacker.transform.position;
+		forceDirection.y = 0.0f;
+
+		// Apply a knockback force to spoof knockback for now.
+		if (lethalDamage.HitReaction == AttackData.ReactionType.Knockback) {
+			forceDirection.Normalize ();
+			forceDirection.y = 1.2f;
+			forceDirection.Normalize ();
+
+			Vector3 force = forceDirection * 14;
+			ragdoll.rigidbody.AddForce (force, ForceMode.Impulse);
+		}
 
 		Destroy (gameObject);
 		Destroy (ragdoll, 3.0f);

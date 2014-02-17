@@ -27,7 +27,7 @@ GameObject:
   - 4: {fileID: 400002}
   - 54: {fileID: 5400000}
   - 136: {fileID: 13600000}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: SkelRagdoll
   m_TagString: Untagged
   m_Icon: {fileID: 0}

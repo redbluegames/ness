@@ -10,7 +10,6 @@ public class Fighter : MonoBehaviour
 	public GameObject target;
 	Health health;
 	bool isHuman = false;
-
 	public Team team;
 	
 	// Timers
@@ -66,6 +65,7 @@ public class Fighter : MonoBehaviour
 	float attackDamping = 5.0f;
 	const float defaultDamping = 25.0f;
 	float damping = 25.0f;
+	public float mass = 6.0f;
 	CollisionFlags collisionFlags;
 
 	// Timers
@@ -162,6 +162,33 @@ public class Fighter : MonoBehaviour
 		} else {
 			HideChargeEffects ();
 		}
+	}
+	
+	// Push rigid bodies we come in contact with
+	void OnControllerColliderHit (ControllerColliderHit hit)
+	{
+		// Only push the ragdoll layer for now
+		LayerMask pushLayer = 1 << Layers.RAGDOLL;
+		if (!Layers.IsObjectOnLayerMask (hit.gameObject, pushLayer)) {
+			return;
+		}
+		Rigidbody body = hit.collider.attachedRigidbody;
+		// only push rigidbodies
+		if (body == null || body.isKinematic) {
+			return;
+		}
+		// Do not push things that are below us
+		if (hit.moveDirection.y < -0.4f) {
+			return;
+		}
+		// Only push in XZ direction
+		Vector3 pushDir = new Vector3 (hit.moveDirection.x, 0, hit.moveDirection.z);
+		// Multiply push vector by the character's speed to give believeable push amount
+		Vector3 pushForce = pushDir * hit.controller.velocity.magnitude * mass;
+
+		// Add Force instead of modifying velocity directly. This takes the rigid body's mass
+		// into account, and prevents stomping of velocity.
+		body.AddForceAtPosition (pushForce, hit.point);
 	}
 	
 	/*
@@ -299,7 +326,7 @@ public class Fighter : MonoBehaviour
 	 */
 	public void Block ()
 	{
-		if (isBlocking || isAttacking || chargeUpTimer.IsRunning() ) {
+		if (isBlocking || isAttacking || chargeUpTimer.IsRunning ()) {
 			return;
 		}
 		
@@ -465,7 +492,7 @@ public class Fighter : MonoBehaviour
 	{
 		Weapon activeWeapon = carriedWeapons [equippedWeaponIndex].GetComponent<Weapon> ();
 		//TODO Create a Damage tab in the google fu spreadsheet that assists with calculating desired damage.
-		Damage damageOut = new Damage (currentAttack.maxDamage, myTransform, new RaycastHit ());
+		Damage damageOut = new Damage (currentAttack.maxDamage, currentAttack.reactionType, new RaycastHit (), myTransform);
 		activeWeapon.BeginAttack (damageOut, this);
 	}
 
@@ -497,7 +524,7 @@ public class Fighter : MonoBehaviour
 			}
 		}
 		// Kill any attack trail
-		SetAttackTrailActive(false);
+		SetAttackTrailActive (false);
 		// Cancel charge ups
 		chargeUpTimer.StopTimer ();
 		currentChargeUpTime = 0;
@@ -555,7 +582,7 @@ public class Fighter : MonoBehaviour
 	 */
 	void FireMeleeWeapon ()
 	{
-		SetAttackTrailActive(true);
+		SetAttackTrailActive (true);
 		animation.Play (currentAttack.swingAnimation.name, PlayMode.StopAll);
 	}
 

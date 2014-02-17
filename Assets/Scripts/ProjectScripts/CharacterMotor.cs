@@ -9,6 +9,8 @@ public class CharacterMotor : MonoBehaviour
 	public float Speed = 5.0f;
 	public float MoveScale = 1.0f;
 	public float Gravity = -20.0f;
+	public float Mass = 1.0f;
+	public LayerMask PushLayer = 1 << Layers.RAGDOLL;
 	float verticalSpeed = 0.0f;
 	CollisionFlags collisionFlags;
 	Animator animator;
@@ -33,6 +35,34 @@ public class CharacterMotor : MonoBehaviour
 			MoveCharacter ();
 			UpdateFacing ();
 		}
+	}
+
+	// Push rigid bodies we come in contact with
+	void OnControllerColliderHit(ControllerColliderHit hit) {
+
+		// Only push the ragdoll layer for now
+		if(!Layers.IsObjectOnLayerMask(hit.gameObject, PushLayer)) {
+			return;
+		}
+
+		Rigidbody body = hit.collider.attachedRigidbody;
+
+		// Only push rigidbodies
+		if (body == null || body.isKinematic)
+			return;
+		// Do not push things that are below us
+		if (hit.moveDirection.y < -0.4f)
+			return;
+
+		// Only push in XZ direction
+		Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+		// Multiply push vector by the character's speed to give believeable push amount
+		Vector3 pushForce = pushDir * hit.controller.velocity.magnitude * Mass;
+		
+		// Add Force instead of modifying velocity directly. This takes the rigid body's mass
+		// into account, and prevents stomping of velocity.
+		body.AddForceAtPosition (pushForce, hit.point);
+
 	}
 
 	void OnAnimatorMove ()
