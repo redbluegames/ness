@@ -58,6 +58,6 @@ public class AI : MonoBehaviour
 	/// </summary>
 	void FindTarget ()
 	{
-		Target = GameObject.Find (ObjectNames.PLAYER);
+		Target = GameObject.Find (SceneObjectNames.PLAYER);
 	}
 }

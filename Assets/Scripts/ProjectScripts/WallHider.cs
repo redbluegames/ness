@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -14,7 +14,7 @@ public class WallHider : MonoBehaviour
 
 	void Awake ()
 	{
-		GameObject player = GameObject.Find (ObjectNames.PLAYER);
+		GameObject player = GameObject.Find (SceneObjectNames.PLAYER);
 		playerTransform = player.transform;
 		cameraTransform = Camera.main.transform;
 	}

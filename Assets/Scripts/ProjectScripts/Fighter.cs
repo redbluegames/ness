@@ -223,7 +223,7 @@ public class Fighter : MonoBehaviour
 		EquipWeapon (equippedWeaponIndex);
 
 		// Initialize shield durability for the prototype.
-		ShieldDurability = 100.0f;
+		ShieldDurability = 1.0f;
 	}
 
 	/*
@@ -231,7 +231,7 @@ public class Fighter : MonoBehaviour
 	 */
 	void SetupEnemyFighter ()
 	{
-		AttackManager attackManager = (AttackManager)GameObject.Find (ObjectNames.MANAGERS).GetComponent <AttackManager> ();
+		AttackManager attackManager = (AttackManager)GameObject.Find (SceneObjectNames.MANAGERS).GetComponent <AttackManager> ();
 		attacks = new AttackData[Enum.GetNames (typeof(AttackType)).Length];
 		attacks [(int)AttackType.Weak] = attackManager.GetAttack (GoogleFu.Attacks.rowIds.ENEMY_WEAK);
 		attacks [(int)AttackType.Strong] = attackManager.GetAttack (GoogleFu.Attacks.rowIds.ENEMY_STRONG);
@@ -778,7 +778,7 @@ public class Fighter : MonoBehaviour
 	/// <param name="incomingDamage">Incoming damage.</param>
 	void DecreaseShieldDurability (Damage incomingDamage)
 	{
-		const float durabilityPerDamage = 1f;
+		const float durabilityPerDamage = 0.01f;
 		float durabilityLost = incomingDamage.Amount * durabilityPerDamage;
 		ShieldDurability = Mathf.Max(ShieldDurability - durabilityLost, 0.0f);
 		if(IsShieldBroken())
@@ -794,7 +794,7 @@ public class Fighter : MonoBehaviour
 	/// <returns><c>true</c> if the shield broken and unusable; otherwise, <c>false</c>.</returns>
 	bool IsShieldBroken ()
 	{
-		return ShieldDurability <= 0.0f;
+		return ShieldDurability <= 0.0001f;
 	}
 
 	/*

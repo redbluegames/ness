@@ -37,9 +37,9 @@ public class PlayerController : IController
 	void AssignReferences ()
 	{
 		enemies = new List<GameObject> ();
-		pointer = GameObject.Find (ObjectNames.POINTER);
+		pointer = GameObject.Find (SceneObjectNames.POINTER);
 		fighter = gameObject.GetComponent<Fighter> ();
-		targetReticle = GameObject.Find (ObjectNames.TARGET_RETICLE);
+		targetReticle = GameObject.Find (SceneObjectNames.TARGET_RETICLE);
 		reticleY = targetReticle.transform.position.y;
 	}
 	

@@ -74,7 +74,7 @@ public class AIRanged : MonoBehaviour
 	
 	void FindTarget ()
 	{
-		Target = GameObject.Find (ObjectNames.PLAYER);
+		Target = GameObject.Find (SceneObjectNames.PLAYER);
 	}
 
 	/*

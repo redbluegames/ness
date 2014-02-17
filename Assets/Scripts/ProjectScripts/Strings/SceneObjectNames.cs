@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ObjectNames
+public class SceneObjectNames
 {
 	public static string PLAYER = "Player";
 	public static string POINTER = "Pointer";

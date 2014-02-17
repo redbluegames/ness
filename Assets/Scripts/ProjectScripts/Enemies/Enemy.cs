@@ -62,7 +62,7 @@ public class Enemy : MonoBehaviour
 	void AddToPlayerEnemyList ()
 	{
 		if (team == Team.BadGuys) {
-			PlayerController player = GameObject.Find (ObjectNames.PLAYER).GetComponent<PlayerController> ();
+			PlayerController player = GameObject.Find (SceneObjectNames.PLAYER).GetComponent<PlayerController> ();
 			player.RememberEnemy (gameObject);
 		}
 	}
@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour
 	{
 		if (team == Team.BadGuys) {
 			// Take enemy off the player's list of enemies
-			PlayerController player = GameObject.Find (ObjectNames.PLAYER).GetComponent<PlayerController> ();
+			PlayerController player = GameObject.Find (SceneObjectNames.PLAYER).GetComponent<PlayerController> ();
 			player.ForgetEnemy (gameObject);
 		}
 	}

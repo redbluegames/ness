@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Spawner : MonoBehaviour
@@ -12,7 +12,7 @@ public class Spawner : MonoBehaviour
 	void Start ()
 	{
 		spawnReady = true;
-		prefabContainer = GameObject.Find (ObjectNames.DYNAMIC_OBJECTS);
+		prefabContainer = GameObject.Find (SceneObjectNames.DYNAMIC_OBJECTS);
 	}
 
 	// Update is called once per frame

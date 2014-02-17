@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class FXParenter : MonoBehaviour
@@ -17,7 +17,7 @@ public class FXParenter : MonoBehaviour
 	IEnumerator ParentFXWhenLoaded ()
 	{
 		CFX_SpawnSystem fxSpawner = GetComponent<CFX_SpawnSystem> ();
-		Transform container = GameObject.Find (ObjectNames.FX_POOL).transform;
+		Transform container = GameObject.Find (SceneObjectNames.FX_POOL).transform;
 
 		// Spin until the FX are loaded
 		while (!CFX_SpawnSystem.AllObjectsLoaded) {
