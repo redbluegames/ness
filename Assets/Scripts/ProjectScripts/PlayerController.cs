@@ -106,7 +106,6 @@ public class PlayerController : IController
 		float deadStickThreshold = 0.5f;
 		InputDevice xbox = InputDevices.GetAllInputDevices () [(int)InputDevices.ControllerTypes.XBox];
 		float rightStickPressedAxis = Input.GetAxisRaw (RBInput.ConcatPlayerIndex (InputStrings.TARGET, PlayerIndex, xbox));
-		Debug.Log ("rightstickPressed: " + rightStickPressedAxis);
 		bool rightStickPressed = rightStickPressedAxis >= 0.99 && rightStickAvailable;
 		// Consolidate bool for PC and XBox
 		bool isTargetPressed = RBInput.GetButtonDownForPlayer (InputStrings.TARGET, PlayerIndex) ||

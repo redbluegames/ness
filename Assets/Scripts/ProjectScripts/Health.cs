@@ -31,7 +31,6 @@ public class Health : MonoBehaviour
 	protected void AdjustHealth (Damage incomingDamage)
 	{
 		curHealth -= incomingDamage.Amount;
-		Debug.Log ("Health: Subtracting = " + incomingDamage.Amount);
 		if (curHealth <= NO_HEALTH) {
 			curHealth = NO_HEALTH;
 			KillOwner (incomingDamage);
