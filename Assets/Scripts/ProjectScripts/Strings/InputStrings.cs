@@ -11,6 +11,7 @@ public static class InputStrings
 	public static string TARGETUP = "TargetUp";
 	public static string TARGETDOWN = "TargetDown";
 	public static string TARGETHORIZONTAL = "TargetHorizontal";
+	public static string TARGETVERTCIAL = "TargetVertical";
 	public static string FIRE = "Fire1";
 	public static string FIRE2 = "Fire2";
 	public static string BLOCK = "Block";

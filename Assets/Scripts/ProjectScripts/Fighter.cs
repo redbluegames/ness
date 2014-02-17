@@ -299,7 +299,7 @@ public class Fighter : MonoBehaviour
 	 */
 	public void Block ()
 	{
-		if (isBlocking || isAttacking || chargeUpTimer.IsRunning() ) {
+		if (isBlocking || isAttacking || chargeUpTimer.IsRunning ()) {
 			return;
 		}
 		
@@ -497,7 +497,7 @@ public class Fighter : MonoBehaviour
 			}
 		}
 		// Kill any attack trail
-		SetAttackTrailActive(false);
+		SetAttackTrailActive (false);
 		// Cancel charge ups
 		chargeUpTimer.StopTimer ();
 		currentChargeUpTime = 0;
@@ -555,7 +555,7 @@ public class Fighter : MonoBehaviour
 	 */
 	void FireMeleeWeapon ()
 	{
-		SetAttackTrailActive(true);
+		SetAttackTrailActive (true);
 		animation.Play (currentAttack.swingAnimation.name, PlayMode.StopAll);
 	}
 
@@ -686,7 +686,7 @@ public class Fighter : MonoBehaviour
 	public void ApplyDamage (Damage incomingDamage)
 	{
 		//TODO derive this from the attack, or damage info
-		playerCamera.Shake (3.0f, 0.2f, 0.1f);
+		playerCamera.Shake (3.0f, 0.2f, 0.4f);
 		// Handle blocked hits first
 		Vector3 toHit = incomingDamage.HitLocation.point - myTransform.position;
 		bool hitFromFront = Vector3.Dot (myTransform.forward, toHit.normalized) < 0;

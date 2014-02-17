@@ -13,7 +13,7 @@ public class PlayerController : IController
 
 	bool isPlayerBound;
 	bool rightStickAvailable = true;
-	bool rightStickHorizontalAvailable = true;
+	bool rightStickAxisAvailable = true;
 
 	// Targetting variables
 	GameObject pointer;
@@ -106,6 +106,7 @@ public class PlayerController : IController
 		float deadStickThreshold = 0.5f;
 		InputDevice xbox = InputDevices.GetAllInputDevices () [(int)InputDevices.ControllerTypes.XBox];
 		float rightStickPressedAxis = Input.GetAxisRaw (RBInput.ConcatPlayerIndex (InputStrings.TARGET, PlayerIndex, xbox));
+		Debug.Log ("rightstickPressed: " + rightStickPressedAxis);
 		bool rightStickPressed = rightStickPressedAxis >= 0.99 && rightStickAvailable;
 		// Consolidate bool for PC and XBox
 		bool isTargetPressed = RBInput.GetButtonDownForPlayer (InputStrings.TARGET, PlayerIndex) ||
@@ -125,15 +126,20 @@ public class PlayerController : IController
 		if (fighter.isLockedOn) {
 			// PC and Controller controls likely should diverge here due to right stick use
 			InputDevice pc = InputDevices.GetAllInputDevices () [(int)InputDevices.ControllerTypes.Keyboard];
-			float aimAxis = Input.GetAxisRaw (RBInput.ConcatPlayerIndex (InputStrings.TARGETHORIZONTAL, PlayerIndex, xbox));
+			float horizontalTargetAxis = Input.GetAxisRaw (RBInput.ConcatPlayerIndex (InputStrings.TARGETHORIZONTAL, PlayerIndex, xbox));
+			float verticalTargetAxis = -Input.GetAxisRaw (RBInput.ConcatPlayerIndex (InputStrings.TARGETVERTCIAL, PlayerIndex, xbox));
 
 			// Move target in axis direction
 			bool changingTarget = false;
 			float horizontal = 0;
 			float vertical = 0;
-			// Set horizontal input
+
+			//
+			// Read in PC input
+			//
+			// Set Horizontal Input for PC
 			if (Input.GetButtonDown (RBInput.ConcatPlayerIndex (InputStrings.TARGETLEFT, PlayerIndex, pc))) {
-				//|| (aimAxis < -deadStickThreshold && rightStickHorizontalAvailable)) {
+				//|| )) {
 				//rightStickHorizontalAvailable = false;
 				//TargetNext (true);
 				horizontal = -1;
@@ -150,20 +156,29 @@ public class PlayerController : IController
 				vertical = 1;
 				changingTarget = true;
 			}
+
+			//
+			// Read in XBox input
+			//
+			// Set Horizontal and Vertical values for XBox
+			bool horizontalAxisPressed = rightStickAxisAvailable &&
+				(horizontalTargetAxis < -deadStickThreshold || horizontalTargetAxis > deadStickThreshold);
+			bool verticalAxisPressed = rightStickAxisAvailable &&
+				(verticalTargetAxis < -deadStickThreshold || verticalTargetAxis > deadStickThreshold);
+			if (horizontalAxisPressed || verticalAxisPressed) {
+				rightStickAxisAvailable = false;
+				TargetNearDirection (horizontalTargetAxis, verticalTargetAxis);
+				changingTarget = true;
+			}
+
+			// Make target change
 			if (changingTarget) {
 				TargetNearDirection (horizontal, vertical);
 			}
-			/*
-			
-			// Move target right
-			if (Input.GetButtonDown (RBInput.ConcatPlayerIndex (InputStrings.TARGETRIGHT, PlayerIndex, pc)) 
-				|| (aimAxis > deadStickThreshold && rightStickHorizontalAvailable)) {
-				rightStickHorizontalAvailable = false;
-				TargetNearDirection (1, 0);
-//				TargetNext (false);
-			}*/
+
 			// Enforce stick behavior like a button
-			rightStickHorizontalAvailable = IsAxisDead (aimAxis, deadStickThreshold);
+			rightStickAxisAvailable = IsAxisDead (horizontalTargetAxis, deadStickThreshold) && 
+				IsAxisDead (verticalTargetAxis, deadStickThreshold);
 		}
 		rightStickAvailable = IsAxisDead (rightStickPressedAxis, deadStickThreshold);
 	}
