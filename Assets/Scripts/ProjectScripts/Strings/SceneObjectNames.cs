@@ -4,6 +4,7 @@ using System.Collections;
 public class SceneObjectNames
 {
 	public static string PLAYER = "Player";
+	public static string GROUND = "Ground";
 	public static string POINTER = "Pointer";
 	public static string TARGET_RETICLE = "TargetReticle";
 	public static string ATTACK_CASTER = "AttackCaster";
