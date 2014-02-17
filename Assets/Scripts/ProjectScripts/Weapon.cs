@@ -47,6 +47,8 @@ public class Weapon : MonoBehaviour
 		fx.particleSystem.Simulate (0.05f);
 		fx.particleSystem.Play ();
 
+		// Assign the hit location to the damage
+		damageOut.HitLocation = hit;
 		hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
 		weaponUser.SendMessage ("NotifyAttackHit", SendMessageOptions.DontRequireReceiver);
 	}
