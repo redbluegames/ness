@@ -246,7 +246,7 @@ public class PlayerController : IController
 		} else if (RBInput.GetAxisForPlayer (InputStrings.BLOCK, PlayerIndex) < 1 ||
 			RBInput.GetButtonUpForPlayer (InputStrings.BLOCK, PlayerIndex)) {
 			if (fighter.isBlocking) {
-				fighter.UnBlock ();
+				fighter.UnBlock (false);
 			}
 		}
 	}

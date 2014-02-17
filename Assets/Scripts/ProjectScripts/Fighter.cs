@@ -21,10 +21,12 @@ public class Fighter : MonoBehaviour
 	// Weapons and Attacks
 	public GameObject weaponHand;
 	public GameObject[] carriedWeapons;
+	public GameObject Shield;
 	public int equippedWeaponIndex;
 	public AttackData[] attacks;
 	public AttackData currentAttack;
 	public bool feetPlanted;
+	public float ShieldDurability {get; private set;}
 
 	// State Variables
 	public bool isAttacking { get; private set; }
@@ -38,6 +40,7 @@ public class Fighter : MonoBehaviour
 	public TrailRenderer swingTrail;
 	public AudioClip blockSound;
 	public AudioClip shieldUpSound;
+	public AudioClip shieldBreakSound;
 	public AudioClip takeHitSound;
 	public AudioSource attackAndBlockChannel;
 	public GameObject chargeFX; 
@@ -65,7 +68,7 @@ public class Fighter : MonoBehaviour
 	float attackDamping = 5.0f;
 	const float defaultDamping = 25.0f;
 	float damping = 25.0f;
-	public float mass = 6.0f;
+	public float mass = 6.0f; // Mass is used to push rigidbodies. This belongs on the motor, eventually.
 	CollisionFlags collisionFlags;
 
 	// Timers
@@ -164,7 +167,7 @@ public class Fighter : MonoBehaviour
 		}
 	}
 	
-	// Push rigid bodies we come in contact with
+	// Push rigid bodies we come in contact with. This should be moved to a motor, ultimately.
 	void OnControllerColliderHit (ControllerColliderHit hit)
 	{
 		// Only push the ragdoll layer for now
@@ -218,6 +221,9 @@ public class Fighter : MonoBehaviour
 		carriedWeapons [equippedWeaponIndex] = WeaponManager.Instance.SpawnWeapon (Weapons.rowIds.SPEAR, weaponHand);
 		carriedWeapons [equippedWeaponIndex + 1] = WeaponManager.Instance.SpawnWeapon (Weapons.rowIds.BOW, weaponHand);
 		EquipWeapon (equippedWeaponIndex);
+
+		// Initialize shield durability for the prototype.
+		ShieldDurability = 100.0f;
 	}
 
 	/*
@@ -263,9 +269,7 @@ public class Fighter : MonoBehaviour
 			return;
 		}
 		if (isBlocking) {
-			// TODO Get Edward to help make the animation unblock while attacking animation
-			// is playing. Is this worth it without using mechanim?
-			UnBlock ();
+			UnBlock (false);
 		}
 		currentAttack = attacks [(int)attackType];
 		if (currentAttack.controlType == AttackData.ControlType.Hold) {
@@ -311,7 +315,7 @@ public class Fighter : MonoBehaviour
 	{
 		if (IsMoving () || IsIdle ()) {
 			if (isBlocking) {
-				UnBlock ();
+				UnBlock (false);
 			}
 			currentDodgeDirection = direction;
 			dodgeSpeed = startDodgeSpeed;
@@ -326,6 +330,13 @@ public class Fighter : MonoBehaviour
 	 */
 	public void Block ()
 	{
+		// Do not let them block if they don't have any durability left.
+		if(IsShieldBroken())
+		{
+			// Could play an error sound here.
+			return;
+		}
+
 		if (isBlocking || isAttacking || chargeUpTimer.IsRunning ()) {
 			return;
 		}
@@ -340,11 +351,25 @@ public class Fighter : MonoBehaviour
 	/*
 	 * Set the fighter back to non-blocking state.
 	 */
-	public void UnBlock ()
+	public void UnBlock (bool isShieldBreak)
 	{
-		PlaySound (shieldUpSound);
+		if(isShieldBreak) {
+			PlaySound (shieldBreakSound);
+		} else {
+			PlaySound (shieldUpSound);
+		}
 		shieldTime.StopTimer ();
 		isBlocking = false;
+	}
+
+	/// <summary>
+	/// Breaks the fighter's shield
+	/// </summary>
+	void BreakShield ()
+	{
+		// Must stop using a broken shield
+		UnBlock (true);
+		Shield.SetActive(false);
 	}
 
 	/*
@@ -729,6 +754,7 @@ public class Fighter : MonoBehaviour
 				Enemy attackingEnemy = incomingDamage.Attacker.GetComponent<Enemy> ();
 				attackingEnemy.ReceiveKnockback (toHit.normalized * 15.0f, 0.5f);
 			}
+			DecreaseShieldDurability (incomingDamage);
 		} else {
 			// Play a new hit sound at the location. Must make minDistance the same as the
 			// attack channel so that it plays at the same volume. This is kind of weird...
@@ -744,6 +770,31 @@ public class Fighter : MonoBehaviour
 				ReceiveKnockback ((myTransform.position - incomingDamage.Attacker.position).normalized, knockBackDuration);
 			}
 		}
+	}
+
+	/// <summary>
+	/// Decreases the shield's durability and breaks it if it is depleted.
+	/// </summary>
+	/// <param name="incomingDamage">Incoming damage.</param>
+	void DecreaseShieldDurability (Damage incomingDamage)
+	{
+		const float durabilityPerDamage = 1f;
+		float durabilityLost = incomingDamage.Amount * durabilityPerDamage;
+		ShieldDurability = Mathf.Max(ShieldDurability - durabilityLost, 0.0f);
+		if(IsShieldBroken())
+		{
+			// Break their shield if this is the last blow the shield can take
+			BreakShield();
+		}
+	}
+
+	/// <summary>
+	/// Evaluates the shield's durability to determine if it's still usable.
+	/// </summary>
+	/// <returns><c>true</c> if the shield broken and unusable; otherwise, <c>false</c>.</returns>
+	bool IsShieldBroken ()
+	{
+		return ShieldDurability <= 0.0f;
 	}
 
 	/*

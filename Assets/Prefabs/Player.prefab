@@ -808,7 +808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: .131582707, g: .742647052, b: .0163819361, a: 0}
-  duration: .100000001
+  duration: .150000006
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -839,6 +839,7 @@ MonoBehaviour:
   currentChargeUpTime: 0
   weaponHand: {fileID: 100014}
   carriedWeapons: []
+  Shield: {fileID: 100020}
   equippedWeaponIndex: 0
   attacks: []
   currentAttack: {fileID: 0}
@@ -849,9 +850,11 @@ MonoBehaviour:
   swingTrail: {fileID: 0}
   blockSound: {fileID: 8300000, guid: 9426813ea58fd86479986905dd31ed24, type: 3}
   shieldUpSound: {fileID: 8300000, guid: 2fef9763e85ac9148b142e8e6d1b7105, type: 3}
+  shieldBreakSound: {fileID: 8300000, guid: 9b25e4b63e0564466ae0af42d803794a, type: 3}
   takeHitSound: {fileID: 8300000, guid: 821f60eb613b02944a649d7bfdedcc88, type: 3}
   attackAndBlockChannel: {fileID: 8200000}
   chargeFX: {fileID: 100012}
+  mass: 6
   nativeColor: {r: .204476625, g: .437436044, b: .897058845, a: 0}
   characterState: 0
 --- !u!114 &11400006
