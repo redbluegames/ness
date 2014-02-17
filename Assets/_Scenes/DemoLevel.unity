@@ -1983,10 +1983,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1084547139}
-  - {fileID: 1136523972}
-  - {fileID: 1778348738}
   - {fileID: 145281145}
+  - {fileID: 1136523972}
+  - {fileID: 1084547139}
+  - {fileID: 1778348738}
   m_Father: {fileID: 623008919}
 --- !u!1 &480275542
 GameObject:
@@ -2198,7 +2198,7 @@ Prefab:
       objectReference: {fileID: 1079692479}
     - target: {fileID: 11400000, guid: 420716de023694804a0c1c15ab1deefe, type: 2}
       propertyPath: defaultOffset.x
-      value: 3
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 420716de023694804a0c1c15ab1deefe, type: 2}
       propertyPath: defaultOffset.z
@@ -6157,7 +6157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followTarget: {fileID: 1079692479}
   viewPortIndex: 0
-  defaultOffset: {x: 3, y: 11, z: -3.5}
+  defaultOffset: {x: 3.5, y: 11, z: -3.5}
 --- !u!81 &1523060951
 AudioListener:
   m_ObjectHideFlags: 0
