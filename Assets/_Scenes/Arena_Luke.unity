@@ -1842,7 +1842,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 504339625}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Pool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2387,6 +2387,30 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100066, guid: b3c899703af1066418eb7add2f1d9454, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100070, guid: b3c899703af1066418eb7add2f1d9454, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100068, guid: b3c899703af1066418eb7add2f1d9454, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100062, guid: b3c899703af1066418eb7add2f1d9454, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100014, guid: b3c899703af1066418eb7add2f1d9454, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100064, guid: b3c899703af1066418eb7add2f1d9454, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b3c899703af1066418eb7add2f1d9454, type: 2}
   m_RootGameObject: {fileID: 1962522903}
@@ -2717,7 +2741,7 @@ GameObject:
   - 33: {fileID: 1004776767}
   - 65: {fileID: 1004776766}
   - 23: {fileID: 1004776765}
-  m_Layer: 11
+  m_Layer: 2
   m_Name: PoolWest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3137,7 +3161,7 @@ GameObject:
   - 33: {fileID: 1068488439}
   - 65: {fileID: 1068488438}
   - 23: {fileID: 1068488437}
-  m_Layer: 11
+  m_Layer: 2
   m_Name: PoolEast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4171,7 +4195,7 @@ GameObject:
   - 64: {fileID: 1283372059}
   - 23: {fileID: 1283372058}
   - 114: {fileID: 1283372061}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4589,7 +4613,7 @@ GameObject:
   - 33: {fileID: 1425265057}
   - 65: {fileID: 1425265056}
   - 23: {fileID: 1425265055}
-  m_Layer: 11
+  m_Layer: 2
   m_Name: PoolWest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5510,7 +5534,7 @@ GameObject:
   - 33: {fileID: 1830053463}
   - 65: {fileID: 1830053462}
   - 23: {fileID: 1830053461}
-  m_Layer: 11
+  m_Layer: 2
   m_Name: PoolWest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
