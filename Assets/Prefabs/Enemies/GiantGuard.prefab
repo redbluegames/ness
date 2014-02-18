@@ -541,10 +541,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCaster: {fileID: 11400004}
-  SIGHT_DISTANCE: 50
-  attackIds:
-  - GIANT_SWING
-  - GIANT_BIGSWING
+  sightDistance: 50
+  attackIds: 0b0000000c000000
+  cooldownTime: .5
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
