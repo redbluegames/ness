@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class AIGiant : MonoBehaviour
+public class AILegacy : MonoBehaviour
 {
 	public GameObject Target { get; private set; }
 	Enemy enemy;
@@ -51,7 +51,6 @@ public class AIGiant : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-	
 		FindTarget ();
 
 		if (Target != null) {
@@ -62,7 +61,9 @@ public class AIGiant : MonoBehaviour
 			float sqrRange = intendedAttack.range * intendedAttack.range;
 			bool targetInRange = sqrDistanceToTarget < sqrRange;
 			bool targetInSight = enemy.IsTargetVisible (Target, sightDistance);
-			if (!targetInRange && !isAttacking) {
+			if (!targetInSight) {
+				enemy.MoveDirection = enemy.lastSeenTargetPosition - transform.position;
+			} else if (!targetInRange && !isAttacking) {
 				// Approach target until in range
 				enemy.MoveDirection = Target.transform.position - transform.position;
 			} else {
@@ -74,6 +75,9 @@ public class AIGiant : MonoBehaviour
 					StartAttack (intendedAttack);
 					intendedAttack = null;
 				} else if (isAttacking && attackTime.IsTimeUp ()) {
+					if (enemy.currentAttack.IsRanged ()) {
+						FireProjectileWeapon (enemy.currentAttack);
+					}
 					EndAttack ();
 				}
 
@@ -81,10 +85,9 @@ public class AIGiant : MonoBehaviour
 			}
 
 			// Always face the target, ignoring y coordinates
-			if (!isAttacking) {
-				float yFaceDirection = transform.position.y;
+			if (!isAttacking || (isAttacking && enemy.currentAttack.IsRanged ())) {
 				enemy.FaceDirection = Target.transform.position - transform.position;
-				enemy.FaceDirection.y = yFaceDirection;
+				enemy.FaceDirection.y = 0;
 			}
 		}
 	}
@@ -112,9 +115,7 @@ public class AIGiant : MonoBehaviour
 		// the current attack in one of these classes.
 		enemy.currentAttack = attackToStart;
 		attackAnimation.Play (attackToStart.swingAnimation.name);
-		if (attackToStart.IsRanged ()) {
-			FireProjectileWeapon (attackToStart);
-		} else {
+		if (!attackToStart.IsRanged ()) {
 			attackCaster.OnHit += OnAttackHit;
 			attackCaster.Begin ();
 			trailRenderer.enabled = true;
