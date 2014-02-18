@@ -20,7 +20,7 @@ public class PlayerController : IController
 	GameObject targetReticle;
 	float reticleY;
 	Vector3 previousReticleScale;
-	const float LINE_OF_SIGHT_DIST = 15f;
+	const float LINE_OF_SIGHT_DIST = 25f;
 
 	void Awake ()
 	{
@@ -394,9 +394,9 @@ public class PlayerController : IController
 			if (!inSight) {
 				continue;
 			}
-			Vector3 enemyToTarget = enemy.transform.position - targetPosition;
+			Vector3 targetToEnemy = enemy.transform.position - targetPosition;
 			float enemyDistance = Vector3.SqrMagnitude (enemy.transform.position - targetPosition);
-			float angle = Vector3.Angle (directionRelTarget, enemyToTarget);
+			float angle = Vector3.Angle (directionRelTarget, targetToEnemy);
 			if (angle < ACCURACY_THRESHOLD && angle < newTargetAngle + TIE_THRESHOLD) {
 				// Break ties (within X degrees) by checking distance
 				if (angle > newTargetAngle - TIE_THRESHOLD && angle < newTargetAngle + TIE_THRESHOLD) {

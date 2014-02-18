@@ -35,4 +35,13 @@ public class AttackData : ScriptableObject
 		Weak,
 		Strong
 	}
+
+	/// <summary>
+	/// Determines whether this attack is ranged.
+	/// </summary>
+	/// <returns><c>true</c> if this attack is ranged; otherwise, <c>false</c>.</returns>
+	public bool IsRanged ()
+	{
+		return !string.Equals (projectilePrefab, string.Empty);
+	}
 }

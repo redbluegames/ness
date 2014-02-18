@@ -71,14 +71,16 @@ ModelImporter:
       - time: .684310019
         functionName: StartAttackCast
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 100016, guid: f1539c0a3585844a1b01d3bd755f3b00,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: .932378352
         functionName: EndAttackCast
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 100016, guid: f1539c0a3585844a1b01d3bd755f3b00,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

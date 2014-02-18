@@ -11,7 +11,7 @@ public class Fighter : MonoBehaviour
 	Health health;
 	bool isHuman = false;
 	public Team team;
-	
+
 	// Timers
 	CountUpTimer chargeUpTimer;
 	public float currentChargeUpTime = 0;
@@ -43,7 +43,7 @@ public class Fighter : MonoBehaviour
 	public AudioClip shieldBreakSound;
 	public AudioClip takeHitSound;
 	public AudioSource attackAndBlockChannel;
-	public GameObject chargeFX; 
+	public GameObject chargeFX;
 
 	// Dodge
 	float dodgeSpeed;
@@ -51,12 +51,12 @@ public class Fighter : MonoBehaviour
 	float endDodgeSpeed = 0.0f;
 	float dodgeTime = 0.6f;
 	Vector3 currentDodgeDirection;
-	
+
 	// Knockback
 	float currentMoveReactionDuration = 0.6f;
 	Vector3 currentMoveReactionDirection;
 	// How much of the knockback is the target moving?
-	const float KNOCKBACK_MOVE_PORTION = 0.35f; 
+	const float KNOCKBACK_MOVE_PORTION = 0.35f;
 
 	// Store variables for attack tracking
 	float forcedAttackMoveSpeed;
@@ -75,7 +75,7 @@ public class Fighter : MonoBehaviour
 	float lastHitTime = Mathf.NegativeInfinity;
 	float lastDodgeTime = Mathf.NegativeInfinity;
 	float lastKnockbackTime = Mathf.NegativeInfinity;
-	
+
 	// Color management members
 	Color hitColor = new Color (1.0f, 1.0f, 1.0f, 1.0f);
 	public Color nativeColor;
@@ -83,7 +83,7 @@ public class Fighter : MonoBehaviour
 	// Cached objects
 	Transform myTransform;
 	CameraController playerCamera;
-	
+
 	// Character state
 	public enum CharacterState
 	{
@@ -166,7 +166,7 @@ public class Fighter : MonoBehaviour
 			HideChargeEffects ();
 		}
 	}
-	
+
 	// Push rigid bodies we come in contact with. This should be moved to a motor, ultimately.
 	void OnControllerColliderHit (ControllerColliderHit hit)
 	{
@@ -193,7 +193,7 @@ public class Fighter : MonoBehaviour
 		// into account, and prevents stomping of velocity.
 		body.AddForceAtPosition (pushForce, hit.point);
 	}
-	
+
 	/*
 	 * Any pending actions that need to finish up go here. For example, swinging
 	 * a sword starts but later ends in this method, restoring the character state to ready
@@ -209,7 +209,7 @@ public class Fighter : MonoBehaviour
 			UpdateMoveReactionState ();
 		}
 	}
-	
+
 	/*
 	 * Perform object wiring specific for Human Fighters. This includes starting weapons
 	 * and attacks.
@@ -238,7 +238,7 @@ public class Fighter : MonoBehaviour
 	}
 
 	#region Exposed Fighter Actions
-	
+
 	/*
 	 * Walk the fighter in a given direction.
 	 */
@@ -255,7 +255,7 @@ public class Fighter : MonoBehaviour
 			Move (direction, runSpeed * movescale);
 		}
 	}
-	
+
 	/*
 	 * Try to make the character swing its weapon. If it's in the process
 	 * of swinging or swing is on cooldown, it won't do anything. Determine whether
@@ -279,7 +279,7 @@ public class Fighter : MonoBehaviour
 		}
 	}
 
-	
+
 	/*
 	 * Switch through our carried weapons and equip the next one in the array. This includes
 	 * setting any class variables that cache info about the currently equipped weapon.
@@ -292,7 +292,7 @@ public class Fighter : MonoBehaviour
 			EquipWeapon (nextWeaponBeingCarried);
 		}
 	}
-	
+
 	/*
 	 * After charging a weapon, when the fighter lets go of the charge, it should
 	 * perform ReleaseWeapon. This method stamps off the charged up time and begins
@@ -307,7 +307,7 @@ public class Fighter : MonoBehaviour
 			FireWeapon ();
 		}
 	}
-	
+
 	/*
 	 * Cause fighter to dodge in a given direction.
 	 */
@@ -340,7 +340,7 @@ public class Fighter : MonoBehaviour
 		if (isBlocking || isAttacking || chargeUpTimer.IsRunning ()) {
 			return;
 		}
-		
+
 		if (IsIdle () || IsMoving ()) {
 			PlaySound (shieldUpSound);
 			shieldTime.StartTimer ();
@@ -419,7 +419,7 @@ public class Fighter : MonoBehaviour
 			LockOnTarget (target);
 		}
 	}
-	
+
 	/*
 	 * Sets vertical speed to the expected value based on whether or not the character is grounded.
 	 */
@@ -517,7 +517,7 @@ public class Fighter : MonoBehaviour
 	{
 		Weapon activeWeapon = carriedWeapons [equippedWeaponIndex].GetComponent<Weapon> ();
 		//TODO Create a Damage tab in the google fu spreadsheet that assists with calculating desired damage.
-		Damage damageOut = new Damage (currentAttack.maxDamage, currentAttack.reactionType, new RaycastHit (), myTransform);
+		Damage damageOut = new Damage (currentAttack.maxDamage, currentAttack, new RaycastHit (), myTransform);
 		activeWeapon.BeginAttack (damageOut, this);
 	}
 
@@ -544,7 +544,7 @@ public class Fighter : MonoBehaviour
 		// Cancel Attack can be called even if the player isn't attacking
 		if (currentAttack != null) {
 			// Only deactivate non-projectile attacks
-			if (string.Equals (currentAttack.projectilePrefab, string.Empty)) {
+			if (currentAttack.IsRanged ()) {
 				EndAttackCast ();
 			}
 		}
@@ -593,7 +593,7 @@ public class Fighter : MonoBehaviour
 	{
 		isAttacking = true;
 		// Fire weapon, attack isn't chargable
-		bool isMeleeAttack = string.Equals (currentAttack.projectilePrefab, string.Empty);
+		bool isMeleeAttack = !currentAttack.IsRanged ();
 		if (isMeleeAttack) {
 			FireMeleeWeapon ();
 		} else {
@@ -619,11 +619,11 @@ public class Fighter : MonoBehaviour
 	{
 		// Play firing animation
 		animation.Play (currentAttack.swingAnimation.name, PlayMode.StopAll);
-		
+
 		// Spawn and fire projectile
 		Weapon firingWeapon = carriedWeapons [equippedWeaponIndex].GetComponent<Weapon> ();
 		GameObject projectilePrefab = null;
-		Damage damageOut = new Damage (currentAttack.maxDamage, currentAttack.reactionType, myTransform);
+		Damage damageOut = new Damage (currentAttack.maxDamage, currentAttack, new RaycastHit (), myTransform);
 		if (currentAttack.strength == AttackData.Strength.Weak) {
 			projectilePrefab = firingWeapon.lightProjectile;
 		} else if (currentAttack.strength == AttackData.Strength.Strong) {
@@ -636,7 +636,7 @@ public class Fighter : MonoBehaviour
 
 	void SetAttackTrailActive (bool isActive)
 	{
-		
+
 		if (swingTrail != null) {
 			swingTrail.renderer.enabled = isActive;
 		}
@@ -730,7 +730,7 @@ public class Fighter : MonoBehaviour
 	{
 		myTransform.position = point.transform.position;
 	}
-	
+
 	/*
 	 * Resolve a hit and perform the appropriate reaction. This may mean
 	 * taking damage or it may mean resolving a block.
@@ -750,9 +750,13 @@ public class Fighter : MonoBehaviour
 			shieldFlash.Flash ();
 			PlaySound (blockSound);
 			// Cause attacker to get knocked back
+			// TODO We need a check for if the damage is ranged
 			if (shieldTime.GetTimerRuntime () < superBlockWindow) {
-				Enemy attackingEnemy = incomingDamage.Attacker.GetComponent<Enemy> ();
-				attackingEnemy.ReceiveKnockback (toHit.normalized * 15.0f, 0.5f);
+				// Only knockback enemies if non-projectile attacks
+				if (!incomingDamage.Attack.IsRanged ()) {
+					Enemy attackingEnemy = incomingDamage.Attacker.GetComponent<Enemy> ();
+					attackingEnemy.ReceiveKnockback (toHit.normalized * 15.0f, 0.5f);
+				}
 			}
 			DecreaseShieldDurability (incomingDamage);
 		} else {
@@ -764,10 +768,14 @@ public class Fighter : MonoBehaviour
 			lastHitTime = Time.time;
 			health.TakeDamage (incomingDamage);
 			// Handle reaction type of successful hits
-			if (incomingDamage.HitReaction == AttackData.ReactionType.Knockback) {
-				float knockBackDuration = 0.2f;
+			if (incomingDamage.Attack == null) {
+				// TODO This should be resolved when we have Damage refactored to either
+				// always include Attack or not. Right now we get attack on only some damage
+				// instances
+			} else if (incomingDamage.Attack.reactionType == AttackData.ReactionType.Knockback) {
+//				float knockBackDuration = 0.2f;
 				// Knock back in the opposite direction of the attacker.
-				ReceiveKnockback ((myTransform.position - incomingDamage.Attacker.position).normalized, knockBackDuration);
+				//ReceiveKnockback ((myTransform.position - incomingDamage.Attacker.position).normalized, knockBackDuration);
 			}
 		}
 	}
@@ -821,7 +829,7 @@ public class Fighter : MonoBehaviour
 		Color colorToShow;
 		bool isCharging = chargeUpTimer.IsRunning ();
 		const float timeToShowHit = 0.1f;
-		
+
 		if (isCharging) {
 			float chargeRatio = chargeUpTimer.GetTimerRuntime () / currentAttack.chargeAnimation.length;
 			if (chargeRatio >= 1) {
@@ -853,7 +861,7 @@ public class Fighter : MonoBehaviour
 		} else {
 			colorToShow = hitColor;
 		}
-		
+
 		renderer.material.color = colorToShow;
 	}
 
@@ -903,7 +911,7 @@ public class Fighter : MonoBehaviour
 	{
 		return characterState == CharacterState.Idle;
 	}
-	
+
 	/*
 	 * Return true if the character is in dodging state.
 	 */
@@ -911,7 +919,7 @@ public class Fighter : MonoBehaviour
 	{
 		return characterState == CharacterState.Dodging;
 	}
-	
+
 	/*
 	 * Return true if the character is moving.
 	 */
@@ -919,7 +927,7 @@ public class Fighter : MonoBehaviour
 	{
 		return characterState == CharacterState.Moving;
 	}
-	
+
 	/*
 	 * Return true if the character is in the middle of a Move Reaction (ex. knockback).
 	 */
@@ -927,7 +935,7 @@ public class Fighter : MonoBehaviour
 	{
 		return characterState == CharacterState.Knockedback || characterState == CharacterState.KnockedbackByBlock;
 	}
-	
+
 	/*
 	 * Yet another state check bool...
 	 */

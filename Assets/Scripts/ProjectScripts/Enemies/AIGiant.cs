@@ -4,20 +4,28 @@ using System.Collections;
 public class AIGiant : MonoBehaviour
 {
 	public GameObject Target;
-	Enemy enemy;
-	public AnimationClip swingAttackAnimation;
-	public AnimationClip bigSwingAttackAnimation;
 	public Animation attackAnimation;
 	TrailRenderer trailRenderer;
 	public AttackCast attackCaster;
 	CountDownTimer attackTime = new CountDownTimer ();
 	CountDownTimer attackCooldown = new CountDownTimer ();
 	bool isAttacking;
-	
+	float SIGHT_DISTANCE = 50.0f;
+
+	// Attacks
+	AttackData intendedAttack; // Attack chosen for execution
+	AttackData lightAttack;
+	AttackData heavyAttack;
+
+	// Cached references
+	Enemy enemy;
+
 	void Start ()
 	{
 		AssignParentEnemy ();
 		trailRenderer = transform.parent.GetComponentInChildren<TrailRenderer> ();
+		lightAttack = AttackManager.Instance.GetAttack (GoogleFu.Attacks.rowIds.GIANT_SWING);
+		heavyAttack = AttackManager.Instance.GetAttack (GoogleFu.Attacks.rowIds.GIANT_BIGSWING);
 	}
 	 
 	/// <summary>
@@ -35,25 +43,23 @@ public class AIGiant : MonoBehaviour
 		FindTarget ();
 
 		if (Target != null) {
+			if (intendedAttack == null) {
+				intendedAttack = ChooseAttack ();
+			}
 			float sqrDistanceToTarget = (Target.transform.position - transform.position).sqrMagnitude;
-			float ATTACK_RANGE_SQUARED = 14.0f;
-			bool isInAttackRange = sqrDistanceToTarget > ATTACK_RANGE_SQUARED;
-			if (isInAttackRange && !isAttacking) {
+			bool targetInRange = sqrDistanceToTarget < intendedAttack.range;
+			bool targetInSight = enemy.IsTargetVisible (Target, SIGHT_DISTANCE);
+			if (!targetInRange && !isAttacking) {
 				// Approach target until in range
 				enemy.MoveDirection = Target.transform.position - transform.position;
 			} else {
-				// Attack
 				// Stop moving
 				enemy.MoveDirection = Vector3.zero;
 
 				// Begin or end a running attack
 				if (!isAttacking && attackCooldown.IsTimeUp ()) {
-					bool bigAttack = RBRandom.PercentageChance (50);
-					if (!bigAttack) {
-						StartAttack (swingAttackAnimation);
-					} else {
-						StartAttack (bigSwingAttackAnimation);
-					}
+					StartAttack (intendedAttack);
+					intendedAttack = null;
 				} else if (isAttacking && attackTime.IsTimeUp ()) {
 					EndAttack ();
 				}
@@ -70,13 +76,28 @@ public class AIGiant : MonoBehaviour
 		}
 	}
 
-	void StartAttack (AnimationClip attackClip)
+	AttackData ChooseAttack ()
 	{
-		attackAnimation.Play (attackClip.name);
+		AttackData ret;
+		// We can have smarter choices than 50 / 50 but for now this works.
+		if (RBRandom.PercentageChance (50)) {
+			ret = lightAttack;
+		} else {
+			ret = heavyAttack;
+		}
+		return ret;
+	}
+
+	void StartAttack (AttackData attackToStart)
+	{
+		// TODO This is bad practice. When we refactor this, let's properly enapsulate
+		// the current attack in one of these classes.
+		enemy.currentAttack = attackToStart;
+		attackAnimation.Play (attackToStart.swingAnimation.name);
 		attackCaster.OnHit += OnAttackHit;
 		attackCaster.Begin ();
 		trailRenderer.enabled = true;
-		attackTime.StartTimer (attackClip.length);
+		attackTime.StartTimer (attackToStart.swingAnimation.length);
 		isAttacking = true;
 	}
 
@@ -86,6 +107,9 @@ public class AIGiant : MonoBehaviour
 		attackCaster.End ();
 		trailRenderer.enabled = false;
 		isAttacking = false;
+		// TODO This is bad practice. When we refactor this, let's properly enapsulate
+		// the current attack in one of these classes.
+		enemy.currentAttack = null;
 	}
 	
 	void FindTarget ()
@@ -98,7 +122,7 @@ public class AIGiant : MonoBehaviour
 	 */
 	void OnAttackHit (RaycastHit hit)
 	{
-		Damage damageOut = new Damage (20.0f, transform.parent.transform, hit);
+		Damage damageOut = new Damage (20.0f, enemy.currentAttack, hit, transform.parent.transform);
 		GameObject hitGameObject = hit.transform.gameObject;
 		if (hitGameObject.CompareTag (Tags.PLAYER)) {
 			hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);

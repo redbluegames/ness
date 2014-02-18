@@ -80,7 +80,7 @@ public class CharacterMotor : MonoBehaviour
 		// Do not let them move up with a basic character controller
 		MoveDirection.y = 0.0f;
 		if (MoveDirection == Vector3.zero) {
-			Debug.LogError ("CharacterMotor should never have a zero move direction.");
+			Debug.LogError ("CharacterMotor receiving zero moveDirection for object: " + gameObject.name);
 		}
 		Vector3 movement = (MoveDirection.normalized * Speed * MoveScale);
 		// When Moving comes from updates (script driven vs. animation driven) account for delta time

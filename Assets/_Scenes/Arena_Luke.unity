@@ -317,6 +317,8 @@ Prefab:
       objectReference: {fileID: 430612372}
     m_RemovedComponents:
     - {fileID: 11400008, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+    - {fileID: 11400014, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
+    - {fileID: 11400006, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 9b4c39fcf2f7a2347bba736d69dd0224, type: 2}
   m_RootGameObject: {fileID: 1390360874}
   m_IsPrefabParent: 0
@@ -1258,9 +1260,8 @@ Transform:
 --- !u!114 &278150720
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400006, guid: 9b4c39fcf2f7a2347bba736d69dd0224,
-    type: 2}
-  m_PrefabInternal: {fileID: 38278546}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 278150718}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -2731,7 +2732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: .131582707, g: .742647052, b: .0163819361, a: 0}
-  duration: .150000006
+  duration: .100000001
 --- !u!1001 &951258239
 Prefab:
   m_ObjectHideFlags: 0
@@ -3026,9 +3027,8 @@ Transform:
 --- !u!114 &1032048098
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400014, guid: 9b4c39fcf2f7a2347bba736d69dd0224,
-    type: 2}
-  m_PrefabInternal: {fileID: 38278546}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1032048096}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -3139,7 +3139,7 @@ MonoBehaviour:
     _CHARGEANIMATION: 
     _SWINGANIMATION: attack_spear_jab
     _PROJECTILEPREFAB: 
-    _CAMERASHAKEINTENSITY: .100000001
+    _CAMERASHAKEINTENSITY: .400000006
   - _NAME: Spear Charging Attack
     _MINDAMAGE: 10
     _MAXDAMAGE: 30
@@ -3152,7 +3152,7 @@ MonoBehaviour:
     _CHARGEANIMATION: spear_charging
     _SWINGANIMATION: attack_spear_bigjab
     _PROJECTILEPREFAB: 
-    _CAMERASHAKEINTENSITY: .200000003
+    _CAMERASHAKEINTENSITY: .600000024
   - _NAME: Bow Quickfire
     _MINDAMAGE: 5
     _MAXDAMAGE: 5
@@ -3203,6 +3203,19 @@ MonoBehaviour:
     _MAXKNOCKBACK: .5
     _CHARGEANIMATION: 
     _SWINGANIMATION: attack_giant_swing
+    _PROJECTILEPREFAB: 
+    _CAMERASHAKEINTENSITY: .600000024
+  - _NAME: Giant Big Swing
+    _MINDAMAGE: 30
+    _MAXDAMAGE: 30
+    _RANGE: 15
+    _STRENGTH: Strong
+    _CONTROLTYPE: Swing
+    _REACTIONTYPE: Knockback
+    _MINKNOCKBACK: .200000003
+    _MAXKNOCKBACK: .5
+    _CHARGEANIMATION: 
+    _SWINGANIMATION: attack_giant_bigswing
     _PROJECTILEPREFAB: 
     _CAMERASHAKEINTENSITY: .600000024
 --- !u!114 &1032048099
@@ -5704,10 +5717,6 @@ Prefab:
     - target: {fileID: 400000, guid: 3d8f4162e5996244f95d173d4ca16b34, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: 3d8f4162e5996244f95d173d4ca16b34, type: 2}
-      propertyPath: duration
-      value: .150000006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3d8f4162e5996244f95d173d4ca16b34, type: 2}
