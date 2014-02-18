@@ -26,10 +26,11 @@ namespace GoogleFu
 		public float _MINKNOCKBACK;
 		public float _MAXKNOCKBACK;
 		public string _CHARGEANIMATION;
+		public float _CHARGEMOVESCALE;
 		public string _SWINGANIMATION;
 		public string _PROJECTILEPREFAB;
 		public float _CAMERASHAKEINTENSITY;
-		public AttacksRow(string __NAME, string __MINDAMAGE, string __MAXDAMAGE, string __RANGE, string __STRENGTH, string __CONTROLTYPE, string __REACTIONTYPE, string __MINKNOCKBACK, string __MAXKNOCKBACK, string __CHARGEANIMATION, string __SWINGANIMATION, string __PROJECTILEPREFAB, string __CAMERASHAKEINTENSITY) 
+		public AttacksRow(string __NAME, string __MINDAMAGE, string __MAXDAMAGE, string __RANGE, string __STRENGTH, string __CONTROLTYPE, string __REACTIONTYPE, string __MINKNOCKBACK, string __MAXKNOCKBACK, string __CHARGEANIMATION, string __CHARGEMOVESCALE, string __SWINGANIMATION, string __PROJECTILEPREFAB, string __CAMERASHAKEINTENSITY) 
 		{
 			_NAME = __NAME;
 			{
@@ -71,6 +72,13 @@ namespace GoogleFu
 					Debug.LogError("Failed To Convert MAXKNOCKBACK string: "+ __MAXKNOCKBACK +" to float");
 			}
 			_CHARGEANIMATION = __CHARGEANIMATION;
+			{
+			float res;
+				if(float.TryParse(__CHARGEMOVESCALE, out res))
+					_CHARGEMOVESCALE = res;
+				else
+					Debug.LogError("Failed To Convert CHARGEMOVESCALE string: "+ __CHARGEMOVESCALE +" to float");
+			}
 			_SWINGANIMATION = __SWINGANIMATION;
 			_PROJECTILEPREFAB = __PROJECTILEPREFAB;
 			{
@@ -117,6 +125,9 @@ namespace GoogleFu
 				case "CHARGEANIMATION":
 					ret = _CHARGEANIMATION.ToString();
 					break;
+				case "CHARGEMOVESCALE":
+					ret = _CHARGEMOVESCALE.ToString();
+					break;
 				case "SWINGANIMATION":
 					ret = _SWINGANIMATION.ToString();
 					break;
@@ -142,7 +153,7 @@ namespace GoogleFu
 		public List<AttacksRow> Rows = new List<AttacksRow>();
 		public override void AddRowGeneric (List<string> input)
 		{
-			Rows.Add(new AttacksRow(input[0],input[1],input[2],input[3],input[4],input[5],input[6],input[7],input[8],input[9],input[10],input[11],input[12]));
+			Rows.Add(new AttacksRow(input[0],input[1],input[2],input[3],input[4],input[5],input[6],input[7],input[8],input[9],input[10],input[11],input[12],input[13]));
 		}
 		public override void Clear ()
 		{

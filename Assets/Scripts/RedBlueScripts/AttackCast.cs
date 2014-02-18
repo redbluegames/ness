@@ -70,7 +70,21 @@ public class AttackCast : MonoBehaviour
 			// We need to create a RaycastHit event for each collider to get a collision location.
 			// Since it's impossible to see where an overlap occured in the sphere, cast towards
 			// the collider's position to try and find it.
+
+			// Ignore objects in the ignore list. TODO: This duplicates code from ReportHits, so
+			// this should get cleaned up.
+			if (ignoreObjects.Contains (collider.transform.gameObject)) {
+				continue;
+			}
+
 			Vector3 directionToHitCollider = collider.gameObject.transform.position - transform.position;
+			// In case we somehow end up with the same position as the hit, throw it out to prevent
+			// errors
+			if(Mathf.Approximately(0.0f, directionToHitCollider.magnitude))
+			{
+				continue;
+			}
+
 			Ray castRay = new Ray (transform.position, directionToHitCollider.normalized); 
 			RaycastHit hit = new RaycastHit ();
 			collider.Raycast (castRay, out hit, directionToHitCollider.magnitude);

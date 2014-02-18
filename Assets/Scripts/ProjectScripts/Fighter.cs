@@ -251,7 +251,7 @@ public class Fighter : MonoBehaviour
 			float movescale = 1.0f;
 			bool isCharging = chargeUpTimer.IsRunning ();
 			if (isBlocking || isCharging) {
-				movescale = 0.5f;
+				movescale = currentAttack.chargeMovescale;
 			}
 			Move (direction, runSpeed * movescale);
 		}
@@ -443,13 +443,15 @@ public class Fighter : MonoBehaviour
 		Vector3 movement = (direction.normalized * speed) + new Vector3 (0.0f, verticalSpeed, 0.0f);
 		movement *= Time.deltaTime;
 
-		// Rotate to face the direction of XZ movement immediately, if lockFacing isn't set
-		Vector3 movementXZ = new Vector3 (movement.x, 0.0f, movement.z);
+		// Handle Rotation. Look at a target first if we have one
 		if (target != null) {
 			LockOnTarget (target);
-		} else if (movementXZ != Vector3.zero) {
+		} else {
+			// Without a target, rotate to face the direction of XZ movement
+			Vector3 directionXZ = new Vector3 (direction.x, 0.0f, direction.z);
+			// Rotate to face desired movement direction
 			myTransform.rotation = Quaternion.Slerp (myTransform.rotation,
-					Quaternion.LookRotation (movementXZ), Time.deltaTime * damping);
+			                                         Quaternion.LookRotation (directionXZ), Time.deltaTime * damping);
 		}
 
 		// Apply movement vector
@@ -545,7 +547,7 @@ public class Fighter : MonoBehaviour
 		// Cancel Attack can be called even if the player isn't attacking
 		if (currentAttack != null) {
 			// Only deactivate non-projectile attacks
-			if (currentAttack.IsRanged ()) {
+			if (!currentAttack.IsRanged ()) {
 				EndAttackCast ();
 			}
 		}
@@ -639,7 +641,7 @@ public class Fighter : MonoBehaviour
 		}
 		GameObject newProjectile = (GameObject)Instantiate (
 			projectilePrefab, transform.position, transform.rotation);
-		newProjectile.GetComponent<Projectile> ().Fire (2000.0f, 5.0f, transform.forward, damageOut, Team.GoodGuys);
+		newProjectile.GetComponent<Projectile> ().Fire (2000.0f, 5.0f, transform.forward, damageOut, ChargePercentage, Team.GoodGuys);
 	}
 
 	void SetAttackTrailActive (bool isActive)

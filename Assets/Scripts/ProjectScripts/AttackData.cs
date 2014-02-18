@@ -14,6 +14,7 @@ public class AttackData : ScriptableObject
 	public float minKnockback;
 	public float maxKnockback;
 	public AnimationClip chargeAnimation;
+	public float chargeMovescale;
 	public AnimationClip swingAnimation;
 	public string projectilePrefab;
 	public float cameraShakeIntensity;

@@ -10,6 +10,7 @@ public class Projectile : MonoBehaviour
 	float lifeTime;
 	AttackCast attackCast;
 	Rigidbody projectileBody;
+	float damageScale;
 
 	void Awake ()
 	{
@@ -18,7 +19,7 @@ public class Projectile : MonoBehaviour
 		keepAlive = true;
 	}
 
-	public void Fire (float velocity, float secondsToDeath, Vector3 direction, Damage damage, Team shooterTeam)
+	public void Fire (float velocity, float secondsToDeath, Vector3 direction, Damage damage, float damageScalar, Team shooterTeam)
 	{
 		team = shooterTeam;
 		damageOut = damage;
@@ -28,6 +29,7 @@ public class Projectile : MonoBehaviour
 		startingTime = Time.time;
 		lifeTime = secondsToDeath;
 		projectileBody.AddForce (direction * velocity);
+		damageScale = damageScalar;
 	}
 	
 	// Kills the projectile if enough time has passed.
@@ -53,11 +55,14 @@ public class Projectile : MonoBehaviour
 		if (damageOut == null) {
 			Debug.Break ();
 		}
-		damageOut.HitLocation = hit;
+		Damage chargedDamage = new Damage(damageOut);
+		chargedDamage.Amount = Mathf.Ceil (chargedDamage.Amount * damageScale);
+
+		chargedDamage.HitLocation = hit;
 		Enemy enemy = hitGameObject.GetComponentInChildren<Enemy> ();
 		Fighter fighter = hitGameObject.GetComponentInChildren<Fighter> ();
 		if ((enemy != null && enemy.team != team) || (fighter != null && fighter.team != team)) {
-			hitGameObject.SendMessage ("ApplyDamage", damageOut, SendMessageOptions.DontRequireReceiver);
+			hitGameObject.SendMessage ("ApplyDamage", chargedDamage, SendMessageOptions.DontRequireReceiver);
 			DestroyProjectile ();
 		} else if (enemy == null) {
 			// Something other than a player or an enemy was hit

@@ -77,6 +77,7 @@ public class AttackManager : Singleton<AttackManager>
 			newAttack.minKnockback = row._MINKNOCKBACK;
 			newAttack.maxKnockback = row._MAXKNOCKBACK;
 			newAttack.chargeAnimation = LoadClipFromString (row._CHARGEANIMATION);
+			newAttack.chargeMovescale = row._CHARGEMOVESCALE;
 			newAttack.swingAnimation = LoadClipFromString (row._SWINGANIMATION);
 			newAttack.projectilePrefab = row._PROJECTILEPREFAB;
 			newAttack.cameraShakeIntensity = row._CAMERASHAKEINTENSITY;
