@@ -15,4 +15,13 @@ public class Damage
 		Attacker = attackerTransform;
 		Attack = attackData;
 	}
+
+	// Copy constructor
+	public Damage (Damage copyFrom)
+	{
+		HitLocation = copyFrom.HitLocation;
+		Amount = copyFrom.Amount;
+		Attacker = copyFrom.Attacker;
+		Attack = copyFrom.Attack;
+	}
 }

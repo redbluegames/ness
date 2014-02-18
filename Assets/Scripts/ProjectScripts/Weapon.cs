@@ -8,18 +8,18 @@ public class Weapon : MonoBehaviour
 	public AttackCast attackCast;
 	public GameObject lightProjectile;
 	public GameObject heavyProjectile;
-	Fighter weaponUser;
 	public GameObject enemyHitFX;
 	public GameObject wallHitFX;
-
-	Damage damageOut;
+	
+	protected Fighter weaponUser;
+	protected Damage damageOut;
 
 	void Awake ()
 	{
 		attackCast = GetComponentInChildren<AttackCast> ();
 	}
 
-	public void BeginAttack (Damage damageToDeal, Fighter attacker)
+	virtual public void BeginAttack (Damage damageToDeal, Fighter attacker)
 	{
 		weaponUser = attacker;
 		attackCast.OnHit += OnWeaponHit;
@@ -27,7 +27,7 @@ public class Weapon : MonoBehaviour
 		attackCast.Begin ();
 	}
 
-	public void EndAttack ()
+	virtual public void EndAttack ()
 	{
 		attackCast.OnHit -= OnWeaponHit;
 		attackCast.End ();
@@ -36,7 +36,7 @@ public class Weapon : MonoBehaviour
 	/*
 	 * Deal damage to the hit object based on the current attack.
 	 */
-	void OnWeaponHit (RaycastHit hit)
+	virtual protected void OnWeaponHit (RaycastHit hit)
 	{
 		GameObject hitGameObject = hit.transform.gameObject;
 		GameObject fx = CFX_SpawnSystem.GetNextObject (wallHitFX);

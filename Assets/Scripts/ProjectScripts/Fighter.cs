@@ -27,6 +27,7 @@ public class Fighter : MonoBehaviour
 	public AttackData currentAttack;
 	public bool feetPlanted;
 	public float ShieldDurability {get; private set;}
+	public float ChargePercentage {get; private set;}
 
 	// State Variables
 	public bool isAttacking { get; private set; }
@@ -473,10 +474,10 @@ public class Fighter : MonoBehaviour
 	{
 		if (currentAttack == null) {
 			Debug.LogError ("CurrentAttack was null...how?");
+			return;
 		}
-		// TODO we can have a more robust algorithm for determining charge forward speed.
-		// Probably should be exponential.
-		float multiplier = 0.5f + Mathf.Min (currentChargeUpTime / currentAttack.chargeAnimation.length, 1.0f);
+		float minimumChargePercent = 0.0f;
+		float multiplier = Mathf.Max (minimumChargePercent, ChargePercentage);
 		SetAttackMovement (speed * multiplier);
 	}
 
@@ -592,6 +593,13 @@ public class Fighter : MonoBehaviour
 	void FireWeapon ()
 	{
 		isAttacking = true;
+		if(currentAttack.controlType == AttackData.ControlType.Hold) {
+			ChargePercentage = Mathf.Min (currentChargeUpTime / currentAttack.chargeAnimation.length, 1.0f);
+		} else {
+			// Consider non-charging attacks as fully charged, for now. This helps the spear
+			// work without having to know it's source attack.
+			ChargePercentage = 1.0f;
+		}
 		// Fire weapon, attack isn't chargable
 		bool isMeleeAttack = !currentAttack.IsRanged ();
 		if (isMeleeAttack) {

@@ -243,7 +243,8 @@ public class Enemy : MonoBehaviour
 		tweenFlashColor.Flash (Color.white, 0.2f);
 
 		// Apply the hit reaction
-		if (damageFromHit.Attack.reactionType.Equals (AttackData.ReactionType.None)) {
+		// TODO: I enabled hit reaction all the time, in lieu of having a knockback reaction
+		if (damageFromHit.Attack.reactionType.Equals (AttackData.ReactionType.None) || true) {
 			if (weightClass == WeightClass.Small) {
 				Stumble ();
 			}
