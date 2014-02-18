@@ -209,7 +209,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.143806934, y: .335650682, z: 10.3482475}
+  m_LocalPosition: {x: 0, y: .300000012, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400012}
@@ -433,8 +433,11 @@ MonoBehaviour:
   takeHitSound: {fileID: 8300000, guid: 821f60eb613b02944a649d7bfdedcc88, type: 3}
   ragdollPrefab: {fileID: 100006, guid: 949311480947b4894a1e435510ea804e, type: 2}
   tweenFlashColor: {fileID: 11400010}
-  FaceDirection: {x: 0, y: 0, z: 0}
+  weightClass: 0
+  moveDirection: {x: 0, y: 0, z: 0}
   WantsToAttack: 0
+  FaceDirection: {x: 0, y: 0, z: 0}
+  currentAttack: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -452,6 +455,10 @@ MonoBehaviour:
   Speed: 5
   MoveScale: 1
   Gravity: -20
+  Mass: 1
+  PushLayer:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1

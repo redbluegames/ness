@@ -38,10 +38,11 @@ public class CharacterMotor : MonoBehaviour
 	}
 
 	// Push rigid bodies we come in contact with
-	void OnControllerColliderHit(ControllerColliderHit hit) {
+	void OnControllerColliderHit (ControllerColliderHit hit)
+	{
 
 		// Only push the ragdoll layer for now
-		if(!Layers.IsObjectOnLayerMask(hit.gameObject, PushLayer)) {
+		if (!Layers.IsObjectOnLayerMask (hit.gameObject, PushLayer)) {
 			return;
 		}
 
@@ -55,7 +56,7 @@ public class CharacterMotor : MonoBehaviour
 			return;
 
 		// Only push in XZ direction
-		Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+		Vector3 pushDir = new Vector3 (hit.moveDirection.x, 0, hit.moveDirection.z);
 		// Multiply push vector by the character's speed to give believeable push amount
 		Vector3 pushForce = pushDir * hit.controller.velocity.magnitude * Mass;
 		
@@ -75,13 +76,10 @@ public class CharacterMotor : MonoBehaviour
 	
 	void MoveCharacter ()
 	{
-		
 		// Get movement vector
 		// Do not let them move up with a basic character controller
 		MoveDirection.y = 0.0f;
-		if (MoveDirection == Vector3.zero) {
-			Debug.LogError ("CharacterMotor receiving zero moveDirection for object: " + gameObject.name);
-		}
+
 		Vector3 movement = (MoveDirection.normalized * Speed * MoveScale);
 		// When Moving comes from updates (script driven vs. animation driven) account for delta time
 		if (isPositionScriptDriven) {

@@ -461,8 +461,10 @@ MonoBehaviour:
   ragdollPrefab: {fileID: 100002, guid: 32f793a429728db4b8c5ce82143d318d, type: 2}
   tweenFlashColor: {fileID: 11400012}
   weightClass: 1
+  moveDirection: {x: 0, y: 0, z: 0}
   WantsToAttack: 0
   FaceDirection: {x: 0, y: 0, z: 0}
+  currentAttack: {fileID: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -524,7 +526,7 @@ MonoBehaviour:
   MoveScale: 1
   Gravity: -20
   Mass: 6
-  pushlayer:
+  PushLayer:
     serializedVersion: 2
     m_Bits: 8192
 --- !u!114 &11400010
@@ -538,13 +540,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a24d9140793f14ea8104c69d1a7e95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
-  swingAttackAnimation: {fileID: 7400000, guid: 4cd73b032f9222d48b30aca2be99a8b5,
-    type: 2}
-  bigSwingAttackAnimation: {fileID: 7400000, guid: 38921e587a80754409872beaa2c11b1f,
-    type: 2}
-  attackAnimation: {fileID: 11100000}
   attackCaster: {fileID: 11400004}
+  sightDistance: 50
+  attackIds: 0b0000000c000000
+  cooldownTime: .5
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
