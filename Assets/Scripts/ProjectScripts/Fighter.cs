@@ -250,8 +250,10 @@ public class Fighter : MonoBehaviour
 			characterState = CharacterState.Moving;
 			float movescale = 1.0f;
 			bool isCharging = chargeUpTimer.IsRunning ();
-			if (isBlocking || isCharging) {
+			if (isCharging) {
 				movescale = currentAttack.chargeMovescale;
+			} else if (isBlocking) {
+				movescale = 0.5f;
 			}
 			Move (direction, runSpeed * movescale);
 		}
