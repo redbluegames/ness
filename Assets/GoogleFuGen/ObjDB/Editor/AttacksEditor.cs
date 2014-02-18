@@ -116,6 +116,13 @@ namespace GoogleFu
 			EditorGUILayout.EndHorizontal();
 
 			EditorGUILayout.BeginHorizontal();
+			GUILayout.Label( "CHARGEMOVESCALE", GUILayout.Width( 150.0f ) );
+			{
+				EditorGUILayout.FloatField( r._CHARGEMOVESCALE );
+			}
+			EditorGUILayout.EndHorizontal();
+
+			EditorGUILayout.BeginHorizontal();
 			GUILayout.Label( "SWINGANIMATION", GUILayout.Width( 150.0f ) );
 			{
 				EditorGUILayout.LabelField( r._SWINGANIMATION );

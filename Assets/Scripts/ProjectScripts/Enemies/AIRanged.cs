@@ -97,7 +97,7 @@ public class AIRanged : MonoBehaviour
 	void FireProjectileWeapon ()
 	{
 		// Play firing animation
-//		animation.Play (attack.swingAnimation.name, PlayMode.StopAll);
+		//		animation.Play (attack.swingAnimation.name, PlayMode.StopAll);
 		// Spawn and fire projectile
 		Damage damageOut = new Damage (attack.maxDamage, attack, new RaycastHit (), transform);
 		GameObject newProjectile = (GameObject)Instantiate (

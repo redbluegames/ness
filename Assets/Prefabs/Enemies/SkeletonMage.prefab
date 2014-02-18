@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400006}
   - 114: {fileID: 11400006}
+  - 114: {fileID: 11400016}
   m_Layer: 10
   m_Name: AI
   m_TagString: Untagged
@@ -228,7 +229,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100014}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .5, z: .699999988}
+  m_LocalPosition: {x: 0, y: .5, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400012}
@@ -288,7 +289,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 3049dffabc5225d40b27675901977fdd, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -421,8 +422,11 @@ MonoBehaviour:
   takeHitSound: {fileID: 8300000, guid: 821f60eb613b02944a649d7bfdedcc88, type: 3}
   ragdollPrefab: {fileID: 100002, guid: 005221611817d4d999b26ef9fe75354b, type: 2}
   tweenFlashColor: {fileID: 11400014}
-  FaceDirection: {x: 0, y: 0, z: 0}
+  weightClass: 0
+  moveDirection: {x: 0, y: 0, z: 0}
   WantsToAttack: 0
+  FaceDirection: {x: 0, y: 0, z: 0}
+  currentAttack: {fileID: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -453,13 +457,17 @@ MonoBehaviour:
   Speed: 2
   MoveScale: 1
   Gravity: -20
+  Mass: 1
+  PushLayer:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac41fdeab39a44c90b83f0a1ff5fc2a8, type: 3}
   m_Name: 
@@ -525,6 +533,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0, b: 0, a: 0}
   duration: 0
+--- !u!114 &11400016
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99a24d9140793f14ea8104c69d1a7e95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCaster: {fileID: 0}
+  sightDistance: 50
+  attackIds: 0a000000
+  cooldownTime: .5
 --- !u!122 &12200000
 Halo:
   m_ObjectHideFlags: 1

@@ -27,7 +27,11 @@ public class AttackManager : Singleton<AttackManager>
 	 */
 	public AttackData GetAttack (GoogleFu.Attacks.rowIds attackId)
 	{
-		return GetAttack (attackId.ToString ());
+		AttackData ret = GetAttack (attackId.ToString ());
+		if (ret == null) {
+			Debug.LogError ("Could not find attack for attackId: " + attackId.ToString ());
+		}
+		return ret;
 	}
 	
 	/*
@@ -38,7 +42,11 @@ public class AttackManager : Singleton<AttackManager>
 	{
 		AttackData ret = null;
 		foreach (AttackData attack in attackList) {
-			if (string.Equals (attack.attackName, attacksDb.GetRow (attackId)._NAME)) {
+			GoogleFu.AttacksRow requestedAttack = attacksDb.GetRow (attackId);
+			if (requestedAttack == null) {
+				Debug.LogError ("Could not find attack for attackId: " + attackId);
+			}
+			if (string.Equals (attack.attackName, requestedAttack._NAME)) {
 				ret = attack;
 			}
 		}
