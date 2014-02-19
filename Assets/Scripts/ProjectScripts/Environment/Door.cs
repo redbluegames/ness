@@ -4,7 +4,9 @@ using System.Collections;
 public class Door : MonoBehaviour
 {
 	public float moveTime = 2.0f;
+	public bool startOpen;
 	Vector3 closedPosition;
+	Vector3 openPosition;
 	float height;
 
 	const float PADDING = 0.01f;
@@ -15,6 +17,11 @@ public class Door : MonoBehaviour
 	{
 		height = 2 * (gameObject.renderer.bounds.extents.y);
 		closedPosition = transform.position;
+		openPosition = closedPosition + new Vector3 (0, -height + PADDING, 0);
+
+		if (startOpen) {
+			Open ();
+		}
 	}
 
 	/// <summary>
@@ -23,8 +30,7 @@ public class Door : MonoBehaviour
 	public void Open ()
 	{
 		if (!isMoving) {
-			Vector3 newPostion = closedPosition + new Vector3 (0, -height + PADDING, 0);
-			StartCoroutine (MoveDoor (newPostion));
+			StartCoroutine (MoveDoor (openPosition));
 		}
 	}
 
