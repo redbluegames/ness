@@ -5,14 +5,16 @@ public class AI : MonoBehaviour
 {
 
 	public GameObject Target { get; private set; }
-
+	GameObject player;
 	Enemy enemy;
 	CountDownTimer attackCooldown = new CountDownTimer ();
 	const float WAIT_TIME = 3.0f;
+	const float SIGHT_DISTANCE = 20.0f;
 
 	void Start ()
 	{
 		AssignParentEnemy ();
+		player = GameObject.Find (SceneObjectNames.PLAYER);
 	}
 
 	/// <summary>
@@ -26,7 +28,9 @@ public class AI : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		FindTarget ();
+		if (Target == null) {
+			FindTarget ();
+		}
 
 		if (Target != null) {
 			Vector3 directionToTarget = (Target.transform.position - transform.position);
@@ -52,12 +56,17 @@ public class AI : MonoBehaviour
 			enemy.FaceDirection = directionToTarget;
 		}
 	}
-
+	
 	/// <summary>
-	/// Performs a search for a target and assigns it to remember it.
+	/// Perform a visibility check on the player and return whether
+	/// it was seen or not.
 	/// </summary>
-	void FindTarget ()
+	bool FindTarget ()
 	{
-		Target = GameObject.Find (SceneObjectNames.PLAYER);
+		if (enemy.IsTargetVisible (player, SIGHT_DISTANCE)) {
+			Target = player;
+			return true;
+		}
+		return false;
 	}
 }

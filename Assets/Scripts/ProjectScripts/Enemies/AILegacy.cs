@@ -4,6 +4,7 @@ using System.Collections;
 public class AILegacy : MonoBehaviour
 {
 	public GameObject Target { get; private set; }
+	GameObject player;
 	Enemy enemy;
 	Animation attackAnimation;
 	TrailRenderer trailRenderer;
@@ -25,7 +26,6 @@ public class AILegacy : MonoBehaviour
 	void Start ()
 	{
 		SetupReferences ();
-
 	}
 	 
 	/// <summary>
@@ -34,6 +34,7 @@ public class AILegacy : MonoBehaviour
 	void SetupReferences ()
 	{
 		Transform enemyRootObj = transform.parent;
+		player = GameObject.Find (SceneObjectNames.PLAYER);
 		enemy = enemyRootObj.GetComponent<Enemy> ();
 		attackAnimation = enemyRootObj.GetComponentInChildren<Animation> ();
 		trailRenderer = enemyRootObj.GetComponentInChildren<TrailRenderer> ();
@@ -141,11 +142,16 @@ public class AILegacy : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Finds the player by name.
+	/// Perform a visibility check on the player and return whether
+	/// it was seen or not.
 	/// </summary>
-	void FindTarget ()
+	bool FindTarget ()
 	{
-		Target = GameObject.Find (SceneObjectNames.PLAYER);
+		if (enemy.IsTargetVisible (player, sightDistance)) {
+			Target = player;
+			return true;
+		}
+		return false;
 	}
 
 	/// <summary>
