@@ -5,6 +5,8 @@ public class Door : MonoBehaviour
 {
 	public float moveTime = 2.0f;
 	public bool startOpen;
+	public bool rumbleOnOpen;
+	public bool rumbleOnClose;
 	Vector3 closedPosition;
 	Vector3 openPosition;
 	float height;
@@ -30,6 +32,9 @@ public class Door : MonoBehaviour
 	public void Open ()
 	{
 		if (!isMoving) {
+			if (rumbleOnOpen) {
+				Rumble ();
+			}
 			StartCoroutine (MoveDoor (openPosition));
 		}
 	}
@@ -40,7 +45,21 @@ public class Door : MonoBehaviour
 	public void Close ()
 	{
 		if (!isMoving) {
+			if (rumbleOnClose) {
+				Rumble ();
+			}
 			StartCoroutine (MoveDoor (closedPosition));
+		}
+	}
+
+	/// <summary>
+	/// Rumble to make the door more epic.
+	/// </summary>
+	void Rumble ()
+	{
+		CameraController camControl = Camera.main.GetComponent<CameraController> ();
+		if (camControl != null) {
+			camControl.Shake (100, moveTime + 0.25f, 0.07f);
 		}
 	}
 

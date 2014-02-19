@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61e01f9e0b4504953a80991fc30c4224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathFXPrefab: {fileID: 100000, guid: 53c8cd8cbd93f437bbbfc725852adf5c, type: 2}
+  deathFXPrefab: {fileID: 100000, guid: 23db1402dd2bd694bb942ef415e3c34c, type: 2}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
