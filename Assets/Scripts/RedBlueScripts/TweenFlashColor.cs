@@ -71,4 +71,12 @@ public class TweenFlashColor : MonoBehaviour
 		}
 		flashCount--;
 	}
+
+	/// <summary>
+	/// Clean up any coroutines in progress.
+	/// </summary>
+	void OnDestroy ()
+	{
+		StopAllCoroutines ();
+	}
 }

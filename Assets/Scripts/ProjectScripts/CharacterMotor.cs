@@ -68,8 +68,10 @@ public class CharacterMotor : MonoBehaviour
 
 	void OnAnimatorMove ()
 	{
-		// Get speed from animation
-		Speed = animator.deltaPosition.magnitude;
+		// Get speed from animation, ignoring the first frame
+		if (animator) {
+			Speed = animator.deltaPosition.magnitude;
+		}
 		MoveCharacter ();
 		UpdateFacing ();
 	}
