@@ -310,12 +310,12 @@ public class PlayerController : IController
 	/*
 	 * Lock the players onto the closest known enemy. Does not check for sight.
 	 */
-	void TargetNearest ()
+	bool TargetNearest ()
 	{
 		// Can't target nearest if there are no enemies
 		if (enemies.Count == 0) {
 			fighter.LoseTarget ();
-			return;
+			return false;
 		}
 		GameObject newTarget = null;
 		float closestDistance = Vector3.SqrMagnitude (enemies [0].transform.position - transform.position);
@@ -336,7 +336,9 @@ public class PlayerController : IController
 		if (newTarget != null) {
 			fighter.LockOnTarget (newTarget);
 			RepositionReticle ();
+			return true;
 		}
+		return false;
 	}
 
 	/*
@@ -374,7 +376,7 @@ public class PlayerController : IController
 	/// </summary>
 	/// <param name="horizontal">Horizontal.</param>
 	/// <param name="vertical">Vertical.</param>
-	public void TargetNearDirection (float horizontal, float vertical)
+	public bool TargetNearDirection (float horizontal, float vertical)
 	{
 		const float ACCURACY_THRESHOLD = 110f; // Higher makes for more lenient targetting
 		const float TIE_THRESHOLD = 30f; // What angle is too close to pick on angle alone?
@@ -417,7 +419,9 @@ public class PlayerController : IController
 		if (newTarget != null) {
 			fighter.LockOnTarget (newTarget);
 			RepositionReticle ();
+			return true;
 		}
+		return false;
 	}
 
 	/*
@@ -437,7 +441,10 @@ public class PlayerController : IController
 			bool sameAsTarget = enemy.Equals (fighter.target);
 			enemies.Remove (enemy);
 			if (sameAsTarget) {
-				TargetNearest ();
+				bool didRetarget = TargetNearest ();
+				if (!didRetarget) {
+					fighter.LoseTarget ();
+				}
 			}
 		} else {
 			Debug.LogWarning ("Tried to remove enemy from list in which it doesn't exist.");
