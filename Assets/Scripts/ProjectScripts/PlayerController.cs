@@ -20,7 +20,7 @@ public class PlayerController : IController
 	GameObject targetReticle;
 	float reticleY;
 	Vector3 previousReticleScale;
-	const float LINE_OF_SIGHT_DIST = 25f;
+	const float LINE_OF_SIGHT_DIST = 20f;
 
 	void Awake ()
 	{
