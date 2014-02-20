@@ -9,7 +9,7 @@ public class AI : MonoBehaviour
 	Enemy enemy;
 	CountDownTimer attackCooldown = new CountDownTimer ();
 	const float WAIT_TIME = 3.0f;
-	const float SIGHT_DISTANCE = 20.0f;
+	const float SIGHT_DISTANCE = 15.0f;
 
 	void Start ()
 	{
