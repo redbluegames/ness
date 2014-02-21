@@ -1,17 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ActivateObjectSwitch : MonoBehaviour
+public class SignalTrigger : MonoBehaviour
 {
-	public GameObject[] objectsToActivate;
+	public Signal onPress;
 	public bool switchActive { get; private set; }
 
 	// Use this for initialization
 	void Start ()
 	{
-		if (objectsToActivate.Length == 0) {
-			Debug.Log ("ActivateObjectSwitch not wired up with any objects");
-		}
 		switchActive = true;
 	}
 
@@ -23,9 +20,7 @@ public class ActivateObjectSwitch : MonoBehaviour
 	{
 		if (switchActive && collider.CompareTag (Tags.PLAYER)) {
 			switchActive = false;
-			foreach (GameObject obj in objectsToActivate) {
-				obj.SetActive (true);
-			}
+			onPress.Invoke ();
 		}
 	}
 

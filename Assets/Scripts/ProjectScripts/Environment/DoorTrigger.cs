@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DoorSwitch : MonoBehaviour
+public class DoorTrigger : MonoBehaviour
 {
 	public Door[] doors;
 	bool playerOnSwitch;

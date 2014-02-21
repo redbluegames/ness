@@ -17,45 +17,44 @@ public class TimedSpawner : MonoBehaviour
 	{
 		activeEnemiesSpawned = 0;
 		if (activateOnStart) {
+			// Trigger OnEnable
 			ActivateSpawner ();
-		} else {
-			gameObject.SetActive (false);
 		}
-	}
-
-	/// <summary>
-	/// When timedSpawner gets activated, start spawner.
-	/// </summary>
-	void OnEnable ()
-	{
-		ActivateSpawner ();
 	}
 
 	/// <summary>
 	/// Deactivates the spawner.
 	/// </summary>
-	public void DeactivateSpawner ()
+	[Signal]
+	void DeactivateSpawner ()
 	{
 		spawnActive = false;
+		StopAllCoroutines ();
 	}
 
 	/// <summary>
 	/// Activates the spawner.
 	/// </summary>
-	public void ActivateSpawner ()
+	[Signal]
+	void ActivateSpawner ()
 	{
 		spawnActive = true;
 		StartCoroutine (PeriodicSpawn ());
 	}
 
+	/// <summary>
+	/// Counts how many objects have been spawned.
+	/// </summary>
+	/// <returns>The number of children objects aka spawned objects.</returns>
 	int CountActive ()
 	{
-		return GetComponentsInChildren<Enemy> ().Length - 1;
+		return transform.childCount;
 	}
 
 	IEnumerator PeriodicSpawn ()
 	{
 		while (spawnActive) {
+			Debug.Log ("PeriodicSpawn running....");
 			if (activeEnemiesSpawned < maxActiveEnemies) {
 				GameObject newEnemy = (GameObject)Instantiate (prefabToSpawn, transform.position,
 			                                               Quaternion.identity);
@@ -68,9 +67,4 @@ public class TimedSpawner : MonoBehaviour
 		}
 		yield break;
 	}
-	void OnDestroy ()
-	{
-		StopAllCoroutines ();
-	}
-	
 }
