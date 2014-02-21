@@ -10,6 +10,7 @@ public class AILegacy : MonoBehaviour
 	TrailRenderer trailRenderer;
 	public AttackCast attackCaster;
 	GameObject projectilePrefab;
+	public Transform projectileSpawnPoint;
 	CountDownTimer attackTime = new CountDownTimer ();
 	CountDownTimer attackCooldown = new CountDownTimer ();
 	bool isAttacking;
@@ -178,7 +179,9 @@ public class AILegacy : MonoBehaviour
 		// Spawn and fire projectile
 		Damage damageOut = new Damage (projectileAttack.maxDamage, projectileAttack, new RaycastHit (), transform);
 		GameObject newProjectile = (GameObject)Instantiate (
-				projectilePrefab, transform.position, transform.rotation);
-		newProjectile.GetComponent<Projectile> ().Fire (2000.0f, 5.0f, transform.forward, damageOut, 1.0f, Team.BadGuys);
+				projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+		Vector3 projectileToPlayer = Target.transform.position - projectileSpawnPoint.position;
+		projectileToPlayer.y = 0;
+		newProjectile.GetComponent<Projectile> ().Fire (150.0f, 5.0f, projectileToPlayer, damageOut, 1.0f, Team.BadGuys);
 	}
 }
